@@ -161,6 +161,9 @@
 </section>
 
 @section Scripts {
-    <script src="@signalRClientUrl"></script>
+    @if (Model.SignalREnabled)
+    {
+        <script src="@signalRClientUrl"></script>
+    }
     <script src="@Url.Content("~/Scripts/job-status.js")"></script>
 }

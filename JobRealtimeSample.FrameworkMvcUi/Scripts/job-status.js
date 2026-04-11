@@ -103,12 +103,11 @@
             setStatus(response.status, response.message);
             appendLog(response.status, `${response.message} Calculation id returned immediately.`, new Date());
 
-            if (signalREnabled) {
+            if (canUseSignalR()) {
                 await connectToHub(response);
                 appendLog("SignalR", "Connected and joined the company/user/calculation group.", new Date());
             } else {
-                setSignalRState("Disabled by page config", "text-bg-dark");
-                appendLog("SignalR", "Realtime connection is disabled for this page. Snapshot polling is used instead.", new Date());
+                useSnapshotPollingFallback();
                 startPollingSnapshot(currentCalculationId);
             }
 
@@ -159,6 +158,19 @@
         await connection.start();
         setSignalRState("Connected", "text-bg-success");
         await joinCalculationGroup(response);
+    }
+
+    function canUseSignalR() {
+        return signalREnabled && window.signalR;
+    }
+
+    function useSnapshotPollingFallback() {
+        const message = signalREnabled
+            ? "SignalR client script is not available. Snapshot polling is used instead."
+            : "Realtime connection is disabled for this page. Snapshot polling is used instead.";
+
+        setSignalRState(signalREnabled ? "Client not loaded" : "Disabled by page config", "text-bg-dark");
+        appendLog("SignalR", message, new Date());
     }
 
     async function joinCalculationGroup(response) {

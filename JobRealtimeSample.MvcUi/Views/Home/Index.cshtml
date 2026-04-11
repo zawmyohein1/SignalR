@@ -160,6 +160,9 @@
 </section>
 
 @section Scripts {
-    <script src="https://cdn.jsdelivr.net/npm/@@microsoft/signalr@8/dist/browser/signalr.min.js"></script>
+    @if (Model.SignalREnabled)
+    {
+        <script src="https://cdn.jsdelivr.net/npm/@@microsoft/signalr@8/dist/browser/signalr.min.js"></script>
+    }
     <script src="~/js/job-status.js" asp-append-version="true"></script>
 }
