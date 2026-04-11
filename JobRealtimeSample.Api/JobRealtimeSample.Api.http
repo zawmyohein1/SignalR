@@ -1,0 +1,11 @@
+@JobRealtimeSample.Api_HostAddress = https://localhost:5002
+
+POST {{JobRealtimeSample.Api_HostAddress}}/api/jobs/start
+Accept: application/json
+
+###
+
+@JobId = replace-with-job-id
+
+GET {{JobRealtimeSample.Api_HostAddress}}/api/jobs/{{JobId}}
+Accept: application/json

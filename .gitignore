@@ -1,0 +1,30 @@
+# Build output
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider / ReSharper
+.idea/
+_ReSharper*/
+*.DotSettings.user
+
+# NuGet
+packages/
+*.nupkg
+project.lock.json
+project.assets.json
+
+# Local runtime/test logs
+.codex-run/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+

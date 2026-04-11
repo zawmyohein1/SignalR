@@ -1,0 +1,786 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<leaveCalculations>
+  <calculation>
+    <calculationId>b09c5e2d8ce84064aca78e4c25ab904a</calculationId>
+    <companyCode>COMPANY_A</companyCode>
+    <loginUserId>HR_A</loginUserId>
+    <departmentCode>HR</departmentCode>
+    <employeeNo>ALL</employeeNo>
+    <leaveTypeCode>ANNU</leaveTypeCode>
+    <year>2026</year>
+    <status>Completed</status>
+    <message>Leave entitlement process completed successfully.</message>
+    <createdAt>2026-04-11T10:13:29.5379206Z</createdAt>
+    <updatedAt>2026-04-11T10:13:46.7955257Z</updatedAt>
+    <history>
+      <entry>
+        <calculationId>b09c5e2d8ce84064aca78e4c25ab904a</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Accepted</status>
+        <message>Leave entitlement process accepted and started in background.</message>
+        <timestamp>2026-04-11T10:13:29.5379206Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>b09c5e2d8ce84064aca78e4c25ab904a</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Started</status>
+        <message>Leave entitlement process started for COMPANY_A.</message>
+        <timestamp>2026-04-11T10:13:30.5718347Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>b09c5e2d8ce84064aca78e4c25ab904a</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Loading selected employees</status>
+        <message>Loading all employees from HR.</message>
+        <timestamp>2026-04-11T10:13:34.7576460Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>b09c5e2d8ce84064aca78e4c25ab904a</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>Calculating ANNU entitlement for year 2026.</message>
+        <timestamp>2026-04-11T10:13:38.7717924Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>b09c5e2d8ce84064aca78e4c25ab904a</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Updating leave balances</status>
+        <message>Updating leave balances and preparing result summary.</message>
+        <timestamp>2026-04-11T10:13:42.7872370Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>b09c5e2d8ce84064aca78e4c25ab904a</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Completed</status>
+        <message>Leave entitlement process completed successfully.</message>
+        <timestamp>2026-04-11T10:13:46.7955257Z</timestamp>
+      </entry>
+    </history>
+  </calculation>
+  <calculation>
+    <calculationId>6750d2200bd146188b435f2a05df5a6e</calculationId>
+    <companyCode>COMPANY_B</companyCode>
+    <loginUserId>HR_B</loginUserId>
+    <departmentCode>HR</departmentCode>
+    <employeeNo>ALL</employeeNo>
+    <leaveTypeCode>ANNU</leaveTypeCode>
+    <year>2026</year>
+    <status>Completed</status>
+    <message>Leave entitlement process completed successfully.</message>
+    <createdAt>2026-04-11T10:14:10.8680759Z</createdAt>
+    <updatedAt>2026-04-11T10:14:28.4050900Z</updatedAt>
+    <history>
+      <entry>
+        <calculationId>6750d2200bd146188b435f2a05df5a6e</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Accepted</status>
+        <message>Leave entitlement process accepted and started in background.</message>
+        <timestamp>2026-04-11T10:14:10.8680759Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>6750d2200bd146188b435f2a05df5a6e</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Started</status>
+        <message>Leave entitlement process started for COMPANY_B.</message>
+        <timestamp>2026-04-11T10:14:11.9073057Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>6750d2200bd146188b435f2a05df5a6e</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Loading selected employees</status>
+        <message>Loading all employees from HR.</message>
+        <timestamp>2026-04-11T10:14:15.9197802Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>6750d2200bd146188b435f2a05df5a6e</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>Calculating ANNU entitlement for year 2026.</message>
+        <timestamp>2026-04-11T10:14:20.3442680Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>6750d2200bd146188b435f2a05df5a6e</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Updating leave balances</status>
+        <message>Updating leave balances and preparing result summary.</message>
+        <timestamp>2026-04-11T10:14:24.3988759Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>6750d2200bd146188b435f2a05df5a6e</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Completed</status>
+        <message>Leave entitlement process completed successfully.</message>
+        <timestamp>2026-04-11T10:14:28.4050900Z</timestamp>
+      </entry>
+    </history>
+  </calculation>
+  <calculation>
+    <calculationId>c546f68e49e44fc8be349bf64053df2c</calculationId>
+    <companyCode>COMPANY_B</companyCode>
+    <loginUserId>HR_B</loginUserId>
+    <departmentCode>HR</departmentCode>
+    <employeeNo>ALL</employeeNo>
+    <leaveTypeCode>ANNU</leaveTypeCode>
+    <year>2026</year>
+    <status>Completed</status>
+    <message>Leave entitlement process completed successfully.</message>
+    <createdAt>2026-04-11T10:14:28.6947114Z</createdAt>
+    <updatedAt>2026-04-11T10:14:45.8207100Z</updatedAt>
+    <history>
+      <entry>
+        <calculationId>c546f68e49e44fc8be349bf64053df2c</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Accepted</status>
+        <message>Leave entitlement process accepted and started in background.</message>
+        <timestamp>2026-04-11T10:14:28.6947114Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>c546f68e49e44fc8be349bf64053df2c</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Started</status>
+        <message>Leave entitlement process started for COMPANY_B.</message>
+        <timestamp>2026-04-11T10:14:29.7374747Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>c546f68e49e44fc8be349bf64053df2c</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Loading selected employees</status>
+        <message>Loading all employees from HR.</message>
+        <timestamp>2026-04-11T10:14:33.7559045Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>c546f68e49e44fc8be349bf64053df2c</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>Calculating ANNU entitlement for year 2026.</message>
+        <timestamp>2026-04-11T10:14:37.7751518Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>c546f68e49e44fc8be349bf64053df2c</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Updating leave balances</status>
+        <message>Updating leave balances and preparing result summary.</message>
+        <timestamp>2026-04-11T10:14:41.8034862Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>c546f68e49e44fc8be349bf64053df2c</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Completed</status>
+        <message>Leave entitlement process completed successfully.</message>
+        <timestamp>2026-04-11T10:14:45.8207100Z</timestamp>
+      </entry>
+    </history>
+  </calculation>
+  <calculation>
+    <calculationId>2479d4ca985e45179fcb7fc7d779124e</calculationId>
+    <companyCode>COMPANY_A</companyCode>
+    <loginUserId>HR_A</loginUserId>
+    <departmentCode>HR</departmentCode>
+    <employeeNo>ALL</employeeNo>
+    <leaveTypeCode>ANNU</leaveTypeCode>
+    <year>2026</year>
+    <status>Completed</status>
+    <message>Leave entitlement process completed successfully.</message>
+    <createdAt>2026-04-11T10:15:04.8209140Z</createdAt>
+    <updatedAt>2026-04-11T10:15:21.9313054Z</updatedAt>
+    <history>
+      <entry>
+        <calculationId>2479d4ca985e45179fcb7fc7d779124e</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Accepted</status>
+        <message>Leave entitlement process accepted and started in background.</message>
+        <timestamp>2026-04-11T10:15:04.8209140Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>2479d4ca985e45179fcb7fc7d779124e</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Started</status>
+        <message>Leave entitlement process started for COMPANY_A.</message>
+        <timestamp>2026-04-11T10:15:05.8480756Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>2479d4ca985e45179fcb7fc7d779124e</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Loading selected employees</status>
+        <message>Loading all employees from HR.</message>
+        <timestamp>2026-04-11T10:15:09.8658832Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>2479d4ca985e45179fcb7fc7d779124e</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>Calculating ANNU entitlement for year 2026.</message>
+        <timestamp>2026-04-11T10:15:13.8823470Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>2479d4ca985e45179fcb7fc7d779124e</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Updating leave balances</status>
+        <message>Updating leave balances and preparing result summary.</message>
+        <timestamp>2026-04-11T10:15:17.9128721Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>2479d4ca985e45179fcb7fc7d779124e</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Completed</status>
+        <message>Leave entitlement process completed successfully.</message>
+        <timestamp>2026-04-11T10:15:21.9313054Z</timestamp>
+      </entry>
+    </history>
+  </calculation>
+  <calculation>
+    <calculationId>5b6ca3a344c7480cbf7a96c5d1f776a8</calculationId>
+    <companyCode>COMPANY_A</companyCode>
+    <loginUserId>HR_A</loginUserId>
+    <departmentCode>HR</departmentCode>
+    <employeeNo>ALL</employeeNo>
+    <leaveTypeCode>ANNU</leaveTypeCode>
+    <year>2026</year>
+    <status>Completed</status>
+    <message>Leave entitlement process completed successfully.</message>
+    <createdAt>2026-04-11T10:20:06.8259889Z</createdAt>
+    <updatedAt>2026-04-11T10:21:07.0625994Z</updatedAt>
+    <history>
+      <entry>
+        <calculationId>5b6ca3a344c7480cbf7a96c5d1f776a8</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Accepted</status>
+        <message>Leave entitlement process accepted and started in background.</message>
+        <timestamp>2026-04-11T10:20:06.8259889Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>5b6ca3a344c7480cbf7a96c5d1f776a8</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Started</status>
+        <message>Leave entitlement process started for COMPANY_A.</message>
+        <timestamp>2026-04-11T10:20:06.8593253Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>5b6ca3a344c7480cbf7a96c5d1f776a8</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Loading selected employees</status>
+        <message>Loading all employees from HR.</message>
+        <timestamp>2026-04-11T10:20:21.9783054Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>5b6ca3a344c7480cbf7a96c5d1f776a8</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>Calculating ANNU entitlement for year 2026.</message>
+        <timestamp>2026-04-11T10:20:37.0251198Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>5b6ca3a344c7480cbf7a96c5d1f776a8</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Updating leave balances</status>
+        <message>Updating leave balances and preparing result summary.</message>
+        <timestamp>2026-04-11T10:20:52.0388683Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>5b6ca3a344c7480cbf7a96c5d1f776a8</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Completed</status>
+        <message>Leave entitlement process completed successfully.</message>
+        <timestamp>2026-04-11T10:21:07.0625994Z</timestamp>
+      </entry>
+    </history>
+  </calculation>
+  <calculation>
+    <calculationId>f6ebea05a35e4adfb166dff2851909a9</calculationId>
+    <companyCode>COMPANY_B</companyCode>
+    <loginUserId>HR_B</loginUserId>
+    <departmentCode>HR</departmentCode>
+    <employeeNo>ALL</employeeNo>
+    <leaveTypeCode>ANNU</leaveTypeCode>
+    <year>2026</year>
+    <status>Completed</status>
+    <message>Leave entitlement process completed successfully.</message>
+    <createdAt>2026-04-11T10:21:07.0668436Z</createdAt>
+    <updatedAt>2026-04-11T10:22:07.1622786Z</updatedAt>
+    <history>
+      <entry>
+        <calculationId>f6ebea05a35e4adfb166dff2851909a9</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Accepted</status>
+        <message>Leave entitlement process accepted and started in background.</message>
+        <timestamp>2026-04-11T10:21:07.0668436Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f6ebea05a35e4adfb166dff2851909a9</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Started</status>
+        <message>Leave entitlement process started for COMPANY_B.</message>
+        <timestamp>2026-04-11T10:21:07.0962976Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f6ebea05a35e4adfb166dff2851909a9</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Loading selected employees</status>
+        <message>Loading all employees from HR.</message>
+        <timestamp>2026-04-11T10:21:22.1051485Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f6ebea05a35e4adfb166dff2851909a9</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>Calculating ANNU entitlement for year 2026.</message>
+        <timestamp>2026-04-11T10:21:37.1280946Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f6ebea05a35e4adfb166dff2851909a9</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Updating leave balances</status>
+        <message>Updating leave balances and preparing result summary.</message>
+        <timestamp>2026-04-11T10:21:52.1474571Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f6ebea05a35e4adfb166dff2851909a9</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Completed</status>
+        <message>Leave entitlement process completed successfully.</message>
+        <timestamp>2026-04-11T10:22:07.1622786Z</timestamp>
+      </entry>
+    </history>
+  </calculation>
+  <calculation>
+    <calculationId>a7c1e7b0e39a41518d51419a97f5060c</calculationId>
+    <companyCode>COMPANY_B</companyCode>
+    <loginUserId>HR_B</loginUserId>
+    <departmentCode>HR</departmentCode>
+    <employeeNo>ALL</employeeNo>
+    <leaveTypeCode>ANNU</leaveTypeCode>
+    <year>2026</year>
+    <status>Completed</status>
+    <message>Leave entitlement process completed successfully.</message>
+    <createdAt>2026-04-11T10:22:20.1332639Z</createdAt>
+    <updatedAt>2026-04-11T10:23:20.2273978Z</updatedAt>
+    <history>
+      <entry>
+        <calculationId>a7c1e7b0e39a41518d51419a97f5060c</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Accepted</status>
+        <message>Leave entitlement process accepted and started in background.</message>
+        <timestamp>2026-04-11T10:22:20.1332639Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>a7c1e7b0e39a41518d51419a97f5060c</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Started</status>
+        <message>Leave entitlement process started for COMPANY_B.</message>
+        <timestamp>2026-04-11T10:22:20.1624522Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>a7c1e7b0e39a41518d51419a97f5060c</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Loading selected employees</status>
+        <message>Loading all employees from HR.</message>
+        <timestamp>2026-04-11T10:22:35.1798531Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>a7c1e7b0e39a41518d51419a97f5060c</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>Calculating ANNU entitlement for year 2026.</message>
+        <timestamp>2026-04-11T10:22:50.1950461Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>a7c1e7b0e39a41518d51419a97f5060c</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Updating leave balances</status>
+        <message>Updating leave balances and preparing result summary.</message>
+        <timestamp>2026-04-11T10:23:05.2085470Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>a7c1e7b0e39a41518d51419a97f5060c</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Completed</status>
+        <message>Leave entitlement process completed successfully.</message>
+        <timestamp>2026-04-11T10:23:20.2273978Z</timestamp>
+      </entry>
+    </history>
+  </calculation>
+  <calculation>
+    <calculationId>ed160131729043a7ba181f9f88e09cf5</calculationId>
+    <companyCode>COMPANY_A</companyCode>
+    <loginUserId>HR_A</loginUserId>
+    <departmentCode>HR</departmentCode>
+    <employeeNo>ALL</employeeNo>
+    <leaveTypeCode>ANNU</leaveTypeCode>
+    <year>2026</year>
+    <status>Completed</status>
+    <message>Leave entitlement process completed successfully.</message>
+    <createdAt>2026-04-11T10:31:15.9182023Z</createdAt>
+    <updatedAt>2026-04-11T10:32:16.2060835Z</updatedAt>
+    <history>
+      <entry>
+        <calculationId>ed160131729043a7ba181f9f88e09cf5</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Accepted</status>
+        <message>Leave entitlement process accepted and started in background.</message>
+        <timestamp>2026-04-11T10:31:15.9182023Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>ed160131729043a7ba181f9f88e09cf5</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Started</status>
+        <message>Leave entitlement process started for COMPANY_A.</message>
+        <timestamp>2026-04-11T10:31:15.9493604Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>ed160131729043a7ba181f9f88e09cf5</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Loading selected employees</status>
+        <message>Loading all employees from HR.</message>
+        <timestamp>2026-04-11T10:31:31.1566115Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>ed160131729043a7ba181f9f88e09cf5</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>Calculating ANNU entitlement for year 2026.</message>
+        <timestamp>2026-04-11T10:31:46.1730085Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>ed160131729043a7ba181f9f88e09cf5</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Updating leave balances</status>
+        <message>Updating leave balances and preparing result summary.</message>
+        <timestamp>2026-04-11T10:32:01.1953321Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>ed160131729043a7ba181f9f88e09cf5</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Completed</status>
+        <message>Leave entitlement process completed successfully.</message>
+        <timestamp>2026-04-11T10:32:16.2060835Z</timestamp>
+      </entry>
+    </history>
+  </calculation>
+  <calculation>
+    <calculationId>851cb5214ac34539a3c2636ec225d252</calculationId>
+    <companyCode>COMPANY_A</companyCode>
+    <loginUserId>HR_A</loginUserId>
+    <departmentCode>HR</departmentCode>
+    <employeeNo>ALL</employeeNo>
+    <leaveTypeCode>ANNU</leaveTypeCode>
+    <year>2026</year>
+    <status>Completed</status>
+    <message>Leave entitlement process completed successfully.</message>
+    <createdAt>2026-04-11T12:04:45.5174629Z</createdAt>
+    <updatedAt>2026-04-11T12:05:45.6651170Z</updatedAt>
+    <history>
+      <entry>
+        <calculationId>851cb5214ac34539a3c2636ec225d252</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Accepted</status>
+        <message>Leave entitlement process accepted and started in background.</message>
+        <timestamp>2026-04-11T12:04:45.5174629Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>851cb5214ac34539a3c2636ec225d252</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Started</status>
+        <message>Leave entitlement process started for COMPANY_A.</message>
+        <timestamp>2026-04-11T12:04:45.5524874Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>851cb5214ac34539a3c2636ec225d252</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Loading selected employees</status>
+        <message>Loading all employees from HR.</message>
+        <timestamp>2026-04-11T12:05:00.6346623Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>851cb5214ac34539a3c2636ec225d252</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>Calculating ANNU entitlement for year 2026.</message>
+        <timestamp>2026-04-11T12:05:15.6463035Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>851cb5214ac34539a3c2636ec225d252</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Updating leave balances</status>
+        <message>Updating leave balances and preparing result summary.</message>
+        <timestamp>2026-04-11T12:05:30.6621687Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>851cb5214ac34539a3c2636ec225d252</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Completed</status>
+        <message>Leave entitlement process completed successfully.</message>
+        <timestamp>2026-04-11T12:05:45.6651170Z</timestamp>
+      </entry>
+    </history>
+  </calculation>
+</leaveCalculations>

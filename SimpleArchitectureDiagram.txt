@@ -1,0 +1,104 @@
+JobRealtimeSample - Simple Architecture Diagram
+================================================
+
+Main idea:
+
+The browser does not wait for the heavy task.
+The API returns a JobId quickly.
+Progress is pushed back later by SignalR.
+
+
+One Job Cycle
+-------------
+
+  User Browser
+      |
+      | 1. Click "Start Job"
+      v
+  +-----------------------------+
+  | .NET Framework MVC UI       |
+  | http://localhost:5001       |
+  +-----------------------------+
+      |
+      | 2. AJAX POST /api/jobs/start
+      v
+  +-----------------------------+
+  | .NET Framework Web API      |
+  | http://localhost:5002       |
+  +-----------------------------+
+      |
+      | 3. Create JobId
+      | 4. Save job in memory
+      | 5. Start background task
+      |
+      | 6. Return immediately:
+      |    202 Accepted + JobId
+      |
+      v
+  Browser receives JobId
+      |
+      | 7. Connect to SignalR hub
+      | 8. JoinJobGroup(jobId)
+      v
+  +-----------------------------+
+  | ASP.NET Core SignalR Hub    |
+  | https://localhost:5003      |
+  | /hubs/jobstatus            |
+  +-----------------------------+
+
+
+Background Progress Flow
+------------------------
+
+  +-----------------------------+
+  | .NET Framework Web API      |
+  | Background task             |
+  +-----------------------------+
+      |
+      | Status changes:
+      | - Started
+      | - Processing step 1
+      | - Processing step 2
+      | - Processing step 3
+      | - Completed
+      |
+      | POST /api/notifications/job-status
+      v
+  +-----------------------------+
+  | ASP.NET Core SignalR Hub    |
+  +-----------------------------+
+      |
+      | Push SignalR event:
+      | JobStatusUpdated
+      v
+  +-----------------------------+
+  | Browser UI                  |
+  | Updates progress log        |
+  +-----------------------------+
+
+
+Short Explanation
+-----------------
+
+Bad approach:
+
+  Browser -> API -> wait for heavy task -> timeout risk
+
+Correct approach:
+
+  Browser -> API -> get JobId immediately
+  API -> background task
+  API -> RealtimeHub -> Browser receives live updates
+
+
+Project Roles
+-------------
+
+  JobRealtimeSample.FrameworkMvcUi
+      Shows the page and receives live updates.
+
+  JobRealtimeSample.FrameworkApi
+      Starts the job, runs the background task, and sends status notifications.
+
+  JobRealtimeSample.RealtimeHub
+      Receives notifications from API and pushes them to the matching browser job group.

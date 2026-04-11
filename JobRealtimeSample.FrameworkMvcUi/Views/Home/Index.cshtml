@@ -1,0 +1,176 @@
+@model JobRealtimeSample.FrameworkMvcUi.Models.LeaveCalculationPageViewModel
+@{
+    ViewBag.Title = "Leave Calculation";
+    var signalRClientUrl = "https://cdn.jsdelivr.net/npm/@microsoft/signalr@8/dist/browser/signalr.min.js";
+}
+
+<section id="leaveCalculationApp"
+         class="leave-demo"
+         data-api-base-url="@Model.ApiBaseUrl"
+         data-hub-url="@Model.HubUrl"
+         data-signalr-enabled="@Model.SignalREnabled.ToString().ToLowerInvariant()">
+    <div id="loginPanel" class="login-stage">
+        <div class="login-copy">
+            <p class="eyebrow">TIMES SOFTWARE SAMPLE</p>
+            <h1>Leave Calculation realtime demo</h1>
+            <p>
+                Select a company, sign in as an HR user, then start a leave entitlement process.
+                The API returns a calculation id fast while progress arrives later through SignalR.
+            </p>
+        </div>
+
+        <div class="login-box">
+            <div class="brand-mark">
+                <span>TIMES</span>
+                <strong>SOFTWARE</strong>
+            </div>
+
+            <div class="mb-3">
+                <label for="companyCode" class="form-label">Company</label>
+                <select id="companyCode" class="form-select">
+                    @foreach (var company in Model.Companies)
+                    {
+                        <option value="@company.Value">@company.Text</option>
+                    }
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="loginUserId" class="form-label">Login Id</label>
+                <input id="loginUserId" class="form-control" value="HR_A" maxlength="30" />
+            </div>
+
+            <div class="mb-3">
+                <label for="loginPassword" class="form-label">Password</label>
+                <input id="loginPassword" class="form-control" type="password" value="demo" maxlength="30" />
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label">Login Period</label>
+                <div class="period-grid">
+                    <select id="loginYear" class="form-select">
+                        <option selected>@Model.CurrentYear</option>
+                        <option>@(Model.CurrentYear + 1)</option>
+                    </select>
+                    <select id="loginMonth" class="form-select">
+                        <option value="01">01</option>
+                        <option value="02">02</option>
+                        <option value="03">03</option>
+                        <option value="04" selected>04</option>
+                        <option value="05">05</option>
+                        <option value="06">06</option>
+                        <option value="07">07</option>
+                        <option value="08">08</option>
+                        <option value="09">09</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                </div>
+            </div>
+
+            <button id="loginButton" type="button" class="btn btn-outline-primary login-button">Login</button>
+            <p class="demo-hint">Demo only. No production authentication is used here.</p>
+        </div>
+    </div>
+
+    <div id="calculationPanel" class="calculation-stage d-none">
+        <div class="page-heading">
+            <div>
+                <p class="eyebrow">MANAGEMENT TOOLS</p>
+                <h1>Leave Calculation</h1>
+                <p>
+                    Recalculate leave entitlements without holding one long HTTP request open.
+                    Progress is isolated by company, user, and calculation id.
+                </p>
+            </div>
+            <div class="context-box">
+                <span id="contextCompany">Company</span>
+                <strong id="contextUser">User</strong>
+                <small id="contextPeriod">Period</small>
+            </div>
+        </div>
+
+        <div class="work-grid">
+            <div class="process-panel">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="departmentCode" class="form-label">Department</label>
+                        <select id="departmentCode" class="form-select">
+                            @foreach (var department in Model.Departments)
+                            {
+                                <option value="@department.Value">@department.Text</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="employeeNo" class="form-label">Employee</label>
+                        <select id="employeeNo" class="form-select">
+                            @foreach (var employee in Model.Employees)
+                            {
+                                <option value="@employee.Value">@employee.Text</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="leaveTypeCode" class="form-label">Leave Type</label>
+                        <select id="leaveTypeCode" class="form-select">
+                            @foreach (var leaveType in Model.LeaveTypes)
+                            {
+                                <option value="@leaveType.Value">@leaveType.Text</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label for="calculationYear" class="form-label">Year</label>
+                        <select id="calculationYear" class="form-select">
+                            <option selected>@Model.CurrentYear</option>
+                            <option>@(Model.CurrentYear + 1)</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3 d-flex align-items-end">
+                        <button id="processButton" type="button" class="btn btn-primary process-button">Process</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="status-panel">
+                <div class="status-row">
+                    <span>SignalR</span>
+                    <strong id="signalrState" class="badge text-bg-secondary">Disconnected</strong>
+                </div>
+                <div class="status-row">
+                    <span>Calculation Id</span>
+                    <strong id="calculationIdDisplay" class="text-break">No calculation started</strong>
+                </div>
+                <div class="status-row">
+                    <span>Current Status</span>
+                    <strong id="currentStatusDisplay" class="badge text-bg-secondary">Idle</strong>
+                </div>
+                <div class="status-row">
+                    <span>API Response</span>
+                    <strong id="apiResponseDisplay">Waiting for process</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <h2 class="h5 mb-0">Progress Log</h2>
+                <span class="small text-muted">Only this browser group receives these updates.</span>
+            </div>
+            <div id="progressLog" class="job-log" aria-live="polite">
+                <p class="text-muted mb-0">Click Process to start Leave Calculation.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="@signalRClientUrl"></script>
+    <script src="@Url.Content("~/Scripts/job-status.js")"></script>
+}

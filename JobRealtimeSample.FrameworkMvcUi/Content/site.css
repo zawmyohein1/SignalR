@@ -1,0 +1,224 @@
+body {
+    background: #f5f7f8;
+    color: #1f2933;
+}
+
+.app-nav {
+    background: #ffffff;
+    border-bottom: 1px solid #d8e1e8;
+}
+
+.leave-demo {
+    padding-bottom: 2rem;
+}
+
+.login-stage {
+    min-height: calc(100vh - 120px);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 420px);
+    gap: 2rem;
+    align-items: center;
+    background:
+        linear-gradient(90deg, rgba(245, 247, 248, 0.98) 0%, rgba(245, 247, 248, 0.90) 42%, rgba(245, 247, 248, 0.35) 100%),
+        url("https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1600&q=80");
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+    padding: 2rem;
+}
+
+.login-copy {
+    max-width: 640px;
+}
+
+.eyebrow {
+    margin-bottom: 0.4rem;
+    color: #367c74;
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.login-copy h1,
+.page-heading h1 {
+    color: #141f33;
+    font-weight: 700;
+}
+
+.login-copy p,
+.page-heading p {
+    color: #52616d;
+    line-height: 1.6;
+}
+
+.login-box,
+.process-panel,
+.status-panel,
+.context-box,
+.job-log {
+    background: rgba(255, 255, 255, 0.94);
+    border: 1px solid #d8e1e8;
+    border-radius: 8px;
+    box-shadow: 0 10px 28px rgba(31, 41, 51, 0.08);
+}
+
+.login-box {
+    padding: 1.5rem;
+}
+
+.brand-mark {
+    border-bottom: 1px solid #d8e1e8;
+    color: #16135b;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 1.4rem;
+    padding-bottom: 1rem;
+}
+
+.brand-mark span,
+.brand-mark strong {
+    display: block;
+    font-size: 2rem;
+}
+
+.period-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+}
+
+.login-button,
+.process-button {
+    border-radius: 6px;
+    min-height: 44px;
+}
+
+.login-button {
+    min-width: 112px;
+}
+
+.process-button {
+    width: 100%;
+}
+
+.demo-hint {
+    color: #687887;
+    font-size: 0.88rem;
+    margin: 1rem 0 0;
+}
+
+.page-heading {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.context-box {
+    min-width: 240px;
+    padding: 1rem;
+}
+
+.context-box span,
+.context-box small {
+    display: block;
+    color: #687887;
+}
+
+.context-box strong {
+    display: block;
+    color: #141f33;
+    font-size: 1.2rem;
+}
+
+.work-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(300px, 0.6fr);
+    gap: 1rem;
+}
+
+.process-panel,
+.status-panel {
+    padding: 1rem;
+}
+
+.form-control,
+.form-select {
+    border-color: #a9c9d8;
+    border-radius: 6px;
+    min-height: 44px;
+}
+
+.status-row {
+    display: grid;
+    grid-template-columns: 120px minmax(0, 1fr);
+    gap: 0.75rem;
+    padding: 0.65rem 0;
+    border-bottom: 1px solid #edf1f4;
+}
+
+.status-row:last-child {
+    border-bottom: 0;
+}
+
+.status-row span {
+    color: #52616d;
+}
+
+.job-log {
+    min-height: 260px;
+    max-height: 420px;
+    overflow-y: auto;
+    padding: 1rem;
+}
+
+.job-log-entry {
+    border-bottom: 1px solid #e6ebf2;
+    padding: 0.875rem 0;
+}
+
+.job-log-entry:first-child {
+    padding-top: 0;
+}
+
+.job-log-entry:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+}
+
+.job-log-entry p {
+    margin: 0.45rem 0 0;
+}
+
+.log-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+}
+
+.log-meta time {
+    color: #687887;
+    font-size: 0.86rem;
+}
+
+@media (max-width: 991.98px) {
+    .login-stage,
+    .work-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .page-heading {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .login-stage {
+        padding: 1rem;
+    }
+
+    .status-row {
+        grid-template-columns: 1fr;
+        gap: 0.25rem;
+    }
+}
