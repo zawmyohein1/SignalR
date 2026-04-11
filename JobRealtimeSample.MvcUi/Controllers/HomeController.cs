@@ -25,8 +25,7 @@ public class HomeController : Controller
             CurrentYear = DateTime.Now.Year,
             Companies = BuildCompanies(),
             Departments = BuildDepartments(),
-            Employees = BuildEmployees(),
-            LeaveTypes = BuildLeaveTypes()
+            Employees = BuildEmployees()
         };
 
         return View(model);
@@ -92,22 +91,4 @@ public class HomeController : Controller
         ];
     }
 
-    private static IReadOnlyList<DemoOption> BuildLeaveTypes()
-    {
-        return
-        [
-            new("ANNU", "ANNU - ANNUAL LEAVE"),
-            new("SICK", "SICK - SICK LEAVE"),
-            new("HOSP", "HOSP - HOSPITALISATION"),
-            new("CHILDLVE", "CHILDLVE - CHILD CARE LEAVE"),
-            new("COMP", "COMP - COMPASSIONATE LEAVE"),
-            new("EXAM", "EXAM - EXAM LEAVE"),
-            new("MATE", "MATE - MATERNITY LEAVE"),
-            new("PATE", "PATE - PATERNITY LEAVE"),
-            new("NPL", "NPL - NO PAY LEAVE"),
-            new("RO", "RO - REPLACEMENT OFF"),
-            new("SEMINAR", "SEMINAR - SEMINAR"),
-            new("TRAINING", "TRAINING - TRAINING LEAVE")
-        ];
-    }
 }

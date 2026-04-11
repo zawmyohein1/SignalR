@@ -8,6 +8,8 @@ var allowedOrigins = builder.Configuration
 
 builder.Services.Configure<JobRealtimeSample.Api.Options.RealtimeHubOptions>(
     builder.Configuration.GetSection("RealtimeHub"));
+builder.Services.Configure<JobRealtimeSample.Api.Options.GenericJobOptions>(
+    builder.Configuration.GetSection("GenericJob"));
 builder.Services.Configure<JobRealtimeSample.Api.Options.LeaveCalculationOptions>(
     builder.Configuration.GetSection("LeaveCalculation"));
 builder.Services.Configure<JobRealtimeSample.Api.Options.HubTokenOptions>(

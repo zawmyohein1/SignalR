@@ -12,6 +12,47 @@ public sealed class BackgroundLeaveCalculationRunner(
 {
     private readonly LeaveCalculationOptions _options = options.Value;
 
+    private const string StartedStatus = "Started";
+    private const string CalculatingStatus = "Calculating leave entitlement";
+    private const string CompletedStatus = "Completed";
+    private const string FailedStatus = "Failed";
+
+    private static readonly DemoEmployee[] DemoEmployees =
+    [
+        new("001", "ANDY LOW"),
+        new("002", "BEN LIM"),
+        new("003", "COLIN KOH"),
+        new("004", "DAVID GAN"),
+        new("005", "EUGENE ONG"),
+        new("006", "FRASER PANG"),
+        new("101", "ANGELA GOH"),
+        new("102", "BETTY CHIA"),
+        new("103", "CECILIA NG"),
+        new("104", "DAPHNE TAN"),
+        new("105", "EMILY WONG"),
+        new("106", "FIONA WONG"),
+        new("801", "RACHEL WONG"),
+        new("802", "SUSAN TAY"),
+        new("803", "TERESA TAN"),
+        new("804", "UNICE CHENG"),
+        new("8040", "COPY UNICE CHENG"),
+        new("805", "VIVIAN CHIA")
+    ];
+
+    private static readonly string[] DemoLeaveCodes =
+    [
+        "ANNU",
+        "SICK",
+        "HOSP",
+        "CHILDLVE",
+        "COMP",
+        "EXAM",
+        "MATE",
+        "PATE",
+        "NPL",
+        "RO"
+    ];
+
     public void RunInBackground(string calculationId)
     {
         // The API returns immediately. The simulated leave entitlement process
@@ -34,46 +75,28 @@ public sealed class BackgroundLeaveCalculationRunner(
             await DelayAsync(_options.InitialDelaySeconds, cancellationToken);
             await PublishStatusAsync(
                 calculationId,
-                "Started",
+                StartedStatus,
                 $"Leave entitlement process started for {info.CompanyCode}.",
                 cancellationToken);
 
             await DelayAsync(_options.StepDelaySeconds, cancellationToken);
-            await PublishStatusAsync(
-                calculationId,
-                "Loading selected employees",
-                BuildEmployeeLoadingMessage(info),
-                cancellationToken);
+            await RunEntitlementCalculationAsync(info, cancellationToken);
 
             await DelayAsync(_options.StepDelaySeconds, cancellationToken);
             await PublishStatusAsync(
                 calculationId,
-                "Calculating leave entitlement",
-                $"Calculating {info.LeaveTypeCode} entitlement for year {info.Year}.",
-                cancellationToken);
-
-            await DelayAsync(_options.StepDelaySeconds, cancellationToken);
-            await PublishStatusAsync(
-                calculationId,
-                "Updating leave balances",
-                "Updating leave balances and preparing result summary.",
-                cancellationToken);
-
-            await DelayAsync(_options.StepDelaySeconds, cancellationToken);
-            await PublishStatusAsync(
-                calculationId,
-                "Completed",
+                CompletedStatus,
                 "Leave entitlement process completed successfully.",
                 cancellationToken);
         }
         catch (OperationCanceledException)
         {
-            await PublishStatusAsync(calculationId, "Failed", "Leave calculation was canceled.", CancellationToken.None);
+            await PublishStatusAsync(calculationId, FailedStatus, "Leave calculation was canceled.", CancellationToken.None);
         }
         catch (Exception ex)
         {
             logger.LogError(ex, "Leave calculation {CalculationId} failed.", calculationId);
-            await PublishStatusAsync(calculationId, "Failed", "Leave calculation failed. Check API logs for details.", CancellationToken.None);
+            await PublishStatusAsync(calculationId, FailedStatus, "Leave calculation failed. Check API logs for details.", CancellationToken.None);
         }
     }
 
@@ -102,16 +125,45 @@ public sealed class BackgroundLeaveCalculationRunner(
         }
     }
 
-    private static string BuildEmployeeLoadingMessage(LeaveCalculationInfo info)
+    private async Task RunEntitlementCalculationAsync(
+        LeaveCalculationInfo info,
+        CancellationToken cancellationToken)
     {
-        return string.Equals(info.EmployeeNo, "ALL", StringComparison.OrdinalIgnoreCase)
-            ? $"Loading all employees from {info.DepartmentCode}."
-            : $"Loading employee {info.EmployeeNo} from {info.DepartmentCode}.";
+        foreach (var employee in ResolveEmployees(info))
+        {
+            foreach (var _ in DemoLeaveCodes)
+            {
+                await DelayAsync(_options.LeaveCodeDelaySeconds, cancellationToken);
+            }
+
+            await PublishStatusAsync(
+                info.CalculationId,
+                CalculatingStatus,
+                $"[{employee.DisplayName}] done.",
+                cancellationToken);
+        }
     }
 
-    private static Task DelayAsync(int seconds, CancellationToken cancellationToken)
+    private static IEnumerable<DemoEmployee> ResolveEmployees(LeaveCalculationInfo info)
+    {
+        if (string.Equals(info.EmployeeNo, "ALL", StringComparison.OrdinalIgnoreCase))
+        {
+            return DemoEmployees;
+        }
+
+        var employee = DemoEmployees.FirstOrDefault(
+            item => string.Equals(item.EmployeeNo, info.EmployeeNo, StringComparison.OrdinalIgnoreCase));
+
+        return [employee ?? new DemoEmployee(info.EmployeeNo, info.EmployeeNo)];
+    }
+
+    private static Task DelayAsync(double seconds, CancellationToken cancellationToken)
     {
         return Task.Delay(TimeSpan.FromSeconds(Math.Max(0, seconds)), cancellationToken);
     }
-}
 
+    private sealed record DemoEmployee(string EmployeeNo, string EmployeeName)
+    {
+        public string DisplayName => $"{EmployeeNo}-{EmployeeName}";
+    }
+}

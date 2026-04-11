@@ -9,6 +9,8 @@
     const hubUrl = app.dataset.hubUrl;
     const signalREnabled = app.dataset.signalrEnabled === "true";
     const seenNotifications = new Set();
+    const demoLeaveTypeCode = "ANNU";
+    const processingButtonHtml = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Processing...';
 
     let connection = null;
     let currentCalculationId = null;
@@ -19,11 +21,13 @@
     const statusClasses = {
         Accepted: "text-bg-secondary",
         Started: "text-bg-primary",
-        "Loading selected employees": "text-bg-info",
         "Calculating leave entitlement": "text-bg-warning",
-        "Updating leave balances": "text-bg-warning",
         Completed: "text-bg-success",
         Failed: "text-bg-danger"
+    };
+
+    const logStatusLabels = {
+        "Calculating leave entitlement": "Calculating"
     };
 
     $("#companyCode").on("change", function () {
@@ -67,7 +71,7 @@
         }
 
         const $button = $(this);
-        $button.prop("disabled", true).text("Processing...");
+        $button.prop("disabled", true).html(processingButtonHtml);
         resetProcessUi();
 
         const requestStartedAt = performance.now();
@@ -76,7 +80,7 @@
             loginUserId: loginContext.loginUserId,
             departmentCode: $("#departmentCode").val(),
             employeeNo: $("#employeeNo").val(),
-            leaveTypeCode: $("#leaveTypeCode").val(),
+            leaveTypeCode: demoLeaveTypeCode,
             year: Number($("#calculationYear").val())
         };
 
@@ -103,7 +107,7 @@
                 await connectToHub(response);
                 appendLog("SignalR", "Connected and joined the company/user/calculation group.", new Date());
             } else {
-                $("#signalrState").removeClass().addClass("badge text-bg-dark").text("Disabled by page config");
+                setSignalRState("Disabled by page config", "text-bg-dark");
                 appendLog("SignalR", "Realtime connection is disabled for this page. Snapshot polling is used instead.", new Date());
                 startPollingSnapshot(currentCalculationId);
             }
@@ -136,11 +140,11 @@
         });
 
         connection.onreconnecting(function () {
-            $("#signalrState").removeClass().addClass("badge text-bg-warning").text("Reconnecting");
+            setSignalRState("Reconnecting", "text-bg-warning");
         });
 
         connection.onreconnected(async function () {
-            $("#signalrState").removeClass().addClass("badge text-bg-success").text("Connected");
+            setSignalRState("Connected", "text-bg-success");
 
             if (currentCalculationId && loginContext) {
                 await joinCalculationGroup();
@@ -149,11 +153,11 @@
         });
 
         connection.onclose(function () {
-            $("#signalrState").removeClass().addClass("badge text-bg-secondary").text("Disconnected");
+            setSignalRState("Disconnected", "text-bg-secondary");
         });
 
         await connection.start();
-        $("#signalrState").removeClass().addClass("badge text-bg-success").text("Connected");
+        setSignalRState("Connected", "text-bg-success");
         await joinCalculationGroup(response);
     }
 
@@ -224,30 +228,39 @@
         currentHubAccessToken = null;
         $("#calculationIdDisplay").text("No calculation started");
         $("#apiResponseDisplay").text("Waiting for API response");
-        $("#signalrState").removeClass().addClass("badge text-bg-secondary").text(signalREnabled ? "Disconnected" : "Disabled by page config");
+        setSignalRState(signalREnabled ? "Disconnected" : "Disabled by page config", "text-bg-secondary");
         $("#progressLog").empty();
         setStatus("Accepted", "Request has not been sent yet.");
     }
 
     function setStatus(status, message) {
         const badgeClass = statusClasses[status] || "text-bg-secondary";
-        $("#currentStatusDisplay")
-            .removeClass()
-            .addClass(`badge ${badgeClass}`)
-            .text(status);
+        setBadge($("#currentStatusDisplay"), status, badgeClass);
 
         if (message) {
             $("#currentStatusDisplay").attr("title", message);
         }
     }
 
+    function setSignalRState(text, badgeClass) {
+        setBadge($("#signalrState"), text, badgeClass);
+    }
+
+    function setBadge($element, text, badgeClass) {
+        $element
+            .removeClass()
+            .addClass(`badge ${badgeClass}`)
+            .text(text);
+    }
+
     function appendLog(status, message, timestamp) {
         const timeText = timestamp.toLocaleTimeString();
         const badgeClass = statusClasses[status] || "text-bg-dark";
+        const displayStatus = logStatusLabels[status] || status;
         const entry = $(`
             <div class="job-log-entry">
                 <div class="log-meta">
-                    <span class="badge ${badgeClass}">${escapeHtml(status)}</span>
+                    <span class="badge ${badgeClass}">${escapeHtml(displayStatus)}</span>
                     <time>${escapeHtml(timeText)}</time>
                 </div>
                 <p>${escapeHtml(message)}</p>
@@ -255,7 +268,8 @@
         `);
 
         $("#progressLog").append(entry);
-        entry[0].scrollIntoView({ block: "nearest" });
+        const log = $("#progressLog")[0];
+        log.scrollTop = log.scrollHeight;
     }
 
     function getAjaxErrorMessage(error) {
@@ -278,4 +292,3 @@
         return $("<div>").text(value || "").html();
     }
 })();
-

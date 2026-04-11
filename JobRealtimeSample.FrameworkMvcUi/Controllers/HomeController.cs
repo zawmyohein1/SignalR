@@ -27,8 +27,7 @@ namespace JobRealtimeSample.FrameworkMvcUi.Controllers
                 CurrentYear = DateTime.Now.Year,
                 Companies = BuildCompanies(),
                 Departments = BuildDepartments(),
-                Employees = BuildEmployees(),
-                LeaveTypes = BuildLeaveTypes()
+                Employees = BuildEmployees()
             };
 
             return View(model);
@@ -83,23 +82,5 @@ namespace JobRealtimeSample.FrameworkMvcUi.Controllers
             };
         }
 
-        private static IReadOnlyList<DemoOption> BuildLeaveTypes()
-        {
-            return new[]
-            {
-                new DemoOption("ANNU", "ANNU - ANNUAL LEAVE"),
-                new DemoOption("SICK", "SICK - SICK LEAVE"),
-                new DemoOption("HOSP", "HOSP - HOSPITALISATION"),
-                new DemoOption("CHILDLVE", "CHILDLVE - CHILD CARE LEAVE"),
-                new DemoOption("COMP", "COMP - COMPASSIONATE LEAVE"),
-                new DemoOption("EXAM", "EXAM - EXAM LEAVE"),
-                new DemoOption("MATE", "MATE - MATERNITY LEAVE"),
-                new DemoOption("PATE", "PATE - PATERNITY LEAVE"),
-                new DemoOption("NPL", "NPL - NO PAY LEAVE"),
-                new DemoOption("RO", "RO - REPLACEMENT OFF"),
-                new DemoOption("SEMINAR", "SEMINAR - SEMINAR"),
-                new DemoOption("TRAINING", "TRAINING - TRAINING LEAVE")
-            };
-        }
     }
 }

@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using JobRealtimeSample.FrameworkApi.Models;
@@ -12,6 +15,50 @@ namespace JobRealtimeSample.FrameworkApi.Services
         private readonly RealtimeNotifier _realtimeNotifier;
         private readonly int _initialDelaySeconds;
         private readonly int _stepDelaySeconds;
+        private readonly double _leaveCodeDelaySeconds;
+
+        private const string StartedStatus = "Started";
+        private const string CalculatingStatus = "Calculating leave entitlement";
+        private const string CompletedStatus = "Completed";
+        private const string FailedStatus = "Failed";
+
+        private static readonly DemoEmployee[] DemoEmployees = new[]
+        {
+            new DemoEmployee("001", "ANDY LOW"),
+            new DemoEmployee("002", "BEN LIM"),
+            new DemoEmployee("003", "COLIN KOH"),
+            new DemoEmployee("004", "DAVID GAN"),
+            new DemoEmployee("005", "EUGENE ONG"),
+            new DemoEmployee("006", "FRASER PANG"),
+            new DemoEmployee("101", "ANGELA GOH"),
+            new DemoEmployee("102", "BETTY CHIA"),
+            new DemoEmployee("103", "CECILIA NG"),
+            new DemoEmployee("104", "DAPHNE TAN"),
+            new DemoEmployee("105", "EMILY WONG"),
+            new DemoEmployee("106", "FIONA WONG"),
+            new DemoEmployee("801", "RACHEL WONG"),
+            new DemoEmployee("802", "SUSAN TAY"),
+            new DemoEmployee("803", "TERESA TAN"),
+            new DemoEmployee("804", "UNICE CHENG"),
+            new DemoEmployee("8040", "COPY UNICE CHENG"),
+            new DemoEmployee("805", "VIVIAN CHIA")
+        };
+
+        private static readonly string[] DemoLeaveCodes = new[]
+        {
+            "ANNU",
+            "SICK",
+            "HOSP",
+            "CHILDLVE",
+            "COMP",
+            "EXAM",
+            "MATE",
+            "PATE",
+            "NPL",
+            "RO",
+            "SEMINAR",
+            "TRAINING"
+        };
 
         public BackgroundLeaveCalculationRunner(XmlLeaveCalculationStore store, RealtimeNotifier realtimeNotifier)
         {
@@ -19,6 +66,7 @@ namespace JobRealtimeSample.FrameworkApi.Services
             _realtimeNotifier = realtimeNotifier;
             _initialDelaySeconds = ReadSeconds("LeaveCalculationInitialDelaySeconds", 1);
             _stepDelaySeconds = ReadSeconds("LeaveCalculationStepDelaySeconds", 4);
+            _leaveCodeDelaySeconds = ReadDoubleSeconds("LeaveCalculationLeaveCodeDelaySeconds", 3);
         }
 
         public void RunInBackground(string calculationId)
@@ -43,46 +91,28 @@ namespace JobRealtimeSample.FrameworkApi.Services
                 await DelayAsync(_initialDelaySeconds, cancellationToken);
                 await PublishStatusAsync(
                     calculationId,
-                    "Started",
+                    StartedStatus,
                     $"Leave entitlement process started for {info.CompanyCode}.",
                     cancellationToken);
 
                 await DelayAsync(_stepDelaySeconds, cancellationToken);
-                await PublishStatusAsync(
-                    calculationId,
-                    "Loading selected employees",
-                    BuildEmployeeLoadingMessage(info),
-                    cancellationToken);
+                await RunEntitlementCalculationAsync(info, cancellationToken);
 
                 await DelayAsync(_stepDelaySeconds, cancellationToken);
                 await PublishStatusAsync(
                     calculationId,
-                    "Calculating leave entitlement",
-                    $"Calculating {info.LeaveTypeCode} entitlement for year {info.Year}.",
-                    cancellationToken);
-
-                await DelayAsync(_stepDelaySeconds, cancellationToken);
-                await PublishStatusAsync(
-                    calculationId,
-                    "Updating leave balances",
-                    "Updating leave balances and preparing result summary.",
-                    cancellationToken);
-
-                await DelayAsync(_stepDelaySeconds, cancellationToken);
-                await PublishStatusAsync(
-                    calculationId,
-                    "Completed",
+                    CompletedStatus,
                     "Leave entitlement process completed successfully.",
                     cancellationToken);
             }
             catch (OperationCanceledException)
             {
-                await PublishStatusAsync(calculationId, "Failed", "Leave calculation was canceled.", CancellationToken.None);
+                await PublishStatusAsync(calculationId, FailedStatus, "Leave calculation was canceled.", CancellationToken.None);
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Trace.TraceError("Leave calculation {0} failed. {1}", calculationId, ex);
-                await PublishStatusAsync(calculationId, "Failed", "Leave calculation failed. Check API logs for details.", CancellationToken.None);
+                await PublishStatusAsync(calculationId, FailedStatus, "Leave calculation failed. Check API logs for details.", CancellationToken.None);
             }
         }
 
@@ -111,17 +141,42 @@ namespace JobRealtimeSample.FrameworkApi.Services
             }
         }
 
-        private static string BuildEmployeeLoadingMessage(LeaveCalculationInfo info)
+        private async Task RunEntitlementCalculationAsync(
+            LeaveCalculationInfo info,
+            CancellationToken cancellationToken)
+        {
+            foreach (DemoEmployee employee in ResolveEmployees(info))
+            {
+                foreach (string _ in DemoLeaveCodes)
+                {
+                    await DelayAsync(_leaveCodeDelaySeconds, cancellationToken);
+                }
+
+                await PublishStatusAsync(
+                    info.CalculationId,
+                    CalculatingStatus,
+                    $"[{employee.DisplayName}] done.",
+                    cancellationToken);
+            }
+        }
+
+        private static IEnumerable<DemoEmployee> ResolveEmployees(LeaveCalculationInfo info)
         {
             if (string.Equals(info.EmployeeNo, "ALL", StringComparison.OrdinalIgnoreCase))
             {
-                return $"Loading all employees from {info.DepartmentCode}.";
+                return DemoEmployees;
             }
 
-            return $"Loading employee {info.EmployeeNo} from {info.DepartmentCode}.";
+            DemoEmployee employee = DemoEmployees.FirstOrDefault(
+                item => string.Equals(item.EmployeeNo, info.EmployeeNo, StringComparison.OrdinalIgnoreCase));
+
+            return new[]
+            {
+                employee ?? new DemoEmployee(info.EmployeeNo, info.EmployeeNo)
+            };
         }
 
-        private static Task DelayAsync(int seconds, CancellationToken cancellationToken)
+        private static Task DelayAsync(double seconds, CancellationToken cancellationToken)
         {
             return Task.Delay(TimeSpan.FromSeconds(seconds), cancellationToken);
         }
@@ -137,6 +192,37 @@ namespace JobRealtimeSample.FrameworkApi.Services
 
             return value;
         }
+
+        private static double ReadDoubleSeconds(string key, double defaultValue)
+        {
+            double value;
+
+            if (!double.TryParse(
+                    ConfigurationManager.AppSettings[key],
+                    NumberStyles.Float,
+                    CultureInfo.InvariantCulture,
+                    out value)
+                || value < 0)
+            {
+                return defaultValue;
+            }
+
+            return value;
+        }
+
+        private sealed class DemoEmployee
+        {
+            public DemoEmployee(string employeeNo, string employeeName)
+            {
+                EmployeeNo = employeeNo;
+                EmployeeName = employeeName;
+            }
+
+            public string EmployeeNo { get; }
+
+            public string EmployeeName { get; }
+
+            public string DisplayName => $"{EmployeeNo}-{EmployeeName}";
+        }
     }
 }
-

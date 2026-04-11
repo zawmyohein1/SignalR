@@ -115,16 +115,6 @@
                     </div>
 
                     <div class="col-md-6">
-                        <label for="leaveTypeCode" class="form-label">Leave Type</label>
-                        <select id="leaveTypeCode" class="form-select">
-                            @foreach (var leaveType in Model.LeaveTypes)
-                            {
-                                <option value="@leaveType.Value">@leaveType.Text</option>
-                            }
-                        </select>
-                    </div>
-
-                    <div class="col-md-3">
                         <label for="calculationYear" class="form-label">Year</label>
                         <select id="calculationYear" class="form-select">
                             <option selected>@Model.CurrentYear</option>
@@ -132,7 +122,7 @@
                         </select>
                     </div>
 
-                    <div class="col-md-3 d-flex align-items-end">
+                    <div class="col-md-6 d-flex align-items-end">
                         <button id="processButton" type="button" class="btn btn-primary process-button">Process</button>
                     </div>
                 </div>

@@ -15,7 +15,4 @@ public sealed class LeaveCalculationPageViewModel
     public IReadOnlyList<DemoOption> Departments { get; set; } = [];
 
     public IReadOnlyList<DemoOption> Employees { get; set; } = [];
-
-    public IReadOnlyList<DemoOption> LeaveTypes { get; set; } = [];
 }
-

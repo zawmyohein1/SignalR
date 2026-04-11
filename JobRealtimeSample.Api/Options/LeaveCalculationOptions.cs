@@ -7,5 +7,6 @@ public sealed class LeaveCalculationOptions
     public int InitialDelaySeconds { get; set; } = 1;
 
     public int StepDelaySeconds { get; set; } = 4;
-}
 
+    public double LeaveCodeDelaySeconds { get; set; } = 3;
+}
