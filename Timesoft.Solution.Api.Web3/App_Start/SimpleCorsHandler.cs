@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace JobRealtimeSample.FrameworkApi
+namespace Timesoft.Solution.Api.Web3
 {
     public sealed class SimpleCorsHandler : DelegatingHandler
     {

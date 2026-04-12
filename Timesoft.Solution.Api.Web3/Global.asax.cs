@@ -1,6 +1,6 @@
 using System.Web.Http;
 
-namespace JobRealtimeSample.FrameworkApi
+namespace Timesoft.Solution.Api.Web3
 {
     public class WebApiApplication : System.Web.HttpApplication
     {

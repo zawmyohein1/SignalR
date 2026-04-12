@@ -2,10 +2,10 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
-using JobRealtimeSample.FrameworkApi.Models;
-using JobRealtimeSample.FrameworkApi.Vendors;
+using Timesoft.Solution.Api.Web3.Models;
+using Timesoft.Solution.Api.Web3.Vendors;
 
-namespace JobRealtimeSample.FrameworkApi.Controllers
+namespace Timesoft.Solution.Api.Web3.Controllers
 {
     [RoutePrefix("api/leave-calculations")]
     public sealed class LeaveCalculationsController : ApiController

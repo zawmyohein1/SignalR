@@ -1,4 +1,4 @@
-namespace JobRealtimeSample.RealtimeHub.Models;
+namespace Timesoft.Solution.RealtimeHub.Models;
 
 public sealed record LeaveCalculationStatusNotification(
     string CalculationId,

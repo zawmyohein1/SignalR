@@ -5,9 +5,9 @@ using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using JobRealtimeSample.FrameworkApi.Models;
+using Timesoft.Solution.Api.Web3.Models;
 
-namespace JobRealtimeSample.FrameworkApi.Services
+namespace Timesoft.Solution.Api.Web3.Services
 {
     public sealed class BackgroundLeaveCalculationRunner
     {

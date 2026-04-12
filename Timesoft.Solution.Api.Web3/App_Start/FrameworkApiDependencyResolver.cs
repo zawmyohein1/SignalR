@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Web.Http.Dependencies;
-using JobRealtimeSample.FrameworkApi.Controllers;
-using JobRealtimeSample.FrameworkApi.Vendors;
+using Timesoft.Solution.Api.Web3.Controllers;
+using Timesoft.Solution.Api.Web3.Vendors;
 
-namespace JobRealtimeSample.FrameworkApi
+namespace Timesoft.Solution.Api.Web3
 {
     public sealed class FrameworkApiDependencyResolver : IDependencyResolver
     {

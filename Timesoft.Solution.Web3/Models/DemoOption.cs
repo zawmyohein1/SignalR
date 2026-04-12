@@ -1,4 +1,4 @@
-namespace JobRealtimeSample.FrameworkMvcUi.Models
+namespace Timesoft.Solution.Web3.Models
 {
     public sealed class DemoOption
     {
@@ -13,4 +13,3 @@ namespace JobRealtimeSample.FrameworkMvcUi.Models
         public string Text { get; }
     }
 }
-

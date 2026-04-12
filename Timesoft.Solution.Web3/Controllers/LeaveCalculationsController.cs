@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
-namespace JobRealtimeSample.FrameworkMvcUi.Controllers
+namespace Timesoft.Solution.Web3.Controllers
 {
     public sealed class LeaveCalculationsController : Controller
     {

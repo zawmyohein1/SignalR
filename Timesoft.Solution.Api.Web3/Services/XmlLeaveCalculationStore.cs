@@ -5,9 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Web.Hosting;
 using System.Xml.Linq;
-using JobRealtimeSample.FrameworkApi.Models;
+using Timesoft.Solution.Api.Web3.Models;
 
-namespace JobRealtimeSample.FrameworkApi.Services
+namespace Timesoft.Solution.Api.Web3.Services
 {
     public sealed class XmlLeaveCalculationStore
     {

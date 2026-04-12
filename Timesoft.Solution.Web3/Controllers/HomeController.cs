@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Web.Mvc;
-using JobRealtimeSample.FrameworkMvcUi.Models;
+using Timesoft.Solution.Web3.Models;
 
-namespace JobRealtimeSample.FrameworkMvcUi.Controllers
+namespace Timesoft.Solution.Web3.Controllers
 {
     public class HomeController : Controller
     {

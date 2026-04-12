@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace JobRealtimeSample.FrameworkMvcUi.Models
+namespace Timesoft.Solution.Web3.Models
 {
     public sealed class LeaveCalculationPageViewModel
     {

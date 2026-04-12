@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace JobRealtimeSample.FrameworkApi.Models
+namespace Timesoft.Solution.Api.Web3.Models
 {
     public sealed class LeaveCalculationInfo
     {

@@ -1,1 +1,1 @@
-<%@ Application Codebehind="Global.asax.cs" Inherits="JobRealtimeSample.FrameworkMvcUi.MvcApplication" Language="C#" %>
+<%@ Application Codebehind="Global.asax.cs" Inherits="Timesoft.Solution.Web3.MvcApplication" Language="C#" %>

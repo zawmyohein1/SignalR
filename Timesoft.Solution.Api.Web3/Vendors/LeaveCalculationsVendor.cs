@@ -1,9 +1,9 @@
 using System.Threading;
 using System.Threading.Tasks;
-using JobRealtimeSample.FrameworkApi.Models;
-using JobRealtimeSample.FrameworkApi.Services;
+using Timesoft.Solution.Api.Web3.Models;
+using Timesoft.Solution.Api.Web3.Services;
 
-namespace JobRealtimeSample.FrameworkApi.Vendors
+namespace Timesoft.Solution.Api.Web3.Vendors
 {
     public sealed class LeaveCalculationsVendor
     {

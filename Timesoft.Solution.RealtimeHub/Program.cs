@@ -19,8 +19,8 @@ builder.Services.AddCors(options =>
 });
 builder.Services.AddControllers();
 builder.Services.AddSignalR();
-builder.Services.AddSingleton<JobRealtimeSample.RealtimeHub.Services.BasicNotificationAuthService>();
-builder.Services.AddSingleton<JobRealtimeSample.RealtimeHub.Services.DemoHubTokenService>();
+builder.Services.AddSingleton<Timesoft.Solution.RealtimeHub.Services.BasicNotificationAuthService>();
+builder.Services.AddSingleton<Timesoft.Solution.RealtimeHub.Services.DemoHubTokenService>();
 
 var app = builder.Build();
 
@@ -35,8 +35,8 @@ app.UseRouting();
 app.UseCors(MvcUiCorsPolicy);
 
 app.MapControllers();
-app.MapHub<JobRealtimeSample.RealtimeHub.Hubs.JobStatusHub>("/hubs/jobstatus");
-app.MapGet("/", () => Results.Ok("JobRealtimeSample realtime hub is running."));
+app.MapHub<Timesoft.Solution.RealtimeHub.Hubs.JobStatusHub>("/hubs/jobstatus");
+app.MapGet("/", () => Results.Ok("Timesoft.Solution.RealtimeHub is running."));
 app.Map("/error", () => Results.Problem("An unexpected realtime hub error occurred."));
 
 app.Run();

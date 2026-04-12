@@ -1,4 +1,4 @@
-namespace JobRealtimeSample.FrameworkApi.Models
+namespace Timesoft.Solution.Api.Web3.Models
 {
     public sealed class StartLeaveCalculationResponse
     {

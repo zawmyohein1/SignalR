@@ -1,7 +1,7 @@
-using JobRealtimeSample.RealtimeHub.Services;
+using Timesoft.Solution.RealtimeHub.Services;
 using Microsoft.AspNetCore.SignalR;
 
-namespace JobRealtimeSample.RealtimeHub.Hubs;
+namespace Timesoft.Solution.RealtimeHub.Hubs;
 
 public sealed class JobStatusHub(DemoHubTokenService tokenService) : Hub
 {

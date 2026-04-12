@@ -1,7 +1,7 @@
 using System.Net.Http.Headers;
 using System.Text;
 
-namespace JobRealtimeSample.RealtimeHub.Services;
+namespace Timesoft.Solution.RealtimeHub.Services;
 
 public sealed class BasicNotificationAuthService(IConfiguration configuration)
 {

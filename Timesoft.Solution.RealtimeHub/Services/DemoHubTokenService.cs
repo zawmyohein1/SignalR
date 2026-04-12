@@ -1,8 +1,8 @@
 using System.Security.Cryptography;
 using System.Text;
-using JobRealtimeSample.RealtimeHub.Models;
+using Timesoft.Solution.RealtimeHub.Models;
 
-namespace JobRealtimeSample.RealtimeHub.Services;
+namespace Timesoft.Solution.RealtimeHub.Services;
 
 public sealed class DemoHubTokenService(IConfiguration configuration)
 {

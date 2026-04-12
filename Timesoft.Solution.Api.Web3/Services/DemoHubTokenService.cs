@@ -3,7 +3,7 @@ using System.Configuration;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace JobRealtimeSample.FrameworkApi.Services
+namespace Timesoft.Solution.Api.Web3.Services
 {
     public sealed class DemoHubTokenService
     {

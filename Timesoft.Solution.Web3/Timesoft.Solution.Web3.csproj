@@ -14,6 +14,7 @@
     <IISExpressSSLPort>5001</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
     <UseGlobalApplicationHostFile />
+    <RuntimeIdentifiers>win</RuntimeIdentifiers>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Use64BitIISExpress />
     <IISExpressWindowsAuthentication />

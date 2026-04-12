@@ -2,7 +2,7 @@ using System.Net.Http.Formatting;
 using System.Web.Http;
 using Newtonsoft.Json.Serialization;
 
-namespace JobRealtimeSample.FrameworkApi
+namespace Timesoft.Solution.Api.Web3
 {
     public static class WebApiConfig
     {

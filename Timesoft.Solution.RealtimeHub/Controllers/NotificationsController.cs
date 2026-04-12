@@ -1,10 +1,10 @@
-using JobRealtimeSample.RealtimeHub.Hubs;
-using JobRealtimeSample.RealtimeHub.Models;
-using JobRealtimeSample.RealtimeHub.Services;
+using Timesoft.Solution.RealtimeHub.Hubs;
+using Timesoft.Solution.RealtimeHub.Models;
+using Timesoft.Solution.RealtimeHub.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 
-namespace JobRealtimeSample.RealtimeHub.Controllers;
+namespace Timesoft.Solution.RealtimeHub.Controllers;
 
 [ApiController]
 [Route("api/notifications")]
@@ -19,7 +19,7 @@ public sealed class NotificationsController(
         // Only the API project may post server-to-hub notifications.
         if (!notificationAuth.IsAuthorized(Request))
         {
-            Response.Headers["WWW-Authenticate"] = "Basic realm=\"JobRealtimeSample.RealtimeHub\"";
+            Response.Headers["WWW-Authenticate"] = "Basic realm=\"Timesoft.Solution.RealtimeHub\"";
             return Unauthorized(new { message = "API-to-Hub notification credentials are invalid." });
         }
 

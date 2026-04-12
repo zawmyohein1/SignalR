@@ -5,10 +5,10 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using JobRealtimeSample.FrameworkApi.Models;
+using Timesoft.Solution.Api.Web3.Models;
 using Newtonsoft.Json;
 
-namespace JobRealtimeSample.FrameworkApi.Services
+namespace Timesoft.Solution.Api.Web3.Services
 {
     public sealed class RealtimeNotifier : IDisposable
     {

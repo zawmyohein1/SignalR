@@ -1,8 +1,8 @@
 using System;
-using JobRealtimeSample.FrameworkApi.Services;
-using JobRealtimeSample.FrameworkApi.Vendors;
+using Timesoft.Solution.Api.Web3.Services;
+using Timesoft.Solution.Api.Web3.Vendors;
 
-namespace JobRealtimeSample.FrameworkApi
+namespace Timesoft.Solution.Api.Web3
 {
     public static class LeaveCalculationCompositionRoot
     {
