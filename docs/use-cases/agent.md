@@ -22,11 +22,11 @@ Each browser receives only its own company/user/calculation updates.
 Enhance all existing projects:
 
 ```text
-JobRealtimeSample.FrameworkMvcUi
-JobRealtimeSample.FrameworkApi
-JobRealtimeSample.MvcUi
-JobRealtimeSample.Api
-JobRealtimeSample.RealtimeHub
+Timesoft.Solution.Web3
+Timesoft.Solution.Api.Web3
+Timesoft.Solution.Web4
+Timesoft.Solution.Api.Web4
+Timesoft.Solution.RealtimeHub
 ```
 
 Do not remove or break the existing standalone hub architecture.

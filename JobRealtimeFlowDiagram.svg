@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1600" viewBox="0 0 1200 1600" role="img" aria-labelledby="title desc">
-  <title id="title">JobRealtimeSample Flow Diagram</title>
+  <title id="title">Timesoft.Solution.Demo Flow Diagram</title>
   <desc id="desc">A vertical flow diagram showing MVC UI, Framework API, background task, RealtimeHub, and browser progress updates.</desc>
 
   <defs>

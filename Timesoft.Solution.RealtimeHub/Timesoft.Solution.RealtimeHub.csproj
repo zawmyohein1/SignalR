@@ -4,6 +4,8 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>Timesoft.Solution.RealtimeHub</AssemblyName>
+    <RootNamespace>Timesoft.Solution.RealtimeHub</RootNamespace>
   </PropertyGroup>
 
 </Project>

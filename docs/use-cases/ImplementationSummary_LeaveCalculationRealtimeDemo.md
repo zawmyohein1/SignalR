@@ -4,11 +4,11 @@ Date: 2026-04-11
 
 ## Completed
 
-- Enhanced `JobRealtimeSample.RealtimeHub`.
-- Enhanced `JobRealtimeSample.FrameworkApi`.
-- Enhanced `JobRealtimeSample.FrameworkMvcUi`.
-- Enhanced `JobRealtimeSample.Api`.
-- Enhanced `JobRealtimeSample.MvcUi`.
+- Enhanced `Timesoft.Solution.RealtimeHub`.
+- Enhanced `Timesoft.Solution.Api.Web3`.
+- Enhanced `Timesoft.Solution.Web3`.
+- Enhanced `Timesoft.Solution.Api.Web4`.
+- Enhanced `Timesoft.Solution.Web4`.
 - Updated `README.md`.
 - Added XML storage files for Leave Calculation status/history.
 - Added company/user/calculation SignalR group isolation.
@@ -70,7 +70,7 @@ company:COMPANY_A:user:HR_A:calculation:62f9090fc9a94cea9bcf42b4eb748a5e
 Build:
 
 ```text
-MSBuild JobRealtimeSample.sln succeeded.
+MSBuild Timesoft.Solution.Demo.sln succeeded.
 ```
 
 Framework runtime smoke test:

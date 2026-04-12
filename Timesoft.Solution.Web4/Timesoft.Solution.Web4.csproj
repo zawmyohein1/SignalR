@@ -4,6 +4,8 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>Timesoft.Solution.Web4</AssemblyName>
+    <RootNamespace>Timesoft.Solution.Web4</RootNamespace>
   </PropertyGroup>
 
 </Project>

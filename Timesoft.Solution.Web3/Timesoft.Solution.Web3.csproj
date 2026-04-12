@@ -7,8 +7,8 @@
     <ProjectGuid>{B3919675-C6A1-4FC8-A272-9C0907A7729B}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
-    <RootNamespace>JobRealtimeSample.FrameworkMvcUi</RootNamespace>
-    <AssemblyName>JobRealtimeSample.FrameworkMvcUi</AssemblyName>
+    <RootNamespace>Timesoft.Solution.Web3</RootNamespace>
+    <AssemblyName>Timesoft.Solution.Web3</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort>5001</IISExpressSSLPort>

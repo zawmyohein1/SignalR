@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Enhance the existing `JobRealtimeSample` solution into a clearer Leave Calculation realtime demo.
+Enhance the existing `Timesoft.Solution.Demo` solution into a clearer Leave Calculation realtime demo.
 
 The final demo should prove this scenario:
 
@@ -22,11 +22,11 @@ All existing sample projects should be enhanced.
 
 | Project | Type | Role |
 | --- | --- | --- |
-| `JobRealtimeSample.FrameworkMvcUi` | ASP.NET MVC 5 / .NET Framework 4.8 | Primary legacy-style UI demo |
-| `JobRealtimeSample.FrameworkApi` | ASP.NET Web API 2 / .NET Framework 4.8 | Primary legacy-style API demo |
-| `JobRealtimeSample.MvcUi` | ASP.NET Core MVC / .NET 8 | .NET 8 UI parity demo |
-| `JobRealtimeSample.Api` | ASP.NET Core Web API / .NET 8 | .NET 8 API parity demo |
-| `JobRealtimeSample.RealtimeHub` | ASP.NET Core SignalR / .NET 8 | Shared standalone realtime server |
+| `Timesoft.Solution.Web3` | ASP.NET MVC 5 / .NET Framework 4.8 | Primary legacy-style UI demo |
+| `Timesoft.Solution.Api.Web3` | ASP.NET Web API 2 / .NET Framework 4.8 | Primary legacy-style API demo |
+| `Timesoft.Solution.Web4` | ASP.NET Core MVC / .NET 8 | .NET 8 UI parity demo |
+| `Timesoft.Solution.Api.Web4` | ASP.NET Core Web API / .NET 8 | .NET 8 API parity demo |
+| `Timesoft.Solution.RealtimeHub` | ASP.NET Core SignalR / .NET 8 | Shared standalone realtime server |
 
 Important:
 
@@ -180,8 +180,8 @@ Call it "basic demo hub token" in the UI/documentation, but implement it using t
 
 ### 2. Login Page
 
-- [ ] Add a simple login page to `JobRealtimeSample.FrameworkMvcUi`.
-- [ ] Add a matching simple login page to `JobRealtimeSample.MvcUi`.
+- [ ] Add a simple login page to `Timesoft.Solution.Web3`.
+- [ ] Add a matching simple login page to `Timesoft.Solution.Web4`.
 - [ ] Include company selection.
 - [ ] Include login id.
 - [ ] Include password field for demo only.
@@ -369,4 +369,3 @@ Call it "basic demo hub token" in the UI/documentation, but implement it using t
 - Browser-to-Hub connection uses demo token validation.
 - README explains how to run and test.
 - Chrome/Firefox/Edge multi-company test passes.
-

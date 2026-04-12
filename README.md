@@ -1,6 +1,6 @@
-# JobRealtimeSample
+# Timesoft.Solution.Demo
 
-JobRealtimeSample demonstrates how an MVC page can start a long-running Leave Calculation process without waiting on one timeout-prone HTTP request.
+Timesoft.Solution.Demo demonstrates how an MVC page can start a long-running Leave Calculation process without waiting on one timeout-prone HTTP request.
 
 The API returns a calculation id immediately, runs the work in the background, saves progress to XML, and sends status updates to a standalone ASP.NET Core SignalR hub.
 
@@ -38,11 +38,11 @@ RealtimeHub pushes progress only to the matching browser group
 
 | Project | Technology | Role |
 | --- | --- | --- |
-| `JobRealtimeSample.FrameworkMvcUi` | ASP.NET MVC 5 / .NET Framework 4.8 | Primary legacy-style UI demo |
-| `JobRealtimeSample.FrameworkApi` | ASP.NET Web API 2 / .NET Framework 4.8 | Primary legacy-style API demo |
-| `JobRealtimeSample.MvcUi` | ASP.NET Core MVC / .NET 8 | .NET 8 UI parity demo |
-| `JobRealtimeSample.Api` | ASP.NET Core Web API / .NET 8 | .NET 8 API parity demo |
-| `JobRealtimeSample.RealtimeHub` | ASP.NET Core SignalR / .NET 8 | Shared standalone realtime server |
+| `Timesoft.Solution.Web3` | ASP.NET MVC 5 / .NET Framework 4.8 | Primary legacy-style UI demo |
+| `Timesoft.Solution.Api.Web3` | ASP.NET Web API 2 / .NET Framework 4.8 | Primary legacy-style API demo |
+| `Timesoft.Solution.Web4` | ASP.NET Core MVC / .NET 8 | .NET 8 UI parity demo |
+| `Timesoft.Solution.Api.Web4` | ASP.NET Core Web API / .NET 8 | .NET 8 API parity demo |
+| `Timesoft.Solution.RealtimeHub` | ASP.NET Core SignalR / .NET 8 | Shared standalone realtime server |
 
 ## Ports
 
@@ -114,20 +114,20 @@ Browser WebSocket connections cannot reliably send custom Basic Auth headers, so
 The Leave Calculation flow saves status to XML:
 
 ```text
-JobRealtimeSample.FrameworkApi/App_Data/LeaveCalculationJobs.xml
-JobRealtimeSample.Api/App_Data/LeaveCalculationJobs.xml
+Timesoft.Solution.Api.Web3/App_Data/LeaveCalculationJobs.xml
+Timesoft.Solution.Api.Web4/App_Data/LeaveCalculationJobs.xml
 ```
 
 The generic old job sample may still have in-memory code, but the Leave Calculation demo uses XML state.
 
 ## Run Framework Demo
 
-1. Open `JobRealtimeSample.sln` in Visual Studio.
+1. Open `Timesoft.Solution.Demo.sln` in Visual Studio.
 2. Set multiple startup projects.
 3. Start these projects together:
-   - `JobRealtimeSample.FrameworkMvcUi`
-   - `JobRealtimeSample.FrameworkApi`
-   - `JobRealtimeSample.RealtimeHub`
+   - `Timesoft.Solution.Web3`
+   - `Timesoft.Solution.Api.Web3`
+   - `Timesoft.Solution.RealtimeHub`
 4. Open `http://localhost:5001`.
 5. Select a company and login.
 6. Select Department, Employee, Leave Type, and Year.
@@ -136,12 +136,12 @@ The generic old job sample may still have in-memory code, but the Leave Calculat
 
 ## Run .NET 8 Parity Demo
 
-1. Open `JobRealtimeSample.sln` in Visual Studio.
+1. Open `Timesoft.Solution.Demo.sln` in Visual Studio.
 2. Set multiple startup projects.
 3. Start these projects together:
-   - `JobRealtimeSample.MvcUi`
-   - `JobRealtimeSample.Api`
-   - `JobRealtimeSample.RealtimeHub`
+   - `Timesoft.Solution.Web4`
+   - `Timesoft.Solution.Api.Web4`
+   - `Timesoft.Solution.RealtimeHub`
 4. Open `https://localhost:5101`.
 5. Select a company and login.
 6. Click `Process`.
@@ -202,7 +202,7 @@ This keeps existing pages unaffected unless they explicitly opt into SignalR.
 Build the full solution with Visual Studio MSBuild:
 
 ```powershell
-& "C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Current\Bin\MSBuild.exe" JobRealtimeSample.sln /restore /p:Configuration=Debug /p:Platform="Any CPU"
+& "C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Current\Bin\MSBuild.exe" Timesoft.Solution.Demo.sln /restore /p:Configuration=Debug /p:Platform="Any CPU"
 ```
 
 ## Important Rules
@@ -214,4 +214,3 @@ Build the full solution with Visual Studio MSBuild:
 - Keep RealtimeHub as a standalone ASP.NET Core SignalR server.
 - Keep the sample database-free.
 - Use XML for Leave Calculation status/history in this demo.
-

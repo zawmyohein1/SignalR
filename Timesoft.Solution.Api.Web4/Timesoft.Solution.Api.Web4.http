@@ -1,6 +1,6 @@
-@JobRealtimeSample.Api_HostAddress = https://localhost:5002
+@Timesoft.Solution.Api.Web4_HostAddress = https://localhost:5002
 
-POST {{JobRealtimeSample.Api_HostAddress}}/api/leave-calculations/start
+POST {{Timesoft.Solution.Api.Web4_HostAddress}}/api/leave-calculations/start
 Content-Type: application/json
 Accept: application/json
 
@@ -9,7 +9,6 @@ Accept: application/json
   "loginUserId": "HR_A",
   "departmentCode": "HR",
   "employeeNo": "001",
-  "leaveTypeCode": "ANNU",
   "year": 2026
 }
 
@@ -17,5 +16,5 @@ Accept: application/json
 
 @CalculationId = replace-with-calculation-id
 
-GET {{JobRealtimeSample.Api_HostAddress}}/api/leave-calculations/{{CalculationId}}
+GET {{Timesoft.Solution.Api.Web4_HostAddress}}/api/leave-calculations/{{CalculationId}}
 Accept: application/json

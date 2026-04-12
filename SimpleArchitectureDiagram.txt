@@ -1,4 +1,4 @@
-JobRealtimeSample - Simple Architecture Diagram
+Timesoft.Solution.Demo - Simple Architecture Diagram
 ================================================
 
 Main idea:
@@ -94,11 +94,11 @@ Correct approach:
 Project Roles
 -------------
 
-  JobRealtimeSample.FrameworkMvcUi
+  Timesoft.Solution.Web3
       Shows the page and receives live updates.
 
-  JobRealtimeSample.FrameworkApi
+  Timesoft.Solution.Api.Web3
       Starts the job, runs the background task, and sends status notifications.
 
-  JobRealtimeSample.RealtimeHub
+  Timesoft.Solution.RealtimeHub
       Receives notifications from API and pushes them to the matching browser job group.

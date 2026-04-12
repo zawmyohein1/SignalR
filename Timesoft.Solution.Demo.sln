@@ -1,17 +1,17 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobRealtimeSample.MvcUi", "JobRealtimeSample.MvcUi\JobRealtimeSample.MvcUi.csproj", "{0AA177B9-D7DC-4514-88CA-5DEA1A0752AA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timesoft.Solution.Web4", "Timesoft.Solution.Web4\Timesoft.Solution.Web4.csproj", "{0AA177B9-D7DC-4514-88CA-5DEA1A0752AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobRealtimeSample.Api", "JobRealtimeSample.Api\JobRealtimeSample.Api.csproj", "{2972B7D9-6873-4BB5-BB43-C89AA5E4B89E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timesoft.Solution.Api.Web4", "Timesoft.Solution.Api.Web4\Timesoft.Solution.Api.Web4.csproj", "{2972B7D9-6873-4BB5-BB43-C89AA5E4B89E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobRealtimeSample.RealtimeHub", "JobRealtimeSample.RealtimeHub\JobRealtimeSample.RealtimeHub.csproj", "{4DBE3A02-C08B-42B3-902C-966F0DB3F17D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timesoft.Solution.RealtimeHub", "Timesoft.Solution.RealtimeHub\Timesoft.Solution.RealtimeHub.csproj", "{4DBE3A02-C08B-42B3-902C-966F0DB3F17D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobRealtimeSample.FrameworkMvcUi", "JobRealtimeSample.FrameworkMvcUi\JobRealtimeSample.FrameworkMvcUi.csproj", "{B3919675-C6A1-4FC8-A272-9C0907A7729B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timesoft.Solution.Web3", "Timesoft.Solution.Web3\Timesoft.Solution.Web3.csproj", "{B3919675-C6A1-4FC8-A272-9C0907A7729B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobRealtimeSample.FrameworkApi", "JobRealtimeSample.FrameworkApi\JobRealtimeSample.FrameworkApi.csproj", "{8B318F92-A08D-475D-A622-98A94DE78A5C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timesoft.Solution.Api.Web3", "Timesoft.Solution.Api.Web3\Timesoft.Solution.Api.Web3.csproj", "{8B318F92-A08D-475D-A622-98A94DE78A5C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

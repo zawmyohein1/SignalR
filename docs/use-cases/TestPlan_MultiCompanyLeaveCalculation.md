@@ -96,16 +96,16 @@ company:COMPANY_C:user:HR_C:calculation:CALC_C
 Start these projects:
 
 ```text
-JobRealtimeSample.FrameworkMvcUi
-JobRealtimeSample.FrameworkApi
-JobRealtimeSample.RealtimeHub
+Timesoft.Solution.Web3
+Timesoft.Solution.Api.Web3
+Timesoft.Solution.RealtimeHub
 ```
 
 Do not start these during this test:
 
 ```text
-JobRealtimeSample.MvcUi
-JobRealtimeSample.Api
+Timesoft.Solution.Web4
+Timesoft.Solution.Api.Web4
 ```
 
 ## Step 2 - Login In Chrome
