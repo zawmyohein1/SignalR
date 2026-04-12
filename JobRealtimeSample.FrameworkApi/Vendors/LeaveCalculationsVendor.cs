@@ -46,9 +46,7 @@ namespace JobRealtimeSample.FrameworkApi.Vendors
                 return "departmentCode is required.";
             }
 
-            return string.IsNullOrWhiteSpace(request.LeaveTypeCode)
-                ? "leaveTypeCode is required."
-                : null;
+            return null;
         }
 
         public async Task<StartLeaveCalculationResult> StartAsync(

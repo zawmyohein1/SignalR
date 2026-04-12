@@ -6,9 +6,7 @@ public sealed record LeaveCalculationStatusNotification(
     string LoginUserId,
     string DepartmentCode,
     string EmployeeNo,
-    string LeaveTypeCode,
     int Year,
     string Status,
     string Message,
     DateTimeOffset Timestamp);
-

@@ -10,8 +10,5 @@ public sealed class LeaveCalculationStartRequest
 
     public string? EmployeeNo { get; set; }
 
-    public string? LeaveTypeCode { get; set; }
-
     public int Year { get; set; }
 }
-

@@ -9,7 +9,6 @@
     const calculationProxyUrl = app.dataset.calculationProxyUrl || "/LeaveCalculations";
     const hubUrl = app.dataset.hubUrl;
     const signalREnabled = app.dataset.signalrEnabled === "true";
-    const demoLeaveTypeCode = "ANNU";
     const synchronousExecutionMode = "SynchronousHttp";
     const processingButtonHtml = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Processing...';
 
@@ -114,7 +113,6 @@
             loginUserId: loginContext.loginUserId,
             departmentCode: $("#departmentCode").val(),
             employeeNo: $("#employeeNo").val(),
-            leaveTypeCode: demoLeaveTypeCode,
             year: Number($("#calculationYear").val())
         };
     }

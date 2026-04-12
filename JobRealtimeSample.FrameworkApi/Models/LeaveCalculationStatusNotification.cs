@@ -14,8 +14,6 @@ namespace JobRealtimeSample.FrameworkApi.Models
 
         public string EmployeeNo { get; set; }
 
-        public string LeaveTypeCode { get; set; }
-
         public int Year { get; set; }
 
         public string Status { get; set; }
@@ -25,4 +23,3 @@ namespace JobRealtimeSample.FrameworkApi.Models
         public DateTimeOffset Timestamp { get; set; }
     }
 }
-

@@ -12,8 +12,6 @@ public sealed class LeaveCalculationStatusNotification
 
     public string EmployeeNo { get; set; } = string.Empty;
 
-    public string LeaveTypeCode { get; set; } = string.Empty;
-
     public int Year { get; set; }
 
     public string Status { get; set; } = string.Empty;
@@ -22,4 +20,3 @@ public sealed class LeaveCalculationStatusNotification
 
     public DateTimeOffset Timestamp { get; set; }
 }
-
