@@ -160,12 +160,12 @@ For every SignalR test, confirm:
 
 | Screenshot | Purpose |
 | --- | --- |
-| `use-cases/images/test-plan/single-page-running.png` | Shows SignalR connected and one Leave Calculation Page receiving realtime progress. |
-| `use-cases/images/test-plan/completed-state.png` | Shows one full SignalR cycle completed successfully. |
-| `use-cases/images/test-plan/signalr-disabled-mode.png` | Shows normal HTTP completion when SignalR is disabled. |
-| `use-cases/images/test-plan/multi-company-login-context.png` | Shows Company A and Company B using separate login contexts. |
-| `use-cases/images/test-plan/multi-company-running.png` | Shows Company A and Company B running at the same time with separate calculation ids. |
-| `use-cases/images/test-plan/multi-company-completed.png` | Shows both companies completed without crossing progress updates. |
+| ![Single page running](use-cases/images/test-plan/single-page-running.png) | Shows SignalR connected and one Leave Calculation Page receiving realtime progress. |
+| ![Completed state](use-cases/images/test-plan/completed-state.png) | Shows one full SignalR cycle completed successfully. |
+| ![SignalR disabled mode](use-cases/images/test-plan/signalr-disabled-mode.png) | Shows normal HTTP completion when SignalR is disabled. |
+| ![Multi company login context](use-cases/images/test-plan/multi-company-login-context.png) | Shows Company A and Company B using separate login contexts. |
+| ![Multi company running](use-cases/images/test-plan/multi-company-running.png) | Shows Company A and Company B running at the same time with separate calculation ids. |
+| ![Multi company completed](use-cases/images/test-plan/multi-company-completed.png) | Shows both companies completed without crossing progress updates. |
 
 ## Pass Criteria
 
