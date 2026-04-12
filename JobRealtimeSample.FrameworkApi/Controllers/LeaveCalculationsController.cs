@@ -3,7 +3,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 using JobRealtimeSample.FrameworkApi.Models;
-using JobRealtimeSample.FrameworkApi.Services;
 using JobRealtimeSample.FrameworkApi.Vendors;
 
 namespace JobRealtimeSample.FrameworkApi.Controllers
@@ -11,26 +10,23 @@ namespace JobRealtimeSample.FrameworkApi.Controllers
     [RoutePrefix("api/leave-calculations")]
     public sealed class LeaveCalculationsController : ApiController
     {
-        private static readonly XmlLeaveCalculationStore Store = new XmlLeaveCalculationStore();
-        private static readonly RealtimeNotifier RealtimeNotifier = new RealtimeNotifier();
-        private static readonly DemoHubTokenService HubTokenService = new DemoHubTokenService();
-        private static readonly BackgroundLeaveCalculationRunner BackgroundRunner =
-            new BackgroundLeaveCalculationRunner(Store, RealtimeNotifier);
-        private static readonly LeaveCalculationsVendor Vendor =
-            new LeaveCalculationsVendor(Store, HubTokenService, BackgroundRunner);
+        private readonly LeaveCalculationsVendor _vendor;
+
+        public LeaveCalculationsController(LeaveCalculationsVendor vendor)
+        {
+            _vendor = vendor;
+        }
 
         [HttpPost]
         [Route("start")]
         public async Task<IHttpActionResult> Start(LeaveCalculationStartRequest request)
         {
-            string validationMessage = LeaveCalculationsVendor.ValidateStartRequest(request);
+            StartLeaveCalculationResult result = await _vendor.StartAsync(request, CancellationToken.None);
 
-            if (validationMessage != null)
+            if (result.ValidationMessage != null)
             {
-                return BadRequest(validationMessage);
+                return BadRequest(result.ValidationMessage);
             }
-
-            StartLeaveCalculationResult result = await Vendor.StartAsync(request, CancellationToken.None);
 
             if (result.Accepted)
             {
@@ -44,7 +40,7 @@ namespace JobRealtimeSample.FrameworkApi.Controllers
         [Route("{calculationId}")]
         public IHttpActionResult GetById(string calculationId)
         {
-            LeaveCalculationInfo calculation = Vendor.GetById(calculationId);
+            LeaveCalculationInfo calculation = _vendor.GetById(calculationId);
 
             if (calculation == null)
             {

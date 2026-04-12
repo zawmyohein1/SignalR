@@ -1,3 +1,2340 @@
-<?xml version="1.0" encoding="utf-8"?>
-<leaveCalculations />
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<leaveCalculations>
+  <calculation>
+    <calculationId>ee0238467ab94449a33dd17969c2a02e</calculationId>
+    <companyCode>COMPANY_A</companyCode>
+    <loginUserId>HR_A</loginUserId>
+    <departmentCode>HR</departmentCode>
+    <employeeNo>ALL</employeeNo>
+    <leaveTypeCode>ANNU</leaveTypeCode>
+    <year>2026</year>
+    <status>Completed</status>
+    <message>Leave entitlement process completed successfully.</message>
+    <createdAt>2026-04-11T16:26:55.7926081Z</createdAt>
+    <updatedAt>2026-04-11T16:27:25.7198241Z</updatedAt>
+    <history>
+      <entry>
+        <calculationId>ee0238467ab94449a33dd17969c2a02e</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Accepted</status>
+        <message>Leave entitlement process accepted and started in background.</message>
+        <timestamp>2026-04-11T16:26:55.7926081Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>ee0238467ab94449a33dd17969c2a02e</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Started</status>
+        <message>Leave entitlement process started for COMPANY_A.</message>
+        <timestamp>2026-04-11T16:26:55.8609664Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>ee0238467ab94449a33dd17969c2a02e</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[001-ANDY LOW] done.</message>
+        <timestamp>2026-04-11T16:27:02.2508064Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>ee0238467ab94449a33dd17969c2a02e</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[002-BEN LIM] done.</message>
+        <timestamp>2026-04-11T16:27:03.3511695Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>ee0238467ab94449a33dd17969c2a02e</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[003-COLIN KOH] done.</message>
+        <timestamp>2026-04-11T16:27:04.4348649Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>ee0238467ab94449a33dd17969c2a02e</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[004-DAVID GAN] done.</message>
+        <timestamp>2026-04-11T16:27:05.5189711Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>ee0238467ab94449a33dd17969c2a02e</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[005-EUGENE ONG] done.</message>
+        <timestamp>2026-04-11T16:27:06.6178325Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>ee0238467ab94449a33dd17969c2a02e</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[006-FRASER PANG] done.</message>
+        <timestamp>2026-04-11T16:27:07.7008770Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>ee0238467ab94449a33dd17969c2a02e</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[101-ANGELA GOH] done.</message>
+        <timestamp>2026-04-11T16:27:08.7530536Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>ee0238467ab94449a33dd17969c2a02e</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[102-BETTY CHIA] done.</message>
+        <timestamp>2026-04-11T16:27:09.8522009Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>ee0238467ab94449a33dd17969c2a02e</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[103-CECILIA NG] done.</message>
+        <timestamp>2026-04-11T16:27:10.9178601Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>ee0238467ab94449a33dd17969c2a02e</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[104-DAPHNE TAN] done.</message>
+        <timestamp>2026-04-11T16:27:12.0016708Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>ee0238467ab94449a33dd17969c2a02e</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[105-EMILY WONG] done.</message>
+        <timestamp>2026-04-11T16:27:13.0672746Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>ee0238467ab94449a33dd17969c2a02e</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[106-FIONA WONG] done.</message>
+        <timestamp>2026-04-11T16:27:14.1357742Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>ee0238467ab94449a33dd17969c2a02e</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[801-RACHEL WONG] done.</message>
+        <timestamp>2026-04-11T16:27:15.2355094Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>ee0238467ab94449a33dd17969c2a02e</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[802-SUSAN TAY] done.</message>
+        <timestamp>2026-04-11T16:27:16.3349052Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>ee0238467ab94449a33dd17969c2a02e</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[803-TERESA TAN] done.</message>
+        <timestamp>2026-04-11T16:27:17.4187322Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>ee0238467ab94449a33dd17969c2a02e</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[804-UNICE CHENG] done.</message>
+        <timestamp>2026-04-11T16:27:18.5339415Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>ee0238467ab94449a33dd17969c2a02e</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[8040-COPY UNICE CHENG] done.</message>
+        <timestamp>2026-04-11T16:27:19.6345801Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>ee0238467ab94449a33dd17969c2a02e</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[805-VIVIAN CHIA] done.</message>
+        <timestamp>2026-04-11T16:27:20.7170090Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>ee0238467ab94449a33dd17969c2a02e</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Completed</status>
+        <message>Leave entitlement process completed successfully.</message>
+        <timestamp>2026-04-11T16:27:25.7198241Z</timestamp>
+      </entry>
+    </history>
+  </calculation>
+  <calculation>
+    <calculationId>454b15ecac6742ef8aecc7b68b752c89</calculationId>
+    <companyCode>COMPANY_B</companyCode>
+    <loginUserId>HR_B</loginUserId>
+    <departmentCode>HR</departmentCode>
+    <employeeNo>ALL</employeeNo>
+    <leaveTypeCode>ANNU</leaveTypeCode>
+    <year>2026</year>
+    <status>Completed</status>
+    <message>Leave entitlement process completed successfully.</message>
+    <createdAt>2026-04-11T16:56:46.2286499Z</createdAt>
+    <updatedAt>2026-04-11T16:57:16.0200414Z</updatedAt>
+    <history>
+      <entry>
+        <calculationId>454b15ecac6742ef8aecc7b68b752c89</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Accepted</status>
+        <message>Leave entitlement process accepted and started in background.</message>
+        <timestamp>2026-04-11T16:56:46.2286499Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>454b15ecac6742ef8aecc7b68b752c89</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Started</status>
+        <message>Leave entitlement process started for COMPANY_B.</message>
+        <timestamp>2026-04-11T16:56:46.2965705Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>454b15ecac6742ef8aecc7b68b752c89</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[001-ANDY LOW] done.</message>
+        <timestamp>2026-04-11T16:56:52.6851610Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>454b15ecac6742ef8aecc7b68b752c89</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[002-BEN LIM] done.</message>
+        <timestamp>2026-04-11T16:56:53.7684283Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>454b15ecac6742ef8aecc7b68b752c89</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[003-COLIN KOH] done.</message>
+        <timestamp>2026-04-11T16:56:54.8183465Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>454b15ecac6742ef8aecc7b68b752c89</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[004-DAVID GAN] done.</message>
+        <timestamp>2026-04-11T16:56:55.9029440Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>454b15ecac6742ef8aecc7b68b752c89</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[005-EUGENE ONG] done.</message>
+        <timestamp>2026-04-11T16:56:56.9863100Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>454b15ecac6742ef8aecc7b68b752c89</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[006-FRASER PANG] done.</message>
+        <timestamp>2026-04-11T16:56:58.0850768Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>454b15ecac6742ef8aecc7b68b752c89</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[101-ANGELA GOH] done.</message>
+        <timestamp>2026-04-11T16:56:59.1678391Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>454b15ecac6742ef8aecc7b68b752c89</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[102-BETTY CHIA] done.</message>
+        <timestamp>2026-04-11T16:57:00.2530229Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>454b15ecac6742ef8aecc7b68b752c89</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[103-CECILIA NG] done.</message>
+        <timestamp>2026-04-11T16:57:01.3351948Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>454b15ecac6742ef8aecc7b68b752c89</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[104-DAPHNE TAN] done.</message>
+        <timestamp>2026-04-11T16:57:02.4017432Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>454b15ecac6742ef8aecc7b68b752c89</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[105-EMILY WONG] done.</message>
+        <timestamp>2026-04-11T16:57:03.4845203Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>454b15ecac6742ef8aecc7b68b752c89</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[106-FIONA WONG] done.</message>
+        <timestamp>2026-04-11T16:57:04.5694673Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>454b15ecac6742ef8aecc7b68b752c89</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[801-RACHEL WONG] done.</message>
+        <timestamp>2026-04-11T16:57:05.6353249Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>454b15ecac6742ef8aecc7b68b752c89</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[802-SUSAN TAY] done.</message>
+        <timestamp>2026-04-11T16:57:06.7186233Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>454b15ecac6742ef8aecc7b68b752c89</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[803-TERESA TAN] done.</message>
+        <timestamp>2026-04-11T16:57:07.7855298Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>454b15ecac6742ef8aecc7b68b752c89</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[804-UNICE CHENG] done.</message>
+        <timestamp>2026-04-11T16:57:08.8534515Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>454b15ecac6742ef8aecc7b68b752c89</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[8040-COPY UNICE CHENG] done.</message>
+        <timestamp>2026-04-11T16:57:09.9188935Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>454b15ecac6742ef8aecc7b68b752c89</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[805-VIVIAN CHIA] done.</message>
+        <timestamp>2026-04-11T16:57:10.9859839Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>454b15ecac6742ef8aecc7b68b752c89</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Completed</status>
+        <message>Leave entitlement process completed successfully.</message>
+        <timestamp>2026-04-11T16:57:16.0200414Z</timestamp>
+      </entry>
+    </history>
+  </calculation>
+  <calculation>
+    <calculationId>f25c69b89a6b4270a5b9c27af7f60f2d</calculationId>
+    <companyCode>COMPANY_B</companyCode>
+    <loginUserId>HR_B</loginUserId>
+    <departmentCode>HR</departmentCode>
+    <employeeNo>ALL</employeeNo>
+    <leaveTypeCode>ANNU</leaveTypeCode>
+    <year>2026</year>
+    <status>Completed</status>
+    <message>Leave entitlement process completed successfully.</message>
+    <createdAt>2026-04-11T16:57:45.4027070Z</createdAt>
+    <updatedAt>2026-04-11T16:58:15.1201854Z</updatedAt>
+    <history>
+      <entry>
+        <calculationId>f25c69b89a6b4270a5b9c27af7f60f2d</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Accepted</status>
+        <message>Leave entitlement process accepted and started in background.</message>
+        <timestamp>2026-04-11T16:57:45.4027070Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f25c69b89a6b4270a5b9c27af7f60f2d</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Started</status>
+        <message>Leave entitlement process started for COMPANY_B.</message>
+        <timestamp>2026-04-11T16:57:45.4333875Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f25c69b89a6b4270a5b9c27af7f60f2d</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[001-ANDY LOW] done.</message>
+        <timestamp>2026-04-11T16:57:51.5399294Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f25c69b89a6b4270a5b9c27af7f60f2d</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[002-BEN LIM] done.</message>
+        <timestamp>2026-04-11T16:57:52.6194297Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f25c69b89a6b4270a5b9c27af7f60f2d</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[003-COLIN KOH] done.</message>
+        <timestamp>2026-04-11T16:57:53.7015053Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f25c69b89a6b4270a5b9c27af7f60f2d</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[004-DAVID GAN] done.</message>
+        <timestamp>2026-04-11T16:57:54.7845763Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f25c69b89a6b4270a5b9c27af7f60f2d</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[005-EUGENE ONG] done.</message>
+        <timestamp>2026-04-11T16:57:55.8518484Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f25c69b89a6b4270a5b9c27af7f60f2d</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[006-FRASER PANG] done.</message>
+        <timestamp>2026-04-11T16:57:56.9367450Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f25c69b89a6b4270a5b9c27af7f60f2d</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[101-ANGELA GOH] done.</message>
+        <timestamp>2026-04-11T16:57:58.0359360Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f25c69b89a6b4270a5b9c27af7f60f2d</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[102-BETTY CHIA] done.</message>
+        <timestamp>2026-04-11T16:57:59.1347503Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f25c69b89a6b4270a5b9c27af7f60f2d</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[103-CECILIA NG] done.</message>
+        <timestamp>2026-04-11T16:58:00.2020968Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f25c69b89a6b4270a5b9c27af7f60f2d</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[104-DAPHNE TAN] done.</message>
+        <timestamp>2026-04-11T16:58:01.3008026Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f25c69b89a6b4270a5b9c27af7f60f2d</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[105-EMILY WONG] done.</message>
+        <timestamp>2026-04-11T16:58:02.4000786Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f25c69b89a6b4270a5b9c27af7f60f2d</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[106-FIONA WONG] done.</message>
+        <timestamp>2026-04-11T16:58:03.4699120Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f25c69b89a6b4270a5b9c27af7f60f2d</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[801-RACHEL WONG] done.</message>
+        <timestamp>2026-04-11T16:58:04.5526009Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f25c69b89a6b4270a5b9c27af7f60f2d</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[802-SUSAN TAY] done.</message>
+        <timestamp>2026-04-11T16:58:05.6862293Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f25c69b89a6b4270a5b9c27af7f60f2d</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[803-TERESA TAN] done.</message>
+        <timestamp>2026-04-11T16:58:06.7845358Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f25c69b89a6b4270a5b9c27af7f60f2d</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[804-UNICE CHENG] done.</message>
+        <timestamp>2026-04-11T16:58:07.9013638Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f25c69b89a6b4270a5b9c27af7f60f2d</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[8040-COPY UNICE CHENG] done.</message>
+        <timestamp>2026-04-11T16:58:08.9870801Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f25c69b89a6b4270a5b9c27af7f60f2d</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[805-VIVIAN CHIA] done.</message>
+        <timestamp>2026-04-11T16:58:10.0859917Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f25c69b89a6b4270a5b9c27af7f60f2d</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Completed</status>
+        <message>Leave entitlement process completed successfully.</message>
+        <timestamp>2026-04-11T16:58:15.1201854Z</timestamp>
+      </entry>
+    </history>
+  </calculation>
+  <calculation>
+    <calculationId>b26e5dbe0d7f4cb0aa824b3a8b0f49f2</calculationId>
+    <companyCode>COMPANY_A</companyCode>
+    <loginUserId>HR_A</loginUserId>
+    <departmentCode>HR</departmentCode>
+    <employeeNo>ALL</employeeNo>
+    <leaveTypeCode>ANNU</leaveTypeCode>
+    <year>2026</year>
+    <status>Completed</status>
+    <message>Leave entitlement process completed successfully.</message>
+    <createdAt>2026-04-12T02:33:48.2134368Z</createdAt>
+    <updatedAt>2026-04-12T02:34:19.7624322Z</updatedAt>
+    <history>
+      <entry>
+        <calculationId>b26e5dbe0d7f4cb0aa824b3a8b0f49f2</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Accepted</status>
+        <message>Leave entitlement process accepted and started in background.</message>
+        <timestamp>2026-04-12T02:33:48.2134368Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>b26e5dbe0d7f4cb0aa824b3a8b0f49f2</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Started</status>
+        <message>Leave entitlement process started for COMPANY_A.</message>
+        <timestamp>2026-04-12T02:33:48.4199192Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>b26e5dbe0d7f4cb0aa824b3a8b0f49f2</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[001-ANDY LOW] done.</message>
+        <timestamp>2026-04-12T02:33:55.2993692Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>b26e5dbe0d7f4cb0aa824b3a8b0f49f2</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[002-BEN LIM] done.</message>
+        <timestamp>2026-04-12T02:33:56.4902068Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>b26e5dbe0d7f4cb0aa824b3a8b0f49f2</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[003-COLIN KOH] done.</message>
+        <timestamp>2026-04-12T02:33:57.6476580Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>b26e5dbe0d7f4cb0aa824b3a8b0f49f2</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[004-DAVID GAN] done.</message>
+        <timestamp>2026-04-12T02:33:58.8596525Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>b26e5dbe0d7f4cb0aa824b3a8b0f49f2</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[005-EUGENE ONG] done.</message>
+        <timestamp>2026-04-12T02:34:00.0063481Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>b26e5dbe0d7f4cb0aa824b3a8b0f49f2</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[006-FRASER PANG] done.</message>
+        <timestamp>2026-04-12T02:34:01.1436564Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>b26e5dbe0d7f4cb0aa824b3a8b0f49f2</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[101-ANGELA GOH] done.</message>
+        <timestamp>2026-04-12T02:34:02.2610461Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>b26e5dbe0d7f4cb0aa824b3a8b0f49f2</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[102-BETTY CHIA] done.</message>
+        <timestamp>2026-04-12T02:34:03.3928179Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>b26e5dbe0d7f4cb0aa824b3a8b0f49f2</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[103-CECILIA NG] done.</message>
+        <timestamp>2026-04-12T02:34:04.5438034Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>b26e5dbe0d7f4cb0aa824b3a8b0f49f2</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[104-DAPHNE TAN] done.</message>
+        <timestamp>2026-04-12T02:34:05.6546762Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>b26e5dbe0d7f4cb0aa824b3a8b0f49f2</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[105-EMILY WONG] done.</message>
+        <timestamp>2026-04-12T02:34:06.7635854Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>b26e5dbe0d7f4cb0aa824b3a8b0f49f2</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[106-FIONA WONG] done.</message>
+        <timestamp>2026-04-12T02:34:07.8934145Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>b26e5dbe0d7f4cb0aa824b3a8b0f49f2</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[801-RACHEL WONG] done.</message>
+        <timestamp>2026-04-12T02:34:09.0043437Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>b26e5dbe0d7f4cb0aa824b3a8b0f49f2</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[802-SUSAN TAY] done.</message>
+        <timestamp>2026-04-12T02:34:10.2059837Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>b26e5dbe0d7f4cb0aa824b3a8b0f49f2</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[803-TERESA TAN] done.</message>
+        <timestamp>2026-04-12T02:34:11.3467590Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>b26e5dbe0d7f4cb0aa824b3a8b0f49f2</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[804-UNICE CHENG] done.</message>
+        <timestamp>2026-04-12T02:34:12.4603895Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>b26e5dbe0d7f4cb0aa824b3a8b0f49f2</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[8040-COPY UNICE CHENG] done.</message>
+        <timestamp>2026-04-12T02:34:13.5775036Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>b26e5dbe0d7f4cb0aa824b3a8b0f49f2</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[805-VIVIAN CHIA] done.</message>
+        <timestamp>2026-04-12T02:34:14.6909487Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>b26e5dbe0d7f4cb0aa824b3a8b0f49f2</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Completed</status>
+        <message>Leave entitlement process completed successfully.</message>
+        <timestamp>2026-04-12T02:34:19.7624322Z</timestamp>
+      </entry>
+    </history>
+  </calculation>
+  <calculation>
+    <calculationId>6d1b6e5678e3496bb51db3409effe32d</calculationId>
+    <companyCode>COMPANY_A</companyCode>
+    <loginUserId>HR_A</loginUserId>
+    <departmentCode>HR</departmentCode>
+    <employeeNo>ALL</employeeNo>
+    <leaveTypeCode>ANNU</leaveTypeCode>
+    <year>2026</year>
+    <status>Completed</status>
+    <message>Leave entitlement process completed successfully.</message>
+    <createdAt>2026-04-12T02:55:21.0397007Z</createdAt>
+    <updatedAt>2026-04-12T02:55:52.7270928Z</updatedAt>
+    <history>
+      <entry>
+        <calculationId>6d1b6e5678e3496bb51db3409effe32d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Accepted</status>
+        <message>Leave entitlement process accepted and started in background.</message>
+        <timestamp>2026-04-12T02:55:21.0397007Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>6d1b6e5678e3496bb51db3409effe32d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Started</status>
+        <message>Leave entitlement process started for COMPANY_A.</message>
+        <timestamp>2026-04-12T02:55:21.2340881Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>6d1b6e5678e3496bb51db3409effe32d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[001-ANDY LOW] done.</message>
+        <timestamp>2026-04-12T02:55:28.1824882Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>6d1b6e5678e3496bb51db3409effe32d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[002-BEN LIM] done.</message>
+        <timestamp>2026-04-12T02:55:29.3510373Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>6d1b6e5678e3496bb51db3409effe32d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[003-COLIN KOH] done.</message>
+        <timestamp>2026-04-12T02:55:30.4787015Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>6d1b6e5678e3496bb51db3409effe32d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[004-DAVID GAN] done.</message>
+        <timestamp>2026-04-12T02:55:31.6285896Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>6d1b6e5678e3496bb51db3409effe32d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[005-EUGENE ONG] done.</message>
+        <timestamp>2026-04-12T02:55:32.7401017Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>6d1b6e5678e3496bb51db3409effe32d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[006-FRASER PANG] done.</message>
+        <timestamp>2026-04-12T02:55:33.8754472Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>6d1b6e5678e3496bb51db3409effe32d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[101-ANGELA GOH] done.</message>
+        <timestamp>2026-04-12T02:55:35.0257424Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>6d1b6e5678e3496bb51db3409effe32d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[102-BETTY CHIA] done.</message>
+        <timestamp>2026-04-12T02:55:36.1585180Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>6d1b6e5678e3496bb51db3409effe32d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[103-CECILIA NG] done.</message>
+        <timestamp>2026-04-12T02:55:37.2800714Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>6d1b6e5678e3496bb51db3409effe32d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[104-DAPHNE TAN] done.</message>
+        <timestamp>2026-04-12T02:55:38.3997113Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>6d1b6e5678e3496bb51db3409effe32d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[105-EMILY WONG] done.</message>
+        <timestamp>2026-04-12T02:55:39.5490880Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>6d1b6e5678e3496bb51db3409effe32d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[106-FIONA WONG] done.</message>
+        <timestamp>2026-04-12T02:55:40.6744602Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>6d1b6e5678e3496bb51db3409effe32d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[801-RACHEL WONG] done.</message>
+        <timestamp>2026-04-12T02:55:41.8005018Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>6d1b6e5678e3496bb51db3409effe32d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[802-SUSAN TAY] done.</message>
+        <timestamp>2026-04-12T02:55:42.9136394Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>6d1b6e5678e3496bb51db3409effe32d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[803-TERESA TAN] done.</message>
+        <timestamp>2026-04-12T02:55:44.0779259Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>6d1b6e5678e3496bb51db3409effe32d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[804-UNICE CHENG] done.</message>
+        <timestamp>2026-04-12T02:55:45.3972594Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>6d1b6e5678e3496bb51db3409effe32d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[8040-COPY UNICE CHENG] done.</message>
+        <timestamp>2026-04-12T02:55:46.5166240Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>6d1b6e5678e3496bb51db3409effe32d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[805-VIVIAN CHIA] done.</message>
+        <timestamp>2026-04-12T02:55:47.6632502Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>6d1b6e5678e3496bb51db3409effe32d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Completed</status>
+        <message>Leave entitlement process completed successfully.</message>
+        <timestamp>2026-04-12T02:55:52.7270928Z</timestamp>
+      </entry>
+    </history>
+  </calculation>
+  <calculation>
+    <calculationId>f2b80ffe857b47b8bd126cdf447728ec</calculationId>
+    <companyCode>COMPANY_B</companyCode>
+    <loginUserId>HR_B</loginUserId>
+    <departmentCode>HR</departmentCode>
+    <employeeNo>ALL</employeeNo>
+    <leaveTypeCode>ANNU</leaveTypeCode>
+    <year>2026</year>
+    <status>Completed</status>
+    <message>Leave entitlement process completed successfully.</message>
+    <createdAt>2026-04-12T02:55:21.7924526Z</createdAt>
+    <updatedAt>2026-04-12T02:55:52.7857909Z</updatedAt>
+    <history>
+      <entry>
+        <calculationId>f2b80ffe857b47b8bd126cdf447728ec</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Accepted</status>
+        <message>Leave entitlement process accepted and started in background.</message>
+        <timestamp>2026-04-12T02:55:21.7924526Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f2b80ffe857b47b8bd126cdf447728ec</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Started</status>
+        <message>Leave entitlement process started for COMPANY_B.</message>
+        <timestamp>2026-04-12T02:55:21.8520246Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f2b80ffe857b47b8bd126cdf447728ec</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[001-ANDY LOW] done.</message>
+        <timestamp>2026-04-12T02:55:28.2557591Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f2b80ffe857b47b8bd126cdf447728ec</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[002-BEN LIM] done.</message>
+        <timestamp>2026-04-12T02:55:29.4186844Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f2b80ffe857b47b8bd126cdf447728ec</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[003-COLIN KOH] done.</message>
+        <timestamp>2026-04-12T02:55:30.5662849Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f2b80ffe857b47b8bd126cdf447728ec</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[004-DAVID GAN] done.</message>
+        <timestamp>2026-04-12T02:55:31.7393410Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f2b80ffe857b47b8bd126cdf447728ec</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[005-EUGENE ONG] done.</message>
+        <timestamp>2026-04-12T02:55:32.8475785Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f2b80ffe857b47b8bd126cdf447728ec</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[006-FRASER PANG] done.</message>
+        <timestamp>2026-04-12T02:55:33.9799090Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f2b80ffe857b47b8bd126cdf447728ec</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[101-ANGELA GOH] done.</message>
+        <timestamp>2026-04-12T02:55:35.1280316Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f2b80ffe857b47b8bd126cdf447728ec</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[102-BETTY CHIA] done.</message>
+        <timestamp>2026-04-12T02:55:36.2480934Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f2b80ffe857b47b8bd126cdf447728ec</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[103-CECILIA NG] done.</message>
+        <timestamp>2026-04-12T02:55:37.3932117Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f2b80ffe857b47b8bd126cdf447728ec</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[104-DAPHNE TAN] done.</message>
+        <timestamp>2026-04-12T02:55:38.5162419Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f2b80ffe857b47b8bd126cdf447728ec</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[105-EMILY WONG] done.</message>
+        <timestamp>2026-04-12T02:55:39.6507002Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f2b80ffe857b47b8bd126cdf447728ec</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[106-FIONA WONG] done.</message>
+        <timestamp>2026-04-12T02:55:40.7817646Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f2b80ffe857b47b8bd126cdf447728ec</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[801-RACHEL WONG] done.</message>
+        <timestamp>2026-04-12T02:55:41.9248902Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f2b80ffe857b47b8bd126cdf447728ec</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[802-SUSAN TAY] done.</message>
+        <timestamp>2026-04-12T02:55:43.0651980Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f2b80ffe857b47b8bd126cdf447728ec</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[803-TERESA TAN] done.</message>
+        <timestamp>2026-04-12T02:55:44.2230244Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f2b80ffe857b47b8bd126cdf447728ec</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[804-UNICE CHENG] done.</message>
+        <timestamp>2026-04-12T02:55:45.4406652Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f2b80ffe857b47b8bd126cdf447728ec</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[8040-COPY UNICE CHENG] done.</message>
+        <timestamp>2026-04-12T02:55:46.5938537Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f2b80ffe857b47b8bd126cdf447728ec</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[805-VIVIAN CHIA] done.</message>
+        <timestamp>2026-04-12T02:55:47.7224359Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>f2b80ffe857b47b8bd126cdf447728ec</calculationId>
+        <companyCode>COMPANY_B</companyCode>
+        <loginUserId>HR_B</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <leaveTypeCode>ANNU</leaveTypeCode>
+        <year>2026</year>
+        <status>Completed</status>
+        <message>Leave entitlement process completed successfully.</message>
+        <timestamp>2026-04-12T02:55:52.7857909Z</timestamp>
+      </entry>
+    </history>
+  </calculation>
+  <calculation>
+    <calculationId>15a68b19333c474fbc95694b1dcba4d6</calculationId>
+    <companyCode>COMPANY_A</companyCode>
+    <loginUserId>HR_A</loginUserId>
+    <departmentCode>HR</departmentCode>
+    <employeeNo>ALL</employeeNo>
+    <year>2026</year>
+    <status>Completed</status>
+    <message>Leave entitlement process completed successfully.</message>
+    <createdAt>2026-04-12T06:20:15.2633192Z</createdAt>
+    <updatedAt>2026-04-12T06:20:45.3589935Z</updatedAt>
+    <history>
+      <entry>
+        <calculationId>15a68b19333c474fbc95694b1dcba4d6</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Accepted</status>
+        <message>Leave entitlement process accepted and started in background.</message>
+        <timestamp>2026-04-12T06:20:15.2633192Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>15a68b19333c474fbc95694b1dcba4d6</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Started</status>
+        <message>Leave entitlement process started for COMPANY_A.</message>
+        <timestamp>2026-04-12T06:20:15.3807593Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>15a68b19333c474fbc95694b1dcba4d6</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[001-ANDY LOW] done.</message>
+        <timestamp>2026-04-12T06:20:21.8279509Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>15a68b19333c474fbc95694b1dcba4d6</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[002-BEN LIM] done.</message>
+        <timestamp>2026-04-12T06:20:22.9274502Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>15a68b19333c474fbc95694b1dcba4d6</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[003-COLIN KOH] done.</message>
+        <timestamp>2026-04-12T06:20:24.0239687Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>15a68b19333c474fbc95694b1dcba4d6</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[004-DAVID GAN] done.</message>
+        <timestamp>2026-04-12T06:20:25.1080584Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>15a68b19333c474fbc95694b1dcba4d6</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[005-EUGENE ONG] done.</message>
+        <timestamp>2026-04-12T06:20:26.1770719Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>15a68b19333c474fbc95694b1dcba4d6</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[006-FRASER PANG] done.</message>
+        <timestamp>2026-04-12T06:20:27.2734411Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>15a68b19333c474fbc95694b1dcba4d6</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[101-ANGELA GOH] done.</message>
+        <timestamp>2026-04-12T06:20:28.3745151Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>15a68b19333c474fbc95694b1dcba4d6</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[102-BETTY CHIA] done.</message>
+        <timestamp>2026-04-12T06:20:29.4441162Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>15a68b19333c474fbc95694b1dcba4d6</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[103-CECILIA NG] done.</message>
+        <timestamp>2026-04-12T06:20:30.5591284Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>15a68b19333c474fbc95694b1dcba4d6</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[104-DAPHNE TAN] done.</message>
+        <timestamp>2026-04-12T06:20:31.6573226Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>15a68b19333c474fbc95694b1dcba4d6</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[105-EMILY WONG] done.</message>
+        <timestamp>2026-04-12T06:20:32.7260275Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>15a68b19333c474fbc95694b1dcba4d6</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[106-FIONA WONG] done.</message>
+        <timestamp>2026-04-12T06:20:33.7931201Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>15a68b19333c474fbc95694b1dcba4d6</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[801-RACHEL WONG] done.</message>
+        <timestamp>2026-04-12T06:20:34.8928049Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>15a68b19333c474fbc95694b1dcba4d6</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[802-SUSAN TAY] done.</message>
+        <timestamp>2026-04-12T06:20:35.9757003Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>15a68b19333c474fbc95694b1dcba4d6</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[803-TERESA TAN] done.</message>
+        <timestamp>2026-04-12T06:20:37.0763074Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>15a68b19333c474fbc95694b1dcba4d6</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[804-UNICE CHENG] done.</message>
+        <timestamp>2026-04-12T06:20:38.1580780Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>15a68b19333c474fbc95694b1dcba4d6</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[8040-COPY UNICE CHENG] done.</message>
+        <timestamp>2026-04-12T06:20:39.2273479Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>15a68b19333c474fbc95694b1dcba4d6</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[805-VIVIAN CHIA] done.</message>
+        <timestamp>2026-04-12T06:20:40.3397170Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>15a68b19333c474fbc95694b1dcba4d6</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Completed</status>
+        <message>Leave entitlement process completed successfully.</message>
+        <timestamp>2026-04-12T06:20:45.3589935Z</timestamp>
+      </entry>
+    </history>
+  </calculation>
+  <calculation>
+    <calculationId>441236fa079943cbbf52c80a948ba6cc</calculationId>
+    <companyCode>COMPANY_A</companyCode>
+    <loginUserId>HR_A</loginUserId>
+    <departmentCode>HR</departmentCode>
+    <employeeNo>ALL</employeeNo>
+    <year>2026</year>
+    <status>Completed</status>
+    <message>Leave entitlement process completed successfully.</message>
+    <createdAt>2026-04-12T06:37:37.3816205Z</createdAt>
+    <updatedAt>2026-04-12T06:38:07.2710805Z</updatedAt>
+    <history>
+      <entry>
+        <calculationId>441236fa079943cbbf52c80a948ba6cc</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Accepted</status>
+        <message>Leave entitlement process accepted and started in background.</message>
+        <timestamp>2026-04-12T06:37:37.3816205Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>441236fa079943cbbf52c80a948ba6cc</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Started</status>
+        <message>Leave entitlement process started for COMPANY_A.</message>
+        <timestamp>2026-04-12T06:37:37.4426957Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>441236fa079943cbbf52c80a948ba6cc</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[001-ANDY LOW] done.</message>
+        <timestamp>2026-04-12T06:37:43.8617496Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>441236fa079943cbbf52c80a948ba6cc</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[002-BEN LIM] done.</message>
+        <timestamp>2026-04-12T06:37:44.9195428Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>441236fa079943cbbf52c80a948ba6cc</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[003-COLIN KOH] done.</message>
+        <timestamp>2026-04-12T06:37:46.0046840Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>441236fa079943cbbf52c80a948ba6cc</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[004-DAVID GAN] done.</message>
+        <timestamp>2026-04-12T06:37:47.0719355Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>441236fa079943cbbf52c80a948ba6cc</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[005-EUGENE ONG] done.</message>
+        <timestamp>2026-04-12T06:37:48.1716323Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>441236fa079943cbbf52c80a948ba6cc</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[006-FRASER PANG] done.</message>
+        <timestamp>2026-04-12T06:37:49.2686671Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>441236fa079943cbbf52c80a948ba6cc</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[101-ANGELA GOH] done.</message>
+        <timestamp>2026-04-12T06:37:50.3539605Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>441236fa079943cbbf52c80a948ba6cc</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[102-BETTY CHIA] done.</message>
+        <timestamp>2026-04-12T06:37:51.4364062Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>441236fa079943cbbf52c80a948ba6cc</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[103-CECILIA NG] done.</message>
+        <timestamp>2026-04-12T06:37:52.5196701Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>441236fa079943cbbf52c80a948ba6cc</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[104-DAPHNE TAN] done.</message>
+        <timestamp>2026-04-12T06:37:53.6041778Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>441236fa079943cbbf52c80a948ba6cc</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[105-EMILY WONG] done.</message>
+        <timestamp>2026-04-12T06:37:54.6863389Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>441236fa079943cbbf52c80a948ba6cc</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[106-FIONA WONG] done.</message>
+        <timestamp>2026-04-12T06:37:55.7707837Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>441236fa079943cbbf52c80a948ba6cc</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[801-RACHEL WONG] done.</message>
+        <timestamp>2026-04-12T06:37:56.8521035Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>441236fa079943cbbf52c80a948ba6cc</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[802-SUSAN TAY] done.</message>
+        <timestamp>2026-04-12T06:37:57.9218366Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>441236fa079943cbbf52c80a948ba6cc</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[803-TERESA TAN] done.</message>
+        <timestamp>2026-04-12T06:37:59.0032978Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>441236fa079943cbbf52c80a948ba6cc</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[804-UNICE CHENG] done.</message>
+        <timestamp>2026-04-12T06:38:00.0886788Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>441236fa079943cbbf52c80a948ba6cc</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[8040-COPY UNICE CHENG] done.</message>
+        <timestamp>2026-04-12T06:38:01.1845043Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>441236fa079943cbbf52c80a948ba6cc</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[805-VIVIAN CHIA] done.</message>
+        <timestamp>2026-04-12T06:38:02.2515216Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>441236fa079943cbbf52c80a948ba6cc</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Completed</status>
+        <message>Leave entitlement process completed successfully.</message>
+        <timestamp>2026-04-12T06:38:07.2710805Z</timestamp>
+      </entry>
+    </history>
+  </calculation>
+  <calculation>
+    <calculationId>2fbfbfd52a8548e5a7d43e4a39ad114d</calculationId>
+    <companyCode>COMPANY_A</companyCode>
+    <loginUserId>HR_A</loginUserId>
+    <departmentCode>HR</departmentCode>
+    <employeeNo>ALL</employeeNo>
+    <year>2026</year>
+    <status>Completed</status>
+    <message>Leave entitlement process completed successfully.</message>
+    <createdAt>2026-04-12T07:05:14.8625614Z</createdAt>
+    <updatedAt>2026-04-12T07:05:45.4377036Z</updatedAt>
+    <history>
+      <entry>
+        <calculationId>2fbfbfd52a8548e5a7d43e4a39ad114d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Accepted</status>
+        <message>Leave entitlement process accepted and started in background.</message>
+        <timestamp>2026-04-12T07:05:14.8625614Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>2fbfbfd52a8548e5a7d43e4a39ad114d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Started</status>
+        <message>Leave entitlement process started for COMPANY_A.</message>
+        <timestamp>2026-04-12T07:05:14.9389943Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>2fbfbfd52a8548e5a7d43e4a39ad114d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[001-ANDY LOW] done.</message>
+        <timestamp>2026-04-12T07:05:21.2856884Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>2fbfbfd52a8548e5a7d43e4a39ad114d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[002-BEN LIM] done.</message>
+        <timestamp>2026-04-12T07:05:22.3542886Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>2fbfbfd52a8548e5a7d43e4a39ad114d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[003-COLIN KOH] done.</message>
+        <timestamp>2026-04-12T07:05:24.1299102Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>2fbfbfd52a8548e5a7d43e4a39ad114d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[004-DAVID GAN] done.</message>
+        <timestamp>2026-04-12T07:05:25.2349631Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>2fbfbfd52a8548e5a7d43e4a39ad114d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[005-EUGENE ONG] done.</message>
+        <timestamp>2026-04-12T07:05:26.2862500Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>2fbfbfd52a8548e5a7d43e4a39ad114d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[006-FRASER PANG] done.</message>
+        <timestamp>2026-04-12T07:05:27.3866360Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>2fbfbfd52a8548e5a7d43e4a39ad114d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[101-ANGELA GOH] done.</message>
+        <timestamp>2026-04-12T07:05:28.4865544Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>2fbfbfd52a8548e5a7d43e4a39ad114d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[102-BETTY CHIA] done.</message>
+        <timestamp>2026-04-12T07:05:29.5611412Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>2fbfbfd52a8548e5a7d43e4a39ad114d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[103-CECILIA NG] done.</message>
+        <timestamp>2026-04-12T07:05:30.6364766Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>2fbfbfd52a8548e5a7d43e4a39ad114d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[104-DAPHNE TAN] done.</message>
+        <timestamp>2026-04-12T07:05:31.7212043Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>2fbfbfd52a8548e5a7d43e4a39ad114d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[105-EMILY WONG] done.</message>
+        <timestamp>2026-04-12T07:05:32.8026617Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>2fbfbfd52a8548e5a7d43e4a39ad114d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[106-FIONA WONG] done.</message>
+        <timestamp>2026-04-12T07:05:33.8871501Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>2fbfbfd52a8548e5a7d43e4a39ad114d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[801-RACHEL WONG] done.</message>
+        <timestamp>2026-04-12T07:05:34.9838056Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>2fbfbfd52a8548e5a7d43e4a39ad114d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[802-SUSAN TAY] done.</message>
+        <timestamp>2026-04-12T07:05:36.0538583Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>2fbfbfd52a8548e5a7d43e4a39ad114d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[803-TERESA TAN] done.</message>
+        <timestamp>2026-04-12T07:05:37.1350965Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>2fbfbfd52a8548e5a7d43e4a39ad114d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[804-UNICE CHENG] done.</message>
+        <timestamp>2026-04-12T07:05:38.2179585Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>2fbfbfd52a8548e5a7d43e4a39ad114d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[8040-COPY UNICE CHENG] done.</message>
+        <timestamp>2026-04-12T07:05:39.3182699Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>2fbfbfd52a8548e5a7d43e4a39ad114d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Calculating leave entitlement</status>
+        <message>[805-VIVIAN CHIA] done.</message>
+        <timestamp>2026-04-12T07:05:40.4023476Z</timestamp>
+      </entry>
+      <entry>
+        <calculationId>2fbfbfd52a8548e5a7d43e4a39ad114d</calculationId>
+        <companyCode>COMPANY_A</companyCode>
+        <loginUserId>HR_A</loginUserId>
+        <departmentCode>HR</departmentCode>
+        <employeeNo>ALL</employeeNo>
+        <year>2026</year>
+        <status>Completed</status>
+        <message>Leave entitlement process completed successfully.</message>
+        <timestamp>2026-04-12T07:05:45.4377036Z</timestamp>
+      </entry>
+    </history>
+  </calculation>
+</leaveCalculations>

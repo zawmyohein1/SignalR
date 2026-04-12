@@ -169,5 +169,272 @@
     {
         <script src="@signalRClientUrl"></script>
     }
-    <script src="@Url.Content("~/Scripts/job-status.js")"></script>
+    <script src="@Url.Content("~/Scripts/leave-calculation-signalr-client.js")"></script>
+    <script>
+        $(function () {
+            // Page wiring stays here.
+            const $app = $("#leaveCalculationApp");
+
+            if (!$app.length) {
+                return;
+            }
+
+            const calculationProxyUrl = $app.data("calculationProxyUrl") || "/LeaveCalculations";
+            const hubUrl = $app.data("hubUrl");
+            const signalREnabled = $app.data("signalrEnabled") === true || $app.data("signalrEnabled") === "true";
+            const processingButtonHtml = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Processing...';
+            const synchronousExecutionMode = "SynchronousHttp";
+            const realtimeClient = window.leaveCalculationSignalRClient;
+
+            const statusClasses = {
+                Accepted: "text-bg-secondary",
+                Started: "text-bg-primary",
+                "Calculating leave entitlement": "text-bg-warning",
+                Completed: "text-bg-success",
+                Failed: "text-bg-danger"
+            };
+
+            const logStatusLabels = {
+                "Calculating leave entitlement": "Calculating",
+                "HTTP response": "HTTP response"
+            };
+
+            let loginContext = null;
+            let currentCalculationId = null;
+
+            realtimeClient.configure({
+                calculationProxyUrl: calculationProxyUrl,
+                hubUrl: hubUrl,
+                signalREnabled: signalREnabled,
+                callbacks: {
+                    onSignalRState: setSignalRState,
+                    onStatus: setStatus,
+                    onLog: appendLog,
+                    onFinish: finishProcess
+                }
+            });
+
+            bindEvents();
+            updateDemoLoginUser();
+
+            function bindEvents() {
+                $("#companyCode").on("change", updateDemoLoginUser);
+                $("#loginButton").on("click", handleLoginClick);
+                $("#processButton").on("click", handleProcessClick);
+            }
+
+            function updateDemoLoginUser() {
+                // Demo login follows the company.
+                const companyCode = $("#companyCode").val();
+                const suffix = companyCode === "COMPANY_A" ? "A" : companyCode === "COMPANY_B" ? "B" : "C";
+
+                $("#loginUserId").val(`HR_${suffix}`);
+            }
+
+            function handleLoginClick() {
+                const loginUserId = ($("#loginUserId").val() || "").trim();
+
+                if (!loginUserId) {
+                    alert("Login Id is required for the demo.");
+                    return;
+                }
+
+                loginContext = {
+                    companyCode: $("#companyCode").val(),
+                    companyText: $("#companyCode option:selected").text(),
+                    loginUserId: loginUserId,
+                    period: `${$("#loginYear").val()}/${$("#loginMonth").val()}`
+                };
+
+                showCalculationPanel();
+                appendLog("Ready", "Login context selected. The next Process click will start Leave Calculation.", new Date());
+            }
+
+            function showCalculationPanel() {
+                $("#contextCompany").text(loginContext.companyText);
+                $("#contextUser").text(loginContext.loginUserId);
+                $("#contextPeriod").text(`Period ${loginContext.period}`);
+                $("#loginPanel").addClass("d-none");
+                $("#calculationPanel").removeClass("d-none");
+            }
+
+            async function handleProcessClick() {
+                // Start the job from the page.
+                if (!loginContext) {
+                    alert("Please login first.");
+                    return;
+                }
+
+                const $button = $("#processButton");
+                const requestStartedAt = performance.now();
+
+                $button.prop("disabled", true).html(processingButtonHtml);
+                await resetProcessUi();
+                appendLog("HTTP request", "Posting Leave Calculation request. The browser will not wait for the full calculation to finish.", new Date());
+
+                try {
+                    const response = await startCalculation(buildStartPayload());
+                    const elapsedMilliseconds = Math.round(performance.now() - requestStartedAt);
+
+                    await handleStartResponse(response, elapsedMilliseconds);
+                } catch (error) {
+                    setStatus("Failed", "Could not start Leave Calculation.");
+                    appendLog("Failed", getAjaxErrorMessage(error), new Date());
+                    $button.prop("disabled", false).text("Process");
+                }
+            }
+
+            function buildStartPayload() {
+                return {
+                    companyCode: loginContext.companyCode,
+                    loginUserId: loginContext.loginUserId,
+                    departmentCode: $("#departmentCode").val(),
+                    employeeNo: $("#employeeNo").val(),
+                    year: Number($("#calculationYear").val())
+                };
+            }
+
+            function startCalculation(payload) {
+                return $.ajax({
+                    url: `${calculationProxyUrl}/Start`,
+                    method: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(payload)
+                });
+            }
+
+            async function handleStartResponse(response, elapsedMilliseconds) {
+                currentCalculationId = response.calculationId;
+
+                const isSynchronousHttp = response.executionMode === synchronousExecutionMode || response.signalREnabled === false;
+
+                showStartResponse(response, elapsedMilliseconds, isSynchronousHttp);
+
+                if (isSynchronousHttp) {
+                    await completeSynchronousHttpFlow(response, elapsedMilliseconds);
+                    return;
+                }
+
+                await realtimeClient.start(response);
+                await realtimeClient.refreshSnapshot(currentCalculationId);
+            }
+
+            function showStartResponse(response, elapsedMilliseconds, isSynchronousHttp) {
+                $("#calculationIdDisplay").text(currentCalculationId);
+                $("#apiResponseDisplay").text(
+                    isSynchronousHttp
+                        ? `${response.status} in ${elapsedMilliseconds} ms`
+                        : `202 Accepted in ${elapsedMilliseconds} ms`);
+                $("#executionModeDisplay").text(isSynchronousHttp ? "Normal HTTP request" : "Background + SignalR");
+
+                setStatus(response.status, response.message);
+                appendLog(
+                    response.status,
+                    isSynchronousHttp
+                        ? `${response.message} Normal HTTP request waited until the calculation finished.`
+                        : `${response.message} Calculation id returned immediately.`,
+                    new Date());
+            }
+
+            async function completeSynchronousHttpFlow(response, elapsedMilliseconds) {
+                $("#logModeHint").text("SignalR is disabled. Browser receives the final API response after the request completes.");
+                setSignalRState("Off", "text-bg-dark");
+
+                try {
+                    await realtimeClient.refreshSnapshot(currentCalculationId);
+                } catch (error) {
+                    setStatus("Failed", "Could not load the completed calculation.");
+                    appendLog("Failed", getAjaxErrorMessage(error), new Date());
+                }
+
+                appendLog(
+                    "HTTP response",
+                    `API returned ${response.status} after ${elapsedMilliseconds} ms. No realtime callback was used.`,
+                    new Date());
+                finishProcess();
+            }
+
+            async function resetProcessUi() {
+                await realtimeClient.reset();
+                currentCalculationId = null;
+
+                $("#calculationIdDisplay").text("No calculation started");
+                $("#apiResponseDisplay").text("Waiting for API response");
+                $("#executionModeDisplay").text("Waiting for process");
+                $("#logModeHint").text(
+                    signalREnabled
+                        ? "Only this browser group receives these updates."
+                        : "SignalR is disabled. Browser waits for the API response.");
+                $("#progressLog").empty();
+
+                setSignalRState(signalREnabled ? "Disconnected" : "Disabled by page config", "text-bg-secondary");
+                setStatus("Accepted", "Request has not been sent yet.");
+            }
+
+            function finishProcess() {
+                $("#processButton").prop("disabled", false).text("Process");
+            }
+
+            function setStatus(status, message) {
+                const badgeClass = statusClasses[status] || "text-bg-secondary";
+                setBadge($("#currentStatusDisplay"), status, badgeClass);
+
+                if (message) {
+                    $("#currentStatusDisplay").attr("title", message);
+                }
+            }
+
+            function setSignalRState(text, badgeClass) {
+                setBadge($("#signalrState"), text, badgeClass);
+            }
+
+            function setBadge($element, text, badgeClass) {
+                $element
+                    .removeClass()
+                    .addClass(`badge ${badgeClass}`)
+                    .text(text);
+            }
+
+            function appendLog(status, message, timestamp) {
+                // Add the newest log row at the bottom.
+                const timeText = timestamp.toLocaleTimeString();
+                const badgeClass = statusClasses[status] || "text-bg-dark";
+                const displayStatus = logStatusLabels[status] || status;
+                const entry = $(`
+                    <div class="job-log-entry">
+                        <div class="log-meta">
+                            <span class="badge ${badgeClass}">${escapeHtml(displayStatus)}</span>
+                            <time>${escapeHtml(timeText)}</time>
+                        </div>
+                        <p>${escapeHtml(message)}</p>
+                    </div>
+                `);
+
+                $("#progressLog").append(entry);
+
+                const log = $("#progressLog")[0];
+                log.scrollTop = log.scrollHeight;
+            }
+
+            function getAjaxErrorMessage(error) {
+                if (error && error.responseJSON && error.responseJSON.message) {
+                    return error.responseJSON.message;
+                }
+
+                if (error && error.responseText) {
+                    return error.responseText;
+                }
+
+                if (error && error.statusText) {
+                    return `Request failed: ${error.statusText}`;
+                }
+
+                return "Request failed. Make sure the API and RealtimeHub projects are running.";
+            }
+
+            function escapeHtml(value) {
+                return $("<div>").text(value || "").html();
+            }
+        });
+    </script>
 }

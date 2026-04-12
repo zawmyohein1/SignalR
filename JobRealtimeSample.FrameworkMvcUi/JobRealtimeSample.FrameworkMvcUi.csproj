@@ -62,7 +62,7 @@
   <ItemGroup>
     <Content Include="Content\site.css" />
     <Content Include="Global.asax" />
-    <Content Include="Scripts\job-status.js" />
+    <Content Include="Scripts\leave-calculation-signalr-client.js" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />

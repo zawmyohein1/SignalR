@@ -13,14 +13,12 @@ public sealed class LeaveCalculationsController(LeaveCalculationsVendor vendor) 
         LeaveCalculationStartRequest? request,
         CancellationToken cancellationToken)
     {
-        var validationMessage = LeaveCalculationsVendor.ValidateStartRequest(request);
-
-        if (validationMessage is not null)
-        {
-            return BadRequest(new { message = validationMessage });
-        }
-
         var result = await vendor.StartAsync(request!, cancellationToken);
+
+        if (result.ValidationMessage is not null)
+        {
+            return BadRequest(new { message = result.ValidationMessage });
+        }
 
         return result.Accepted
             ? Accepted(result.Response)

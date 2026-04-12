@@ -51,6 +51,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\SimpleCorsHandler.cs" />
+    <Compile Include="App_Start\FrameworkApiDependencyResolver.cs" />
+    <Compile Include="App_Start\LeaveCalculationCompositionRoot.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\LeaveCalculationsController.cs" />
     <Compile Include="Global.asax.cs">

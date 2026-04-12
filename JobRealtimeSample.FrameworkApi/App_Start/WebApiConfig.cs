@@ -9,6 +9,7 @@ namespace JobRealtimeSample.FrameworkApi
         public static void Register(HttpConfiguration config)
         {
             config.MessageHandlers.Add(new SimpleCorsHandler());
+            config.DependencyResolver = new FrameworkApiDependencyResolver();
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(

@@ -11,37 +11,22 @@ public sealed class LeaveCalculationsVendor(
     private const string BackgroundSignalRMode = "BackgroundSignalR";
     private const string SynchronousHttpMode = "SynchronousHttp";
 
-    public static string? ValidateStartRequest(LeaveCalculationStartRequest? request)
-    {
-        if (request is null)
-        {
-            return "Request body is required.";
-        }
-
-        if (string.IsNullOrWhiteSpace(request.CompanyCode))
-        {
-            return "companyCode is required.";
-        }
-
-        if (string.IsNullOrWhiteSpace(request.LoginUserId))
-        {
-            return "loginUserId is required.";
-        }
-
-        if (string.IsNullOrWhiteSpace(request.DepartmentCode))
-        {
-            return "departmentCode is required.";
-        }
-
-        return null;
-    }
-
     public async Task<StartLeaveCalculationResult> StartAsync(
-        LeaveCalculationStartRequest request,
+        LeaveCalculationStartRequest? request,
         CancellationToken cancellationToken)
     {
+        var validationMessage = ValidateStartRequest(request);
+
+        if (validationMessage is not null)
+        {
+            return new StartLeaveCalculationResult(
+                Accepted: false,
+                Response: null,
+                ValidationMessage: validationMessage);
+        }
+
         // One calculation id tracks this request from API to UI.
-        var calculation = store.Create(request);
+        var calculation = store.Create(request!);
         var hubAccessToken = hubTokenService.CreateToken(
             calculation.CompanyCode,
             calculation.LoginUserId,
@@ -70,6 +55,31 @@ public sealed class LeaveCalculationsVendor(
     public LeaveCalculationInfo? GetById(string calculationId)
     {
         return store.Get(calculationId);
+    }
+
+    private static string? ValidateStartRequest(LeaveCalculationStartRequest? request)
+    {
+        if (request is null)
+        {
+            return "Request body is required.";
+        }
+
+        if (string.IsNullOrWhiteSpace(request.CompanyCode))
+        {
+            return "companyCode is required.";
+        }
+
+        if (string.IsNullOrWhiteSpace(request.LoginUserId))
+        {
+            return "loginUserId is required.";
+        }
+
+        if (string.IsNullOrWhiteSpace(request.DepartmentCode))
+        {
+            return "departmentCode is required.";
+        }
+
+        return null;
     }
 
     private StartLeaveCalculationResponse BuildStartResponse(
