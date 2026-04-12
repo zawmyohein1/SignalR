@@ -11,6 +11,7 @@ public sealed class DemoHubTokenService(IOptions<HubTokenOptions> options)
 
     public string CreateToken(string companyCode, string loginUserId, string calculationId)
     {
+        // Token binds one browser to one company/user/calculation group.
         var expiresUnixSeconds = DateTimeOffset.UtcNow
             .AddMinutes(_options.LifetimeMinutes)
             .ToUnixTimeSeconds();
@@ -36,4 +37,3 @@ public sealed class DemoHubTokenService(IOptions<HubTokenOptions> options)
             .Replace('/', '_');
     }
 }
-

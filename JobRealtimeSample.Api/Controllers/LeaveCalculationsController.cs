@@ -1,66 +1,39 @@
 using JobRealtimeSample.Api.Models;
-using JobRealtimeSample.Api.Services;
+using JobRealtimeSample.Api.Vendors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JobRealtimeSample.Api.Controllers;
 
 [ApiController]
 [Route("api/leave-calculations")]
-public sealed class LeaveCalculationsController(
-    XmlLeaveCalculationStore store,
-    DemoHubTokenService hubTokenService,
-    BackgroundLeaveCalculationRunner backgroundRunner) : ControllerBase
+public sealed class LeaveCalculationsController(LeaveCalculationsVendor vendor) : ControllerBase
 {
     [HttpPost("start")]
-    public ActionResult<StartLeaveCalculationResponse> Start(LeaveCalculationStartRequest request)
+    public async Task<ActionResult<StartLeaveCalculationResponse>> Start(
+        LeaveCalculationStartRequest? request,
+        CancellationToken cancellationToken)
     {
-        if (string.IsNullOrWhiteSpace(request.CompanyCode))
+        var validationMessage = LeaveCalculationsVendor.ValidateStartRequest(request);
+
+        if (validationMessage is not null)
         {
-            return BadRequest(new { message = "companyCode is required." });
+            return BadRequest(new { message = validationMessage });
         }
 
-        if (string.IsNullOrWhiteSpace(request.LoginUserId))
-        {
-            return BadRequest(new { message = "loginUserId is required." });
-        }
+        var result = await vendor.StartAsync(request!, cancellationToken);
 
-        if (string.IsNullOrWhiteSpace(request.DepartmentCode))
-        {
-            return BadRequest(new { message = "departmentCode is required." });
-        }
-
-        if (string.IsNullOrWhiteSpace(request.LeaveTypeCode))
-        {
-            return BadRequest(new { message = "leaveTypeCode is required." });
-        }
-
-        var calculation = store.Create(request);
-        var hubAccessToken = hubTokenService.CreateToken(
-            calculation.CompanyCode,
-            calculation.LoginUserId,
-            calculation.CalculationId);
-
-        backgroundRunner.RunInBackground(calculation.CalculationId);
-
-        return Accepted(new StartLeaveCalculationResponse
-        {
-            CalculationId = calculation.CalculationId,
-            CompanyCode = calculation.CompanyCode,
-            LoginUserId = calculation.LoginUserId,
-            HubAccessToken = hubAccessToken,
-            Status = calculation.Status,
-            Message = calculation.Message
-        });
+        return result.Accepted
+            ? Accepted(result.Response)
+            : Ok(result.Response);
     }
 
     [HttpGet("{calculationId}")]
     public ActionResult<LeaveCalculationInfo> GetById(string calculationId)
     {
-        var calculation = store.Get(calculationId);
+        var calculation = vendor.GetById(calculationId);
 
         return calculation is null
             ? NotFound(new { message = $"Leave calculation '{calculationId}' was not found." })
             : Ok(calculation);
     }
 }
-

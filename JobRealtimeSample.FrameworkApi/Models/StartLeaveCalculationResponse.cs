@@ -10,9 +10,12 @@ namespace JobRealtimeSample.FrameworkApi.Models
 
         public string HubAccessToken { get; set; }
 
+        public bool SignalREnabled { get; set; }
+
+        public string ExecutionMode { get; set; }
+
         public string Status { get; set; }
 
         public string Message { get; set; }
     }
 }
-

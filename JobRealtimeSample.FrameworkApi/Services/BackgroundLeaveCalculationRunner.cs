@@ -67,13 +67,21 @@ namespace JobRealtimeSample.FrameworkApi.Services
             _initialDelaySeconds = ReadSeconds("LeaveCalculationInitialDelaySeconds", 1);
             _stepDelaySeconds = ReadSeconds("LeaveCalculationStepDelaySeconds", 4);
             _leaveCodeDelaySeconds = ReadDoubleSeconds("LeaveCalculationLeaveCodeDelaySeconds", 3);
+            SignalREnabled = ReadBoolean("SignalREnabled", true);
         }
+
+        public bool SignalREnabled { get; }
 
         public void RunInBackground(string calculationId)
         {
             // The HTTP request returns immediately with a calculationId.
             // The simulated leave entitlement process continues in the background.
-            _ = Task.Run(() => RunCalculationAsync(calculationId, CancellationToken.None));
+            _ = Task.Run(() => RunAsync(calculationId, CancellationToken.None));
+        }
+
+        public Task RunAsync(string calculationId, CancellationToken cancellationToken)
+        {
+            return RunCalculationAsync(calculationId, cancellationToken);
         }
 
         private async Task RunCalculationAsync(string calculationId, CancellationToken cancellationToken)
@@ -130,6 +138,12 @@ namespace JobRealtimeSample.FrameworkApi.Services
                 return;
             }
 
+            // XML history is always saved; hub notification is optional.
+            if (!SignalREnabled)
+            {
+                return;
+            }
+
             bool wasSent = await _realtimeNotifier.NotifyLeaveCalculationAsync(notification, cancellationToken);
 
             if (!wasSent)
@@ -145,6 +159,7 @@ namespace JobRealtimeSample.FrameworkApi.Services
             LeaveCalculationInfo info,
             CancellationToken cancellationToken)
         {
+            // Demo work: each employee waits through the configured leave-code loop.
             foreach (DemoEmployee employee in ResolveEmployees(info))
             {
                 foreach (string _ in DemoLeaveCodes)
@@ -178,7 +193,7 @@ namespace JobRealtimeSample.FrameworkApi.Services
 
         private static Task DelayAsync(double seconds, CancellationToken cancellationToken)
         {
-            return Task.Delay(TimeSpan.FromSeconds(seconds), cancellationToken);
+            return Task.Delay(TimeSpan.FromSeconds(Math.Max(0, seconds)), cancellationToken);
         }
 
         private static int ReadSeconds(string key, int defaultValue)
@@ -208,6 +223,15 @@ namespace JobRealtimeSample.FrameworkApi.Services
             }
 
             return value;
+        }
+
+        private static bool ReadBoolean(string key, bool defaultValue)
+        {
+            bool value;
+
+            return bool.TryParse(ConfigurationManager.AppSettings[key], out value)
+                ? value
+                : defaultValue;
         }
 
         private sealed class DemoEmployee

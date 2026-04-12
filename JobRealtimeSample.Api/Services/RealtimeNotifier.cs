@@ -12,33 +12,6 @@ public sealed class RealtimeNotifier(
 {
     private readonly RealtimeHubOptions _options = options.Value;
 
-    public async Task<bool> NotifyAsync(JobStatusNotification notification, CancellationToken cancellationToken)
-    {
-        try
-        {
-            var httpClient = httpClientFactory.CreateClient(nameof(RealtimeNotifier));
-            AddBasicAuth(httpClient);
-            using var response = await httpClient.PostAsJsonAsync(_options.NotificationEndpoint, notification, cancellationToken);
-
-            if (response.IsSuccessStatusCode)
-            {
-                return true;
-            }
-
-            logger.LogWarning(
-                "Realtime hub returned {StatusCode} for job {JobId}.",
-                response.StatusCode,
-                notification.JobId);
-
-            return false;
-        }
-        catch (Exception ex) when (ex is HttpRequestException or TaskCanceledException)
-        {
-            logger.LogWarning(ex, "Could not notify realtime hub for job {JobId}.", notification.JobId);
-            return false;
-        }
-    }
-
     public async Task<bool> NotifyLeaveCalculationAsync(
         LeaveCalculationStatusNotification notification,
         CancellationToken cancellationToken)

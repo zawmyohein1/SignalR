@@ -13,32 +13,10 @@ public sealed class NotificationsController(
     BasicNotificationAuthService notificationAuth,
     ILogger<NotificationsController> logger) : ControllerBase
 {
-    [HttpPost("job-status")]
-    public async Task<IActionResult> PostJobStatus(JobStatusNotification notification)
-    {
-        if (string.IsNullOrWhiteSpace(notification.JobId))
-        {
-            return BadRequest(new { message = "jobId is required." });
-        }
-
-        var groupName = JobStatusHub.JobGroupName(notification.JobId.Trim());
-
-        await hubContext.Clients
-            .Group(groupName)
-            .SendAsync("JobStatusUpdated", notification);
-
-        logger.LogInformation(
-            "Pushed {Status} for job {JobId} to {GroupName}.",
-            notification.Status,
-            notification.JobId,
-            groupName);
-
-        return Ok(new { message = "Notification delivered." });
-    }
-
     [HttpPost("leave-calculation-status")]
     public async Task<IActionResult> PostLeaveCalculationStatus(LeaveCalculationStatusNotification notification)
     {
+        // Only the API project may post server-to-hub notifications.
         if (!notificationAuth.IsAuthorized(Request))
         {
             Response.Headers["WWW-Authenticate"] = "Basic realm=\"JobRealtimeSample.RealtimeHub\"";
@@ -65,6 +43,7 @@ public sealed class NotificationsController(
             notification.LoginUserId.Trim(),
             notification.CalculationId.Trim());
 
+        // Push only to browsers that joined this exact calculation group.
         await hubContext.Clients
             .Group(groupName)
             .SendAsync("LeaveCalculationStatusUpdated", notification);

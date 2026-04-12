@@ -23,6 +23,7 @@ namespace JobRealtimeSample.FrameworkApi.Services
 
         public string CreateToken(string companyCode, string loginUserId, string calculationId)
         {
+            // Token binds one browser to one company/user/calculation group.
             long expiresUnixSeconds = DateTimeOffset.UtcNow
                 .AddMinutes(_tokenLifetimeMinutes)
                 .ToUnixTimeSeconds();
@@ -51,4 +52,3 @@ namespace JobRealtimeSample.FrameworkApi.Services
         }
     }
 }
-

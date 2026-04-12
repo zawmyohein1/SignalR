@@ -18,6 +18,7 @@ public sealed class XmlLeaveCalculationStore
 
     public LeaveCalculationInfo Create(LeaveCalculationStartRequest request)
     {
+        // XML file is the demo persistence store.
         var now = DateTimeOffset.UtcNow;
         var calculationId = Guid.NewGuid().ToString("N");
         const string message = "Leave entitlement process accepted and started in background.";
@@ -66,6 +67,7 @@ public sealed class XmlLeaveCalculationStore
 
     public LeaveCalculationStatusNotification? UpdateStatus(string calculationId, string status, string message)
     {
+        // Status update also appends one history row for UI replay.
         if (string.IsNullOrWhiteSpace(calculationId))
         {
             return null;
@@ -149,6 +151,7 @@ public sealed class XmlLeaveCalculationStore
 
     private void EnsureFileExists()
     {
+        // Create App_Data file on first run.
         var directory = Path.GetDirectoryName(_xmlPath);
 
         if (!string.IsNullOrWhiteSpace(directory) && !Directory.Exists(directory))
@@ -296,4 +299,3 @@ public sealed class XmlLeaveCalculationStore
         return value.UtcDateTime.ToString("O", CultureInfo.InvariantCulture);
     }
 }
-

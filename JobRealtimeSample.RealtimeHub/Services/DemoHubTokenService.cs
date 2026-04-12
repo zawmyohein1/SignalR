@@ -16,6 +16,7 @@ public sealed class DemoHubTokenService(IConfiguration configuration)
         string calculationId,
         out HubAccessTokenClaims? claims)
     {
+        // Token must match the exact calculation group requested by the browser.
         claims = null;
 
         if (string.IsNullOrWhiteSpace(token))
@@ -77,6 +78,7 @@ public sealed class DemoHubTokenService(IConfiguration configuration)
 
     private bool IsSignatureValid(string payload, string signature)
     {
+        // Fixed-time compare avoids leaking signature match timing.
         var expectedSignature = Sign(payload);
         var expectedBytes = Encoding.UTF8.GetBytes(expectedSignature);
         var actualBytes = Encoding.UTF8.GetBytes(signature);
@@ -116,4 +118,3 @@ public sealed class DemoHubTokenService(IConfiguration configuration)
             .Replace('/', '_');
     }
 }
-

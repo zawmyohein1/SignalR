@@ -1,7 +1,10 @@
 using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web.Http;
 using JobRealtimeSample.FrameworkApi.Models;
 using JobRealtimeSample.FrameworkApi.Services;
+using JobRealtimeSample.FrameworkApi.Vendors;
 
 namespace JobRealtimeSample.FrameworkApi.Controllers
 {
@@ -13,60 +16,35 @@ namespace JobRealtimeSample.FrameworkApi.Controllers
         private static readonly DemoHubTokenService HubTokenService = new DemoHubTokenService();
         private static readonly BackgroundLeaveCalculationRunner BackgroundRunner =
             new BackgroundLeaveCalculationRunner(Store, RealtimeNotifier);
+        private static readonly LeaveCalculationsVendor Vendor =
+            new LeaveCalculationsVendor(Store, HubTokenService, BackgroundRunner);
 
         [HttpPost]
         [Route("start")]
-        public IHttpActionResult Start(LeaveCalculationStartRequest request)
+        public async Task<IHttpActionResult> Start(LeaveCalculationStartRequest request)
         {
-            if (request == null)
+            string validationMessage = LeaveCalculationsVendor.ValidateStartRequest(request);
+
+            if (validationMessage != null)
             {
-                return BadRequest("Request body is required.");
+                return BadRequest(validationMessage);
             }
 
-            if (string.IsNullOrWhiteSpace(request.CompanyCode))
+            StartLeaveCalculationResult result = await Vendor.StartAsync(request, CancellationToken.None);
+
+            if (result.Accepted)
             {
-                return BadRequest("companyCode is required.");
+                return Content(HttpStatusCode.Accepted, result.Response);
             }
 
-            if (string.IsNullOrWhiteSpace(request.LoginUserId))
-            {
-                return BadRequest("loginUserId is required.");
-            }
-
-            if (string.IsNullOrWhiteSpace(request.DepartmentCode))
-            {
-                return BadRequest("departmentCode is required.");
-            }
-
-            if (string.IsNullOrWhiteSpace(request.LeaveTypeCode))
-            {
-                return BadRequest("leaveTypeCode is required.");
-            }
-
-            LeaveCalculationInfo calculation = Store.Create(request);
-            string hubAccessToken = HubTokenService.CreateToken(
-                calculation.CompanyCode,
-                calculation.LoginUserId,
-                calculation.CalculationId);
-
-            BackgroundRunner.RunInBackground(calculation.CalculationId);
-
-            return Content(HttpStatusCode.Accepted, new StartLeaveCalculationResponse
-            {
-                CalculationId = calculation.CalculationId,
-                CompanyCode = calculation.CompanyCode,
-                LoginUserId = calculation.LoginUserId,
-                HubAccessToken = hubAccessToken,
-                Status = calculation.Status,
-                Message = calculation.Message
-            });
+            return Ok(result.Response);
         }
 
         [HttpGet]
         [Route("{calculationId}")]
         public IHttpActionResult GetById(string calculationId)
         {
-            LeaveCalculationInfo calculation = Store.Get(calculationId);
+            LeaveCalculationInfo calculation = Vendor.GetById(calculationId);
 
             if (calculation == null)
             {
@@ -79,4 +57,3 @@ namespace JobRealtimeSample.FrameworkApi.Controllers
         }
     }
 }
-

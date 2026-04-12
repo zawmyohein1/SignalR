@@ -1,13 +1,16 @@
 @model JobRealtimeSample.MvcUi.Models.LeaveCalculationPageViewModel
 @{
     ViewData["Title"] = "Leave Calculation";
+    var signalRClientUrl = "https://cdn.jsdelivr.net/npm/@microsoft/signalr@8/dist/browser/signalr.min.js";
 }
 
 <section id="leaveCalculationApp"
          class="leave-demo"
-         data-api-base-url="@Model.ApiBaseUrl"
+         data-calculation-proxy-url="@Url.Content("~/LeaveCalculations")"
          data-hub-url="@Model.HubUrl"
          data-signalr-enabled="@Model.SignalREnabled.ToString().ToLowerInvariant()">
+
+    @* Login screen *@
     <div id="loginPanel" class="login-stage">
         <div class="login-copy">
             <p class="eyebrow">TIMES SOFTWARE SAMPLE</p>
@@ -19,10 +22,7 @@
         </div>
 
         <div class="login-box">
-            <div class="brand-mark">
-                <span>TIMES</span>
-                <strong>SOFTWARE</strong>
-            </div>
+            <div class="brand-mark"><span>TIMES</span><strong>SOFTWARE</strong></div>
 
             <div class="mb-3">
                 <label for="companyCode" class="form-label">Company</label>
@@ -73,6 +73,7 @@
         </div>
     </div>
 
+    @* Leave calculation screen *@
     <div id="calculationPanel" class="calculation-stage d-none">
         <div class="page-heading">
             <div>
@@ -91,6 +92,7 @@
         </div>
 
         <div class="work-grid">
+            @* Process form *@
             <div class="process-panel">
                 <div class="row g-3">
                     <div class="col-md-6">
@@ -127,10 +129,15 @@
                 </div>
             </div>
 
+            @* Runtime status *@
             <div class="status-panel">
                 <div class="status-row">
                     <span>SignalR</span>
                     <strong id="signalrState" class="badge text-bg-secondary">Disconnected</strong>
+                </div>
+                <div class="status-row">
+                    <span>Execution Mode</span>
+                    <strong id="executionModeDisplay">Waiting for process</strong>
                 </div>
                 <div class="status-row">
                     <span>Calculation Id</span>
@@ -147,10 +154,11 @@
             </div>
         </div>
 
+        @* Progress log *@
         <div class="mt-4">
             <div class="d-flex justify-content-between align-items-center mb-2">
                 <h2 class="h5 mb-0">Progress Log</h2>
-                <span class="small text-muted">Only this browser group receives these updates.</span>
+                <span id="logModeHint" class="small text-muted">Only this browser group receives these updates.</span>
             </div>
             <div id="progressLog" class="job-log" aria-live="polite">
                 <p class="text-muted mb-0">Click Process to start Leave Calculation.</p>
@@ -162,7 +170,8 @@
 @section Scripts {
     @if (Model.SignalREnabled)
     {
-        <script src="https://cdn.jsdelivr.net/npm/@@microsoft/signalr@8/dist/browser/signalr.min.js"></script>
+        <script src="@signalRClientUrl"></script>
     }
+
     <script src="~/js/job-status.js" asp-append-version="true"></script>
 }

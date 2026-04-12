@@ -5,33 +5,12 @@ namespace JobRealtimeSample.RealtimeHub.Hubs;
 
 public sealed class JobStatusHub(DemoHubTokenService tokenService) : Hub
 {
-    public static string JobGroupName(string jobId) => $"job:{jobId}";
-
     public static string CalculationGroupName(string companyCode, string loginUserId, string calculationId)
         => $"company:{companyCode}:user:{loginUserId}:calculation:{calculationId}";
 
-    public Task JoinJobGroup(string jobId)
-    {
-        if (string.IsNullOrWhiteSpace(jobId))
-        {
-            throw new HubException("A jobId is required.");
-        }
-
-        return Groups.AddToGroupAsync(Context.ConnectionId, JobGroupName(jobId.Trim()));
-    }
-
-    public Task LeaveJobGroup(string jobId)
-    {
-        if (string.IsNullOrWhiteSpace(jobId))
-        {
-            throw new HubException("A jobId is required.");
-        }
-
-        return Groups.RemoveFromGroupAsync(Context.ConnectionId, JobGroupName(jobId.Trim()));
-    }
-
     public Task JoinCalculationGroup(string companyCode, string loginUserId, string calculationId)
     {
+        // Browser must prove it owns this calculation before joining.
         ValidateCalculationAccess(companyCode, loginUserId, calculationId);
 
         return Groups.AddToGroupAsync(
@@ -41,6 +20,7 @@ public sealed class JobStatusHub(DemoHubTokenService tokenService) : Hub
 
     public Task LeaveCalculationGroup(string companyCode, string loginUserId, string calculationId)
     {
+        // Remove this connection from the calculation-specific group.
         ValidateCalculationAccess(companyCode, loginUserId, calculationId);
 
         return Groups.RemoveFromGroupAsync(
@@ -75,6 +55,7 @@ public sealed class JobStatusHub(DemoHubTokenService tokenService) : Hub
 
     private string? GetAccessToken()
     {
+        // SignalR JavaScript client sends bearer token as query string.
         var request = Context.GetHttpContext()?.Request;
 
         if (request is null)

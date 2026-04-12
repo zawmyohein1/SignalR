@@ -12,14 +12,11 @@ namespace JobRealtimeSample.FrameworkApi.Services
 {
     public sealed class RealtimeNotifier : IDisposable
     {
-        private readonly string _jobStatusNotificationEndpoint;
         private readonly string _leaveCalculationNotificationEndpoint;
         private readonly HttpClient _httpClient;
 
         public RealtimeNotifier()
         {
-            _jobStatusNotificationEndpoint = ConfigurationManager.AppSettings["RealtimeHubNotificationEndpoint"]
-                ?? "https://localhost:5003/api/notifications/job-status";
             _leaveCalculationNotificationEndpoint =
                 ConfigurationManager.AppSettings["RealtimeHubLeaveCalculationNotificationEndpoint"]
                 ?? "https://localhost:5003/api/notifications/leave-calculation-status";
@@ -33,24 +30,6 @@ namespace JobRealtimeSample.FrameworkApi.Services
 
             _httpClient = new HttpClient(handler);
             _httpClient.DefaultRequestHeaders.Authorization = CreateBasicAuthHeader();
-        }
-
-        public async Task<bool> NotifyAsync(JobStatusNotification notification, CancellationToken cancellationToken)
-        {
-            try
-            {
-                string json = JsonConvert.SerializeObject(notification);
-                using (var content = new StringContent(json, Encoding.UTF8, "application/json"))
-                using (HttpResponseMessage response = await _httpClient.PostAsync(_jobStatusNotificationEndpoint, content, cancellationToken))
-                {
-                    return response.IsSuccessStatusCode;
-                }
-            }
-            catch (Exception ex) when (ex is HttpRequestException || ex is TaskCanceledException)
-            {
-                System.Diagnostics.Trace.TraceWarning("Could not notify realtime hub for job {0}. {1}", notification.JobId, ex.Message);
-                return false;
-            }
         }
 
         public async Task<bool> NotifyLeaveCalculationAsync(

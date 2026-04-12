@@ -7,6 +7,7 @@ namespace JobRealtimeSample.Api.Services;
 public sealed class BackgroundLeaveCalculationRunner(
     XmlLeaveCalculationStore store,
     RealtimeNotifier realtimeNotifier,
+    IConfiguration configuration,
     IOptions<LeaveCalculationOptions> options,
     ILogger<BackgroundLeaveCalculationRunner> logger)
 {
@@ -53,11 +54,18 @@ public sealed class BackgroundLeaveCalculationRunner(
         "RO"
     ];
 
+    public bool SignalREnabled { get; } = configuration.GetValue("SignalREnabled", true);
+
     public void RunInBackground(string calculationId)
     {
         // The API returns immediately. The simulated leave entitlement process
         // continues outside the HTTP request and reports progress through SignalR.
-        _ = Task.Run(() => RunCalculationAsync(calculationId, CancellationToken.None));
+        _ = Task.Run(() => RunAsync(calculationId, CancellationToken.None));
+    }
+
+    public Task RunAsync(string calculationId, CancellationToken cancellationToken)
+    {
+        return RunCalculationAsync(calculationId, cancellationToken);
     }
 
     private async Task RunCalculationAsync(string calculationId, CancellationToken cancellationToken)
@@ -114,6 +122,12 @@ public sealed class BackgroundLeaveCalculationRunner(
             return;
         }
 
+        // XML history is always saved; hub notification is optional.
+        if (!SignalREnabled)
+        {
+            return;
+        }
+
         var wasSent = await realtimeNotifier.NotifyLeaveCalculationAsync(notification, cancellationToken);
 
         if (!wasSent)
@@ -129,6 +143,7 @@ public sealed class BackgroundLeaveCalculationRunner(
         LeaveCalculationInfo info,
         CancellationToken cancellationToken)
     {
+        // Demo work: each employee waits through the configured leave-code loop.
         foreach (var employee in ResolveEmployees(info))
         {
             foreach (var _ in DemoLeaveCodes)

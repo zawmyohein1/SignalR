@@ -42,12 +42,11 @@ builder.Services
 
         return handler;
     });
-builder.Services.AddSingleton<JobRealtimeSample.Api.Services.JobService>();
-builder.Services.AddSingleton<JobRealtimeSample.Api.Services.BackgroundJobRunner>();
 builder.Services.AddSingleton<JobRealtimeSample.Api.Services.RealtimeNotifier>();
 builder.Services.AddSingleton<JobRealtimeSample.Api.Services.XmlLeaveCalculationStore>();
 builder.Services.AddSingleton<JobRealtimeSample.Api.Services.DemoHubTokenService>();
 builder.Services.AddSingleton<JobRealtimeSample.Api.Services.BackgroundLeaveCalculationRunner>();
+builder.Services.AddSingleton<JobRealtimeSample.Api.Vendors.LeaveCalculationsVendor>();
 
 var app = builder.Build();
 

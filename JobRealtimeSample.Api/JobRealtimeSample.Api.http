@@ -1,11 +1,21 @@
 @JobRealtimeSample.Api_HostAddress = https://localhost:5002
 
-POST {{JobRealtimeSample.Api_HostAddress}}/api/jobs/start
+POST {{JobRealtimeSample.Api_HostAddress}}/api/leave-calculations/start
+Content-Type: application/json
 Accept: application/json
+
+{
+  "companyCode": "COMPANY_A",
+  "loginUserId": "HR_A",
+  "departmentCode": "HR",
+  "employeeNo": "001",
+  "leaveTypeCode": "ANNU",
+  "year": 2026
+}
 
 ###
 
-@JobId = replace-with-job-id
+@CalculationId = replace-with-calculation-id
 
-GET {{JobRealtimeSample.Api_HostAddress}}/api/jobs/{{JobId}}
+GET {{JobRealtimeSample.Api_HostAddress}}/api/leave-calculations/{{CalculationId}}
 Accept: application/json

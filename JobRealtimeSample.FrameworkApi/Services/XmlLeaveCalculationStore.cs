@@ -22,6 +22,7 @@ namespace JobRealtimeSample.FrameworkApi.Services
 
         public LeaveCalculationInfo Create(LeaveCalculationStartRequest request)
         {
+            // XML file is the demo persistence store.
             DateTimeOffset now = DateTimeOffset.UtcNow;
             string calculationId = Guid.NewGuid().ToString("N");
             string message = "Leave entitlement process accepted and started in background.";
@@ -70,6 +71,7 @@ namespace JobRealtimeSample.FrameworkApi.Services
 
         public LeaveCalculationStatusNotification UpdateStatus(string calculationId, string status, string message)
         {
+            // Status update also appends one history row for UI replay.
             if (string.IsNullOrWhiteSpace(calculationId))
             {
                 return null;
@@ -153,6 +155,7 @@ namespace JobRealtimeSample.FrameworkApi.Services
 
         private void EnsureFileExists()
         {
+            // Create App_Data file on first run.
             string directory = Path.GetDirectoryName(_xmlPath);
 
             if (!Directory.Exists(directory))
@@ -308,4 +311,3 @@ namespace JobRealtimeSample.FrameworkApi.Services
         }
     }
 }
-

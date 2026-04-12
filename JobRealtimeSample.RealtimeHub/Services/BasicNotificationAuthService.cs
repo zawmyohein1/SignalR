@@ -10,6 +10,7 @@ public sealed class BasicNotificationAuthService(IConfiguration configuration)
 
     public bool IsAuthorized(HttpRequest request)
     {
+        // Basic auth protects API-to-Hub notification calls.
         if (!AuthenticationHeaderValue.TryParse(request.Headers.Authorization, out var header))
         {
             return false;
@@ -45,4 +46,3 @@ public sealed class BasicNotificationAuthService(IConfiguration configuration)
             && string.Equals(password, _password, StringComparison.Ordinal);
     }
 }
-
