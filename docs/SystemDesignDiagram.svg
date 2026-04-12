@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">SignalR System Design Diagram</title>
+  <desc id="desc">Web3 Leave Calculation Page calls Web3.Api. Web3.Api notifies RealtimeHub. RealtimeHub pushes SignalR updates to the correct Leave Calculation Page only.</desc>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155" />
+    </marker>
+  </defs>
+
+  <rect width="1280" height="720" fill="#f8fafc" />
+
+  <text x="640" y="64" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="32" font-weight="700" fill="#111827">
+    SignalR System Design
+  </text>
+  <text x="640" y="100" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="17" fill="#64748b">
+    Web3.Api sends progress to RealtimeHub. RealtimeHub pushes updates to the correct Leave Calculation Page only.
+  </text>
+
+  <!-- Main boxes -->
+  <rect x="86" y="210" width="300" height="150" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" />
+  <text x="236" y="258" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" fill="#1e3a8a">
+    Web3
+  </text>
+  <text x="236" y="292" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="600" fill="#111827">
+    Leave Calculation Page
+  </text>
+  <text x="236" y="324" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">
+    Starts process and receives progress
+  </text>
+
+  <rect x="490" y="210" width="300" height="150" rx="8" fill="#f0fdf4" stroke="#22c55e" stroke-width="2" />
+  <text x="640" y="270" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#166534">
+    Web3.Api
+  </text>
+  <text x="640" y="306" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">
+    Starts calculation and sends status
+  </text>
+
+  <rect x="894" y="210" width="300" height="150" rx="8" fill="#faf5ff" stroke="#8b5cf6" stroke-width="2" />
+  <text x="1044" y="258" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#5b21b6">
+    RealtimeHub
+  </text>
+  <text x="1044" y="292" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="600" fill="#111827">
+    JobStatusHub
+  </text>
+  <text x="1044" y="324" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">
+    Pushes JobStatusUpdated
+  </text>
+
+  <!-- Arrows -->
+  <line x1="386" y1="285" x2="490" y2="285" stroke="#334155" stroke-width="4" marker-end="url(#arrow)" />
+  <text x="438" y="258" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">
+    HTTP start
+  </text>
+
+  <line x1="790" y1="285" x2="894" y2="285" stroke="#334155" stroke-width="4" marker-end="url(#arrow)" />
+  <text x="842" y="258" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">
+    status notification
+  </text>
+
+  <path d="M 1044 360 C 1044 505, 236 505, 236 360" fill="none" stroke="#334155" stroke-width="4" marker-end="url(#arrow)" />
+  <text x="640" y="490" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">
+    SignalR realtime update to matching page group only
+  </text>
+
+  <!-- Group rule -->
+  <rect x="170" y="545" width="940" height="76" rx="8" fill="#fff7ed" stroke="#f59e0b" stroke-width="2" />
+  <text x="640" y="575" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="17" font-weight="700" fill="#92400e">
+    SignalR Group Rule
+  </text>
+  <text x="640" y="604" text-anchor="middle" font-family="Consolas, 'Courier New', monospace" font-size="17" fill="#111827">
+    company:{companyCode}:user:{loginUserId}:calculation:{calculationId}
+  </text>
+
+  <!-- Legend -->
+  <rect x="86" y="642" width="1108" height="42" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="640" y="668" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">
+    Web3 = Timesoft.Solution.Web3    |    Web3.Api = Timesoft.Solution.Api.Web3    |    RealtimeHub = Timesoft.Solution.RealtimeHub
+  </text>
+</svg>

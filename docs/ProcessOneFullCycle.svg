@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760" role="img" aria-labelledby="title desc">
+  <title id="title">Process One Full Cycle SignalR Enabled</title>
+  <desc id="desc">One leave calculation process cycle. Web3 starts the request, Web3.Api returns fast, RealtimeHub pushes progress to the matching Leave Calculation Page group only.</desc>
+
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155" />
+    </marker>
+  </defs>
+
+  <rect width="1280" height="760" fill="#f8fafc" />
+
+  <text x="640" y="58" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="32" font-weight="700" fill="#111827">
+    Process One Full Cycle
+  </text>
+  <text x="640" y="94" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="17" fill="#64748b">
+    SignalR enabled: Web3 receives Calculation Id fast, then receives realtime progress from RealtimeHub.
+  </text>
+
+  <!-- Step 1 -->
+  <rect x="60" y="145" width="250" height="112" rx="8" fill="#fff7ed" stroke="#f59e0b" stroke-width="2" />
+  <text x="84" y="177" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" fill="#fff" class="badge">1</text>
+  <rect x="78" y="158" width="34" height="28" rx="6" fill="#d97706" />
+  <text x="95" y="177" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" fill="#fff">1</text>
+  <text x="128" y="178" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" fill="#111827">Click Process</text>
+  <text x="82" y="214" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">Leave Calculation Page starts</text>
+  <text x="82" y="238" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">one calculation request.</text>
+
+  <!-- Step 2 -->
+  <rect x="390" y="145" width="250" height="112" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" />
+  <rect x="408" y="158" width="34" height="28" rx="6" fill="#2563eb" />
+  <text x="425" y="177" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" fill="#fff">2</text>
+  <text x="458" y="178" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" fill="#111827">Send Start Request</text>
+  <text x="412" y="214" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">Web3 controller calls</text>
+  <text x="412" y="238" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">Web3.Api over HTTP.</text>
+
+  <!-- Step 3 -->
+  <rect x="720" y="145" width="250" height="112" rx="8" fill="#f0fdf4" stroke="#22c55e" stroke-width="2" />
+  <rect x="738" y="158" width="34" height="28" rx="6" fill="#16a34a" />
+  <text x="755" y="177" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" fill="#fff">3</text>
+  <text x="788" y="178" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" fill="#111827">Create Id</text>
+  <text x="742" y="214" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">Web3.Api creates Calculation Id</text>
+  <text x="742" y="238" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">and saves Accepted state.</text>
+
+  <!-- Step 4 -->
+  <rect x="970" y="318" width="250" height="112" rx="8" fill="#f0fdf4" stroke="#22c55e" stroke-width="2" />
+  <rect x="988" y="331" width="34" height="28" rx="6" fill="#16a34a" />
+  <text x="1005" y="350" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" fill="#fff">4</text>
+  <text x="1038" y="351" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" fill="#111827">Return Fast</text>
+  <text x="992" y="387" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">Web3.Api returns</text>
+  <text x="992" y="411" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">202 Accepted + Calculation Id.</text>
+
+  <!-- Step 5 -->
+  <rect x="640" y="318" width="250" height="112" rx="8" fill="#fff7ed" stroke="#f59e0b" stroke-width="2" />
+  <rect x="658" y="331" width="34" height="28" rx="6" fill="#d97706" />
+  <text x="675" y="350" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" fill="#fff">5</text>
+  <text x="708" y="351" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" fill="#111827">Join Group</text>
+  <text x="662" y="387" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">Leave Calculation Page connects</text>
+  <text x="662" y="411" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">and joins its own group.</text>
+
+  <!-- Step 6 -->
+  <rect x="310" y="318" width="250" height="112" rx="8" fill="#f0fdf4" stroke="#22c55e" stroke-width="2" />
+  <rect x="328" y="331" width="34" height="28" rx="6" fill="#16a34a" />
+  <text x="345" y="350" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" fill="#fff">6</text>
+  <text x="378" y="351" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" fill="#111827">Run Calculation</text>
+  <text x="332" y="387" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">Background task calculates</text>
+  <text x="332" y="411" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">employee leave entitlement.</text>
+
+  <!-- Step 7 -->
+  <rect x="60" y="500" width="250" height="112" rx="8" fill="#faf5ff" stroke="#8b5cf6" stroke-width="2" />
+  <rect x="78" y="513" width="34" height="28" rx="6" fill="#7c3aed" />
+  <text x="95" y="532" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" fill="#fff">7</text>
+  <text x="128" y="533" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" fill="#111827">Push Update</text>
+  <text x="82" y="569" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">RealtimeHub sends</text>
+  <text x="82" y="593" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">JobStatusUpdated to group.</text>
+
+  <!-- Step 8 -->
+  <rect x="390" y="500" width="250" height="112" rx="8" fill="#fff7ed" stroke="#f59e0b" stroke-width="2" />
+  <rect x="408" y="513" width="34" height="28" rx="6" fill="#d97706" />
+  <text x="425" y="532" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" fill="#fff">8</text>
+  <text x="458" y="533" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" fill="#111827">Update Page</text>
+  <text x="412" y="569" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">Current Status and Progress Log</text>
+  <text x="412" y="593" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">update until Completed.</text>
+
+  <!-- Verification -->
+  <rect x="720" y="500" width="500" height="112" rx="8" fill="#ecfdf5" stroke="#22c55e" stroke-width="2" />
+  <text x="970" y="540" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="700" fill="#166534">Correct Browser Verification</text>
+  <text x="970" y="574" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#334155">Same Calculation Id + same SignalR group = correct page only.</text>
+  <text x="970" y="600" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#64748b">Other company, user, or calculation pages do not receive this update.</text>
+
+  <!-- Group rule -->
+  <rect x="210" y="660" width="860" height="56" rx="8" fill="#fffbeb" stroke="#f59e0b" stroke-width="2" />
+  <text x="640" y="694" text-anchor="middle" font-family="Consolas, 'Courier New', monospace" font-size="18" font-weight="700" fill="#92400e">
+    company:{companyCode}:user:{loginUserId}:calculation:{calculationId}
+  </text>
+
+  <!-- Arrows -->
+  <line x1="310" y1="201" x2="390" y2="201" stroke="#334155" stroke-width="4" marker-end="url(#arrow)" />
+  <line x1="640" y1="201" x2="720" y2="201" stroke="#334155" stroke-width="4" marker-end="url(#arrow)" />
+  <path d="M 970 201 C 1110 201 1130 250 1095 318" fill="none" stroke="#334155" stroke-width="4" marker-end="url(#arrow)" />
+  <line x1="970" y1="374" x2="890" y2="374" stroke="#334155" stroke-width="4" marker-end="url(#arrow)" />
+  <line x1="640" y1="374" x2="560" y2="374" stroke="#334155" stroke-width="4" marker-end="url(#arrow)" />
+  <path d="M 435 430 C 380 485 330 520 310 548" fill="none" stroke="#334155" stroke-width="4" marker-end="url(#arrow)" />
+  <line x1="310" y1="556" x2="390" y2="556" stroke="#334155" stroke-width="4" marker-end="url(#arrow)" />
+  <line x1="640" y1="556" x2="720" y2="556" stroke="#334155" stroke-width="4" marker-end="url(#arrow)" />
+
+  <!-- Small labels -->
+  <text x="350" y="190" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="13" fill="#64748b">HTTP</text>
+  <text x="675" y="190" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="13" fill="#64748b">start</text>
+  <text x="930" y="356" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="13" fill="#64748b">id returned</text>
+  <text x="600" y="356" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="13" fill="#64748b">background</text>
+  <text x="350" y="540" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="13" fill="#64748b">SignalR</text>
+</svg>
