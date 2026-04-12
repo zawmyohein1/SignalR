@@ -24,7 +24,10 @@ project.assets.json
 .codex-run/
 *.log
 
+# Runtime job store
+Timesoft.Solution.Api.Web3/App_Data/LeaveCalculationJobs.xml
+Timesoft.Solution.Api.Web4/App_Data/LeaveCalculationJobs.xml
+
 # OS files
 .DS_Store
 Thumbs.db
-
