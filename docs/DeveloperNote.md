@@ -7,6 +7,7 @@ This note explains the important source-code parts for the SignalR realtime demo
 Focus areas:
 
 - Web3 SignalR browser client
+- Navigation restore after leaving and returning to the calculation page
 - RealtimeHub project
 - How the page joins the correct group
 - How Web3.Api pushes status to the correct page
@@ -53,6 +54,12 @@ File:
 Timesoft.Solution.Web3\Scripts\leave-calculation-signalr-client.js
 ```
 
+The same client behavior exists in the Web4 project:
+
+```text
+Timesoft.Solution.Web4\wwwroot\js\leave-calculation-signalr-client.js
+```
+
 This file is the browser-side SignalR wrapper.
 
 It keeps SignalR code separate from the page action script. The page does not need to know all SignalR connection details. It only calls this client to configure, start, reset, and refresh calculation status.
@@ -66,6 +73,7 @@ It keeps SignalR code separate from the page action script. The page does not ne
 - Update the page through callback functions.
 - Reconnect automatically if the SignalR connection drops.
 - Fall back to snapshot polling if SignalR is disabled or unavailable.
+- Resume an existing active calculation after page navigation.
 - Ignore duplicate notifications.
 
 ### Runtime State
@@ -129,6 +137,55 @@ Else:
 Important point:
 
 SignalR does not start the calculation. Web3.Api already started the calculation. SignalR only tracks progress.
+
+If the SignalR connection attempt fails, the client does not fail the calculation start. It switches the display layer to snapshot polling because Api already owns the running process.
+
+### `resume(savedCalculation)`
+
+This function resumes tracking for a calculation that was saved before the user navigated away.
+
+It restores:
+
+- `calculationId`
+- `hubAccessToken`
+- `companyCode`
+- `loginUserId`
+
+Then it uses the same tracking decision as `start(response)`:
+
+```text
+If SignalR enabled:
+    reconnect to RealtimeHub
+    join calculation group again
+Else:
+    use snapshot polling
+```
+
+The calculation is not started again. The page only resumes watching the existing calculation id.
+
+### `refreshSnapshot(calculationId)`
+
+This function reads the latest calculation snapshot through the MVC `Details` endpoint.
+
+For Web3 MVC:
+
+```text
+GET /LeaveCalculations/Details/{id}
+```
+
+For Web4 MVC:
+
+```text
+GET /LeaveCalculations/Details/{calculationId}
+```
+
+The MVC controller forwards the request to Api:
+
+```text
+GET /api/leave-calculations/{calculationId}
+```
+
+The returned snapshot includes the current status and history. The page uses it to rebuild the progress log after navigation and to catch missed SignalR messages after reconnect.
 
 ### `connectToHub(response)`
 
@@ -201,6 +258,113 @@ GET calculation snapshot every 2 seconds
 ```
 
 This makes the page still usable even when realtime mode is off.
+
+---
+
+## Navigation Restore Implementation
+
+The navigation restore feature is implemented in the Leave Calculation page script.
+
+Files:
+
+```text
+Timesoft.Solution.Web3\Views\Home\Index.cshtml
+Timesoft.Solution.Web4\Views\Home\Index.cshtml
+```
+
+### Active Calculation Storage
+
+When a start response contains a calculation id, the page saves an active calculation pointer in configured browser storage.
+
+Storage key:
+
+```text
+timesoft.leaveCalculation.active
+```
+
+The stored value contains the information needed to resume watching the same process:
+
+- calculation id
+- company code
+- login user id
+- period
+- department
+- employee
+- year
+- hub access token
+- execution mode
+- SignalR enabled flag
+
+Important:
+
+```text
+Browser storage is not the source of truth.
+```
+
+Browser storage only tells the page which calculation id to reload. The actual current status and progress history are loaded from Api XML storage through the `Details` endpoint.
+
+### Page Load Restore Flow
+
+When `Index.cshtml` loads:
+
+1. Read `timesoft.leaveCalculation.active` from the configured storage.
+2. If no active calculation exists, optionally restore only the login form context.
+3. If an active calculation exists, restore the form values and show the calculation panel.
+4. Call `refreshSnapshot(calculationId)` to read the latest Api state.
+5. Rebuild the progress log from snapshot history.
+6. If status is still running, call `resume(savedCalculation)`.
+7. If status is `Completed` or `Failed`, show the final status and enable the Process button.
+
+This is the main reason the page can show a running status after the user goes to `View Leave` and returns.
+
+### Running vs Completed Decision
+
+The decision is based on the latest API snapshot status, not on browser storage.
+
+| Snapshot status | Page behavior after return |
+| --- | --- |
+| `Accepted`, `Started`, `Calculating leave entitlement`, or any non-terminal status | Disable Process button, reconnect to SignalR when possible, continue snapshot polling |
+| `Completed` | Show completed state, replay history, enable Process button |
+| `Failed` | Show failed state, replay history, enable Process button |
+
+### Restore Storage Configuration
+
+Web3 reads these keys from `Web.config`:
+
+```text
+LeaveCalculationDemo-RestoreStorage
+LeaveCalculationDemo-SignalREnabled
+LeaveCalculationDemo-ApiBaseUrl
+LeaveCalculationDemo-HubUrl
+```
+
+Web4 reads these keys from `appsettings.json`:
+
+```text
+LeaveCalculationDemo:RestoreStorage
+LeaveCalculationDemo:SignalREnabled
+LeaveCalculationDemo:ApiBaseUrl
+LeaveCalculationDemo:HubUrl
+```
+
+Supported restore values:
+
+| Value | Meaning |
+| --- | --- |
+| `session` | Use `sessionStorage`; restore in the same tab/session. |
+| `local` | Use `localStorage`; restore after browser close/reopen. |
+| `off` | Do not restore active calculation state. |
+
+### Navigation Test Page
+
+The navigation page is:
+
+```text
+Timesoft.Solution.Web3\Views\Home\ViewLeave.cshtml
+Timesoft.Solution.Web4\Views\Home\ViewLeave.cshtml
+```
+
+It is only used to test leaving and returning to the Leave Calculation page. It does not own calculation state and does not call Api.
 
 ---
 

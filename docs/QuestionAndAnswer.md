@@ -200,3 +200,102 @@ Expected impact:
 - Some additional infrastructure and monitoring responsibility.
 
 The existing system should not be heavily affected if the integration is isolated to selected pages and controlled by configuration.
+
+---
+
+### 16. What happens if the user leaves the Leave Calculation Page while the process is still running?
+
+The calculation continues running in Api.
+
+The browser page does not own the process. After the start request is accepted, Api owns the calculation and saves status/history in XML. The page can be closed, refreshed, or moved to `View Leave` without stopping the background calculation.
+
+When the user returns to the Leave Calculation Page, the page reads the saved active calculation id from browser storage and asks Api for the latest snapshot.
+
+---
+
+### 17. How does the page know whether the process is still running or already completed?
+
+The page checks the latest Api snapshot by calculation id.
+
+Restore flow:
+
+1. Browser storage gives the page the last active calculation id.
+2. Web calls the MVC `Details` endpoint.
+3. MVC calls Api `GET /api/leave-calculations/{calculationId}`.
+4. Api loads the current status and history from XML.
+5. The page decides what to show from that returned status.
+
+If the snapshot says the process is still running, the page disables the Process button and resumes SignalR/polling. If the snapshot says `Completed` or `Failed`, the page shows the final state and enables the Process button again.
+
+---
+
+### 18. Is browser storage the source of truth for calculation status?
+
+No.
+
+Browser storage is only a resume pointer. It remembers which calculation id the browser should reload after navigation.
+
+The source of truth is Api storage:
+
+```text
+Api XML storage -> calculation status + progress history
+Browser storage -> last active calculation id and resume context only
+```
+
+This is important because a running process can continue while the page is not open. The latest status must come from Api, not from the old browser state.
+
+---
+
+### 19. What is the difference between session restore and local restore?
+
+The restore mode is controlled by configuration.
+
+Web3:
+
+```text
+LeaveCalculationDemo-RestoreStorage
+```
+
+Web4:
+
+```text
+LeaveCalculationDemo:RestoreStorage
+```
+
+Supported values:
+
+| Value | Meaning |
+| --- | --- |
+| `session` | Use browser `sessionStorage`. Restore works in the same browser tab/session. |
+| `local` | Use browser `localStorage`. Restore can work after closing and reopening the browser. |
+| `off` | Do not restore the active calculation from browser storage. |
+
+---
+
+### 20. What happens if SignalR cannot reconnect after returning to the page?
+
+The page falls back to snapshot polling.
+
+SignalR is the realtime push channel, but it is not the only way to know status. The page can call the snapshot endpoint repeatedly and update the UI from Api state.
+
+Expected behavior:
+
+- Api process continues running.
+- Page shows polling/fallback state.
+- Progress is refreshed from the snapshot endpoint.
+- Final status still becomes `Completed` when Api finishes.
+
+---
+
+### 21. Why was a `View Leave` page added?
+
+`View Leave` is a simple navigation test page.
+
+It exists so the demo can prove this behavior:
+
+1. Start Leave Calculation.
+2. Leave the calculation page.
+3. Return to the calculation page.
+4. See the current running status or completed result.
+
+`View Leave` does not run calculation logic and does not own calculation state. The important feature is the restore flow on the Leave Calculation Page.

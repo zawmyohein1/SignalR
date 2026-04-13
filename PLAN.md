@@ -2,6 +2,46 @@
 
 ## Feature Plan: Restore Leave Calculation Status After Navigation
 
+### Current Status
+
+Implemented and documented.
+
+Main verified behavior:
+
+- User starts Leave Calculation with SignalR enabled.
+- User navigates to `View Leave`.
+- User returns to `Leave Calculation`.
+- If the calculation is still running, the page restores the same calculation id, shows the current running status, disables the Process button, reconnects to SignalR, and continues updates.
+- If the calculation is completed, the page restores the same calculation id, shows `Completed`, rebuilds the progress log from Api/XML history, and enables the Process button.
+
+Important design rule:
+
+```text
+Browser storage = active calculation id pointer only.
+Api XML storage = source of truth for status and progress history.
+```
+
+### Screenshot Evidence
+
+Saved under:
+
+```text
+docs\use-cases\images\test-plan
+```
+
+| File | Purpose |
+| --- | --- |
+| `view-leave-page.png` | Shows the navigation page while the background calculation can keep running. |
+| `navigation-return-still-running.png` | Shows return from `View Leave` while the same calculation is still running. |
+| `navigation-return-completed.png` | Shows return from `View Leave` after the same calculation completed. |
+
+The two most important screenshots are:
+
+- `navigation-return-still-running.png`
+- `navigation-return-completed.png`
+
+They prove the main feature: returning to the Leave Calculation page loads the correct running or completed status from the Api snapshot.
+
 ### Purpose
 
 Add configurable browser-side restore behavior for the Leave Calculation page.
@@ -38,8 +78,8 @@ Add a second simple navigation page in both MVC UI projects.
 
 Required behavior:
 
-- Leave Calculation page includes a link to the second page.
-- Second page includes a link back to Leave Calculation.
+- Leave Calculation page includes `Leave Calculation` and `View Leave` menu items.
+- `View Leave` includes a link back to Leave Calculation.
 - This gives a clear manual test for leaving and returning while a calculation is running.
 
 Suggested route names:
@@ -58,6 +98,9 @@ Store:
 - `companyText`
 - `loginUserId`
 - `period`
+- `departmentCode`
+- `employeeNo`
+- `year`
 - `hubAccessToken`
 - `executionMode`
 - `signalREnabled`
@@ -106,6 +149,8 @@ Update both Leave Calculation pages to:
 - Show a clear log row when the page restores from browser storage.
 - Keep completed calculations visible when returning to the page.
 - Allow a new Process click after `Completed` or `Failed`.
+- Keep `Leave Calculation` and `View Leave` side by side in the main menu.
+- Keep framework label on the right side as `.NET 8` or `.NET 4.8`.
 
 ### Files To Update
 
@@ -127,6 +172,18 @@ Web3:
 - `Timesoft.Solution.Web3/Views/Home/ViewLeave.cshtml`
 - `Timesoft.Solution.Web3/Scripts/leave-calculation-signalr-client.js`
 
+Documentation:
+
+- `docs/ProjectDetails.md`
+- `docs/DeveloperNote.md`
+- `docs/TestPlan.md`
+- `docs/QuestionAndAnswer.md`
+- `docs/SystemDesignDiagram.svg`
+- `docs/ProcessOneFullCycle.svg`
+- `docs/use-cases/images/test-plan/view-leave-page.png`
+- `docs/use-cases/images/test-plan/navigation-return-still-running.png`
+- `docs/use-cases/images/test-plan/navigation-return-completed.png`
+
 ### Manual Test Cases
 
 1. Set restore mode to `session`, start a calculation, navigate to the second page, return before completion, and confirm the page shows the running status and receives new updates.
@@ -135,6 +192,12 @@ Web3:
 4. Set restore mode to `off`, start a calculation, navigate away and return, and confirm the page starts fresh.
 5. Disable SignalR and confirm the restore flow still loads the latest snapshot through the details endpoint.
 6. Use separate browser tabs/users and confirm one saved calculation does not overwrite another tab when `session` mode is used.
+
+Evidence captured:
+
+- `navigation-return-still-running.png` covers test case 1.
+- `navigation-return-completed.png` covers test case 2.
+- `view-leave-page.png` documents the navigation step used by test cases 1 and 2.
 
 ### Build Verification
 
@@ -155,6 +218,19 @@ Run:
 The API XML store remains the source of truth. Browser storage is only a bookmark to the active calculation and the data needed to rejoin the SignalR group.
 
 For production, prefer issuing a fresh hub token during restore instead of keeping a long-lived token in browser storage.
+
+### Documentation Update Status
+
+Updated existing docs instead of creating a new document.
+
+| Document | Update |
+| --- | --- |
+| `docs\ProjectDetails.md` | Added navigation restore flow and restore storage configuration. |
+| `docs\DeveloperNote.md` | Added `resume(savedCalculation)`, `refreshSnapshot(calculationId)`, and running/completed restore decisions. |
+| `docs\TestPlan.md` | Added navigation restore test cases and screenshot evidence plan. |
+| `docs\QuestionAndAnswer.md` | Added Q&A for leaving page while running, source of truth, storage modes, and fallback polling. |
+| `docs\SystemDesignDiagram.svg` | Added browser storage pointer and Api XML source of truth. |
+| `docs\ProcessOneFullCycle.svg` | Added save/join and update/restore behavior. |
 
 ## Purpose
 

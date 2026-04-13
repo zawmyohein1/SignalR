@@ -60,6 +60,65 @@ This prevents:
 - User A receiving User B updates.
 - Leave Calculation Page A receiving Leave Calculation Page B progress.
 
+## Navigation Restore Flow
+
+The Leave Calculation Page can restore the last active calculation after the user navigates away and comes back.
+
+Important rule:
+
+```text
+Browser storage keeps only the resume pointer.
+Web3.Api / Web4.Api XML storage remains the source of truth.
+```
+
+When the user clicks `Process` in SignalR enabled mode:
+
+1. Web sends a start request through the MVC proxy.
+2. Api creates the calculation id and saves the initial XML state.
+3. Api returns the calculation id quickly.
+4. Web saves the active calculation pointer in browser storage.
+5. Api continues the calculation in the background.
+6. SignalR and snapshot polling keep the page updated.
+
+If the user goes to `View Leave` and then returns to `Leave Calculation`:
+
+1. Web reads the saved active calculation pointer.
+2. Web calls the MVC `Details` endpoint for the calculation id.
+3. MVC forwards the request to Api.
+4. Api loads the latest calculation status and history from XML.
+5. Web rebuilds the progress log from the returned history.
+6. If the calculation is still running, Web reconnects to SignalR and continues polling snapshots.
+7. If the calculation is completed or failed, Web shows the final status and keeps the Process button available for the next run.
+
+This means the browser can leave the page while the background process continues. Returning to the page shows the current running status or the completed result based on the latest API snapshot.
+
+`View Leave` is only a navigation test page for this demo. It does not run or own the calculation process.
+
+## Restore Storage Configuration
+
+The restore behavior is controlled by configuration:
+
+| Project | Key | Values |
+| --- | --- | --- |
+| `Timesoft.Solution.Web3` | `LeaveCalculationDemo-RestoreStorage` | `session`, `local`, `off` |
+| `Timesoft.Solution.Web4` | `LeaveCalculationDemo:RestoreStorage` | `session`, `local`, `off` |
+
+Storage modes:
+
+| Value | Behavior |
+| --- | --- |
+| `session` | Restore inside the same browser tab/session. This is the recommended demo default. |
+| `local` | Restore even after closing and reopening the browser. |
+| `off` | Do not restore active calculation state from browser storage. |
+
+The active calculation storage key is:
+
+```text
+timesoft.leaveCalculation.active
+```
+
+The page also stores login form context as a small convenience, but that is not the main resume mechanism. The active calculation id plus the API snapshot is what restores running or completed calculation status.
+
 ## Important Files
 
 ### Web Projects
@@ -72,17 +131,20 @@ Used by:
 | File | Purpose |
 | --- | --- |
 | `Views/Home/Index.cshtml` | Login UI, Leave Calculation Page, Process button logic |
+| `Views/Home/ViewLeave.cshtml` | Demo navigation page used to leave and return to the calculation page |
 | `leave-calculation-signalr-client.js` | SignalR page connection, group join, update handling |
-| `Controllers/LeaveCalculationsController.cs` | Web3 proxy that calls Web3.Api server-side |
+| `Controllers/LeaveCalculationsController.cs` | MVC proxy that calls the matching Api project server-side |
 | `Controllers/HomeController.cs` | Loads demo page data |
-| `Web.config` / `appsettings.json` | Web3.Api URL, hub URL, SignalR enabled setting |
+| `Web.config` / `appsettings.json` | Api URL, hub URL, SignalR enabled setting, restore storage mode |
 
-Main Web3 functions:
+Main Web functions:
 
 - Build request payload.
 - Call Web3 controller.
 - Connect to SignalR hub.
 - Join calculation group.
+- Save the active calculation pointer for navigation restore.
+- Read the latest calculation snapshot when the page loads again.
 - Show current status.
 - Append progress log.
 - Stop button spinner when completed or failed.
@@ -103,7 +165,7 @@ Used by:
 | `Services/XmlLeaveCalculationStore.cs` | Saves calculation state and history in XML |
 | `Services/DemoHubTokenService.cs` | Creates demo page token for hub connection |
 
-Main Web3.Api functions:
+Main Api functions:
 
 - Create calculation id.
 - Save initial state.
@@ -138,16 +200,19 @@ Main hub functions:
 
 | Mode | Behavior |
 | --- | --- |
-| SignalR enabled | Web3.Api returns fast, process runs in background, Leave Calculation Page receives realtime updates |
-| SignalR disabled | Web3.Api runs process inside HTTP request, Leave Calculation Page waits for final response |
+| SignalR enabled | Api returns fast, process runs in background, Leave Calculation Page receives realtime updates and can restore a running process after navigation |
+| SignalR disabled | Api runs process inside the HTTP request, Leave Calculation Page waits for the final response |
 
 This makes the timeout problem easy to demonstrate.
+
+When SignalR is enabled but the browser cannot connect to RealtimeHub, the page uses snapshot polling against the calculation `Details` endpoint. Polling is a fallback for display only; the calculation still runs in Api.
 
 ## Pros
 
 - Leave Calculation Page does not wait for the full calculation.
-- Web3.Api response is fast when SignalR is enabled.
+- Api response is fast when SignalR is enabled.
 - Progress is visible in realtime.
+- User can navigate away and return to the current running or completed calculation status.
 - One standalone hub can support Web3 and Web4.
 - Group rule protects updates from going to the wrong Leave Calculation Page.
 - SignalR can be turned on or off for demo comparison.
@@ -160,6 +225,7 @@ This makes the timeout problem easy to demonstrate.
 - No production authentication yet.
 - No SignalR scale-out/backplane.
 - No retry queue if Web3.Api-to-hub notification fails.
+- Browser storage stores only the last active calculation pointer for that browser/session.
 - SignalR disabled mode can still hit normal HTTP timeout risk.
 
 ## Production Improvement Ideas

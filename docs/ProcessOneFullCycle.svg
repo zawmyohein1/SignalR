@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="760" viewBox="0 0 1280 760" role="img" aria-labelledby="title desc">
   <title id="title">Process One Full Cycle SignalR Enabled</title>
-  <desc id="desc">One leave calculation process cycle. Web3 starts the request, Web3.Api returns fast, RealtimeHub pushes progress to the matching Leave Calculation Page group only.</desc>
+  <desc id="desc">One leave calculation process cycle. Web starts the request, Api returns fast, saves status/history, and the page can restore running or completed status after navigation by loading the Api snapshot.</desc>
 
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
@@ -14,7 +14,7 @@
     Process One Full Cycle
   </text>
   <text x="640" y="94" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="17" fill="#64748b">
-    SignalR enabled: Web3 receives Calculation Id fast, then receives realtime progress from RealtimeHub.
+    SignalR enabled: Web receives live updates, and after navigation reloads current status from Api snapshot.
   </text>
 
   <!-- Step 1 -->
@@ -31,15 +31,15 @@
   <rect x="408" y="158" width="34" height="28" rx="6" fill="#2563eb" />
   <text x="425" y="177" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" fill="#fff">2</text>
   <text x="458" y="178" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" fill="#111827">Send Start Request</text>
-  <text x="412" y="214" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">Web3 controller calls</text>
-  <text x="412" y="238" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">Web3.Api over HTTP.</text>
+  <text x="412" y="214" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">MVC controller calls</text>
+  <text x="412" y="238" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">the matching Api over HTTP.</text>
 
   <!-- Step 3 -->
   <rect x="720" y="145" width="250" height="112" rx="8" fill="#f0fdf4" stroke="#22c55e" stroke-width="2" />
   <rect x="738" y="158" width="34" height="28" rx="6" fill="#16a34a" />
   <text x="755" y="177" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" fill="#fff">3</text>
   <text x="788" y="178" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" fill="#111827">Create Id</text>
-  <text x="742" y="214" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">Web3.Api creates Calculation Id</text>
+  <text x="742" y="214" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">Api creates Calculation Id</text>
   <text x="742" y="238" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">and saves Accepted state.</text>
 
   <!-- Step 4 -->
@@ -47,15 +47,15 @@
   <rect x="988" y="331" width="34" height="28" rx="6" fill="#16a34a" />
   <text x="1005" y="350" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" fill="#fff">4</text>
   <text x="1038" y="351" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" fill="#111827">Return Fast</text>
-  <text x="992" y="387" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">Web3.Api returns</text>
+  <text x="992" y="387" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">Api returns</text>
   <text x="992" y="411" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">202 Accepted + Calculation Id.</text>
 
   <!-- Step 5 -->
   <rect x="640" y="318" width="250" height="112" rx="8" fill="#fff7ed" stroke="#f59e0b" stroke-width="2" />
   <rect x="658" y="331" width="34" height="28" rx="6" fill="#d97706" />
   <text x="675" y="350" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" fill="#fff">5</text>
-  <text x="708" y="351" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" fill="#111827">Join Group</text>
-  <text x="662" y="387" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">Leave Calculation Page connects</text>
+  <text x="708" y="351" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" fill="#111827">Save + Join</text>
+  <text x="662" y="387" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">Browser saves active id pointer</text>
   <text x="662" y="411" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">and joins its own group.</text>
 
   <!-- Step 6 -->
@@ -78,15 +78,15 @@
   <rect x="390" y="500" width="250" height="112" rx="8" fill="#fff7ed" stroke="#f59e0b" stroke-width="2" />
   <rect x="408" y="513" width="34" height="28" rx="6" fill="#d97706" />
   <text x="425" y="532" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" fill="#fff">8</text>
-  <text x="458" y="533" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" fill="#111827">Update Page</text>
-  <text x="412" y="569" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">Current Status and Progress Log</text>
-  <text x="412" y="593" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">update until Completed.</text>
+  <text x="458" y="533" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" fill="#111827">Update / Restore</text>
+  <text x="412" y="569" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">Live update or Details snapshot</text>
+  <text x="412" y="593" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">shows running or Completed.</text>
 
   <!-- Verification -->
   <rect x="720" y="500" width="500" height="112" rx="8" fill="#ecfdf5" stroke="#22c55e" stroke-width="2" />
-  <text x="970" y="540" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="700" fill="#166534">Correct Browser Verification</text>
-  <text x="970" y="574" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#334155">Same Calculation Id + same SignalR group = correct page only.</text>
-  <text x="970" y="600" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#64748b">Other company, user, or calculation pages do not receive this update.</text>
+  <text x="970" y="540" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="700" fill="#166534">Navigation Restore Verification</text>
+  <text x="970" y="574" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#334155">Browser storage = active calculation id pointer only.</text>
+  <text x="970" y="600" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#64748b">Api XML snapshot decides running, Completed, or Failed.</text>
 
   <!-- Group rule -->
   <rect x="210" y="660" width="860" height="56" rx="8" fill="#fffbeb" stroke="#f59e0b" stroke-width="2" />
@@ -109,5 +109,5 @@
   <text x="675" y="190" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="13" fill="#64748b">start</text>
   <text x="930" y="356" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="13" fill="#64748b">id returned</text>
   <text x="600" y="356" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="13" fill="#64748b">background</text>
-  <text x="350" y="540" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="13" fill="#64748b">SignalR</text>
+  <text x="350" y="540" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="13" fill="#64748b">SignalR or snapshot</text>
 </svg>
