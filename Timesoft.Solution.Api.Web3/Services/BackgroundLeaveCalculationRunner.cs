@@ -64,9 +64,18 @@ namespace Timesoft.Solution.Api.Web3.Services
         {
             _store = store;
             _realtimeNotifier = realtimeNotifier;
-            _initialDelaySeconds = ReadSeconds("LeaveCalculationInitialDelaySeconds", 1);
-            _stepDelaySeconds = ReadSeconds("LeaveCalculationStepDelaySeconds", 4);
-            _leaveCodeDelaySeconds = ReadDoubleSeconds("LeaveCalculationLeaveCodeDelaySeconds", 3);
+            _initialDelaySeconds = ReadSeconds(
+                "LeaveCalculation-InitialDelaySeconds",
+                "LeaveCalculationInitialDelaySeconds",
+                1);
+            _stepDelaySeconds = ReadSeconds(
+                "LeaveCalculation-StepDelaySeconds",
+                "LeaveCalculationStepDelaySeconds",
+                4);
+            _leaveCodeDelaySeconds = ReadDoubleSeconds(
+                "LeaveCalculation-LeaveCodeDelaySeconds",
+                "LeaveCalculationLeaveCodeDelaySeconds",
+                3);
             SignalREnabled = ReadBoolean("SignalREnabled", true);
         }
 
@@ -196,11 +205,11 @@ namespace Timesoft.Solution.Api.Web3.Services
             return Task.Delay(TimeSpan.FromSeconds(Math.Max(0, seconds)), cancellationToken);
         }
 
-        private static int ReadSeconds(string key, int defaultValue)
+        private static int ReadSeconds(string key, string fallbackKey, int defaultValue)
         {
             int value;
 
-            if (!int.TryParse(ConfigurationManager.AppSettings[key], out value) || value < 0)
+            if (!int.TryParse(AppSettings.Read(key, fallbackKey), out value) || value < 0)
             {
                 return defaultValue;
             }
@@ -208,12 +217,12 @@ namespace Timesoft.Solution.Api.Web3.Services
             return value;
         }
 
-        private static double ReadDoubleSeconds(string key, double defaultValue)
+        private static double ReadDoubleSeconds(string key, string fallbackKey, double defaultValue)
         {
             double value;
 
             if (!double.TryParse(
-                    ConfigurationManager.AppSettings[key],
+                    AppSettings.Read(key, fallbackKey),
                     NumberStyles.Float,
                     CultureInfo.InvariantCulture,
                     out value)
@@ -229,7 +238,7 @@ namespace Timesoft.Solution.Api.Web3.Services
         {
             bool value;
 
-            return bool.TryParse(ConfigurationManager.AppSettings[key], out value)
+            return bool.TryParse(AppSettings.Read(key), out value)
                 ? value
                 : defaultValue;
         }

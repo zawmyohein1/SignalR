@@ -1,4 +1,11 @@
 <!doctype html>
+@{
+    var currentAction = ViewContext.RouteData.Values["action"] == null
+        ? string.Empty
+        : ViewContext.RouteData.Values["action"].ToString();
+    var isLeaveCalculationActive = string.Equals(currentAction, "Index", StringComparison.OrdinalIgnoreCase);
+    var isViewLeaveActive = string.Equals(currentAction, "ViewLeave", StringComparison.OrdinalIgnoreCase);
+}
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -9,9 +16,13 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg app-nav mb-4">
-        <div class="container">
+        <div class="container app-nav-inner">
             <a class="navbar-brand fw-semibold" href="@Url.Action("Index", "Home")">Leave Calculation Demo</a>
-            <span class="navbar-text">ASP.NET MVC 5 on .NET Framework 4.8</span>
+            <div class="navbar-nav app-menu">
+                <a class="nav-link app-menu-link @(isLeaveCalculationActive ? "active" : "")" href="@Url.Action("Index", "Home")">Leave Calculation</a>
+                <a class="nav-link app-menu-link @(isViewLeaveActive ? "active" : "")" href="@Url.Action("ViewLeave", "Home")">View Leave</a>
+            </div>
+            <span class="navbar-text app-framework-label">.NET 4.8</span>
         </div>
     </nav>
 

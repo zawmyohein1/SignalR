@@ -8,7 +8,8 @@
          class="leave-demo"
          data-calculation-proxy-url="@Url.Content("~/LeaveCalculations")"
          data-hub-url="@Model.HubUrl"
-         data-signalr-enabled="@Model.SignalREnabled.ToString().ToLowerInvariant()">
+         data-signalr-enabled="@Model.SignalREnabled.ToString().ToLowerInvariant()"
+         data-restore-storage="@Model.RestoreStorageMode">
     <div id="loginPanel" class="login-stage">
         <div class="login-copy">
             <p class="eyebrow">TIMES SOFTWARE SAMPLE</p>
@@ -182,6 +183,9 @@
             const calculationProxyUrl = $app.data("calculationProxyUrl") || "/LeaveCalculations";
             const hubUrl = $app.data("hubUrl");
             const signalREnabled = $app.data("signalrEnabled") === true || $app.data("signalrEnabled") === "true";
+            const restoreStorageMode = normalizeRestoreStorageMode($app.data("restoreStorage"));
+            const activeCalculationStorageKey = "timesoft.leaveCalculation.active";
+            const loginContextStorageKey = "timesoft.leaveCalculation.loginContext";
             const processingButtonHtml = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Processing...';
             const synchronousExecutionMode = "SynchronousHttp";
             const realtimeClient = window.leaveCalculationSignalRClient;
@@ -216,6 +220,9 @@
 
             bindEvents();
             updateDemoLoginUser();
+            restoreSavedCalculation().catch(function (error) {
+                appendLog("Failed", getAjaxErrorMessage(error), new Date());
+            });
 
             function bindEvents() {
                 $("#companyCode").on("change", updateDemoLoginUser);
@@ -246,6 +253,7 @@
                     period: `${$("#loginYear").val()}/${$("#loginMonth").val()}`
                 };
 
+                saveLoginContext();
                 showCalculationPanel();
                 appendLog("Ready", "Login context selected. The next Process click will start Leave Calculation.", new Date());
             }
@@ -310,6 +318,7 @@
 
             async function handleStartResponse(response, elapsedMilliseconds) {
                 currentCalculationId = response.calculationId;
+                saveActiveCalculation(response);
 
                 const isSynchronousHttp = response.executionMode === synchronousExecutionMode || response.signalREnabled === false;
 
@@ -362,6 +371,7 @@
             async function resetProcessUi() {
                 await realtimeClient.reset();
                 currentCalculationId = null;
+                clearSavedCalculation();
 
                 $("#calculationIdDisplay").text("No calculation started");
                 $("#apiResponseDisplay").text("Waiting for API response");
@@ -374,6 +384,232 @@
 
                 setSignalRState(signalREnabled ? "Disconnected" : "Disabled by page config", "text-bg-secondary");
                 setStatus("Accepted", "Request has not been sent yet.");
+            }
+
+            async function restoreSavedCalculation() {
+                const savedCalculation = readSavedCalculation();
+
+                if (!savedCalculation) {
+                    restoreSavedLoginContext();
+                    return;
+                }
+
+                loginContext = {
+                    companyCode: savedCalculation.companyCode,
+                    companyText: savedCalculation.companyText || savedCalculation.companyCode,
+                    loginUserId: savedCalculation.loginUserId,
+                    period: savedCalculation.period || ""
+                };
+                currentCalculationId = savedCalculation.calculationId;
+
+                restoreFormSelections(savedCalculation);
+                showCalculationPanel();
+                $("#progressLog").empty();
+                $("#calculationIdDisplay").text(currentCalculationId);
+                $("#apiResponseDisplay").text("Restored from browser storage");
+                $("#executionModeDisplay").text(
+                    savedCalculation.executionMode === synchronousExecutionMode || savedCalculation.signalREnabled === false
+                        ? "Normal HTTP request"
+                        : "Background + SignalR");
+                $("#logModeHint").text("Latest status is loaded from the saved calculation id.");
+                $("#processButton").prop("disabled", true).html(processingButtonHtml);
+                appendLog("Restored", `Restored calculation ${currentCalculationId}. Loading latest status.`, new Date());
+
+                const snapshot = await realtimeClient.refreshSnapshot(currentCalculationId);
+
+                if (isFinishedStatus(snapshot.status)) {
+                    finishProcess();
+                    return;
+                }
+
+                await realtimeClient.resume(savedCalculation);
+                await realtimeClient.refreshSnapshot(currentCalculationId);
+            }
+
+            function restoreSavedLoginContext() {
+                const savedLoginContext = readSavedLoginContext();
+
+                if (!savedLoginContext) {
+                    return;
+                }
+
+                loginContext = {
+                    companyCode: savedLoginContext.companyCode,
+                    companyText: savedLoginContext.companyText || savedLoginContext.companyCode,
+                    loginUserId: savedLoginContext.loginUserId,
+                    period: savedLoginContext.period || ""
+                };
+
+                restoreFormSelections(savedLoginContext);
+                showCalculationPanel();
+                $("#progressLog").empty();
+                appendLog("Ready", "Login context restored. The next Process click will start Leave Calculation.", new Date());
+            }
+
+            function saveLoginContext() {
+                const storage = getConfiguredStorage();
+
+                if (!storage || !loginContext) {
+                    return;
+                }
+
+                const savedLoginContext = {
+                    companyCode: loginContext.companyCode,
+                    companyText: loginContext.companyText,
+                    loginUserId: loginContext.loginUserId,
+                    period: loginContext.period,
+                    savedAt: new Date().toISOString()
+                };
+
+                try {
+                    storage.setItem(loginContextStorageKey, JSON.stringify(savedLoginContext));
+                } catch (error) {
+                    appendLog("Failed", "Browser storage is not available for login context.", new Date());
+                }
+            }
+
+            function readSavedLoginContext() {
+                const storage = getConfiguredStorage();
+
+                if (!storage) {
+                    return null;
+                }
+
+                try {
+                    const rawValue = storage.getItem(loginContextStorageKey);
+
+                    if (!rawValue) {
+                        return null;
+                    }
+
+                    const savedLoginContext = JSON.parse(rawValue);
+                    return savedLoginContext && savedLoginContext.companyCode && savedLoginContext.loginUserId
+                        ? savedLoginContext
+                        : null;
+                } catch (error) {
+                    storage.removeItem(loginContextStorageKey);
+                    return null;
+                }
+            }
+
+            function saveActiveCalculation(response) {
+                const storage = getConfiguredStorage();
+
+                if (!storage) {
+                    return;
+                }
+
+                const activeCalculation = {
+                    calculationId: response.calculationId,
+                    companyCode: response.companyCode,
+                    companyText: loginContext.companyText,
+                    loginUserId: response.loginUserId,
+                    period: loginContext.period,
+                    departmentCode: $("#departmentCode").val(),
+                    employeeNo: $("#employeeNo").val(),
+                    year: Number($("#calculationYear").val()),
+                    hubAccessToken: response.hubAccessToken,
+                    executionMode: response.executionMode,
+                    signalREnabled: response.signalREnabled,
+                    startedAt: new Date().toISOString()
+                };
+
+                try {
+                    storage.setItem(activeCalculationStorageKey, JSON.stringify(activeCalculation));
+                } catch (error) {
+                    appendLog("Failed", "Browser storage is not available for restore state.", new Date());
+                }
+            }
+
+            function readSavedCalculation() {
+                const storage = getConfiguredStorage();
+
+                if (!storage) {
+                    return null;
+                }
+
+                try {
+                    const rawValue = storage.getItem(activeCalculationStorageKey);
+
+                    if (!rawValue) {
+                        return null;
+                    }
+
+                    const savedCalculation = JSON.parse(rawValue);
+                    return savedCalculation && savedCalculation.calculationId
+                        ? savedCalculation
+                        : null;
+                } catch (error) {
+                    storage.removeItem(activeCalculationStorageKey);
+                    return null;
+                }
+            }
+
+            function clearSavedCalculation() {
+                const storage = getConfiguredStorage();
+
+                if (!storage) {
+                    return;
+                }
+
+                storage.removeItem(activeCalculationStorageKey);
+            }
+
+            function restoreFormSelections(savedCalculation) {
+                $("#companyCode").val(savedCalculation.companyCode);
+                $("#loginUserId").val(savedCalculation.loginUserId);
+
+                if (savedCalculation.departmentCode) {
+                    $("#departmentCode").val(savedCalculation.departmentCode);
+                }
+
+                if (savedCalculation.employeeNo) {
+                    $("#employeeNo").val(savedCalculation.employeeNo);
+                }
+
+                if (savedCalculation.year) {
+                    $("#calculationYear").val(savedCalculation.year);
+                }
+
+                if (savedCalculation.period && savedCalculation.period.indexOf("/") > -1) {
+                    const parts = savedCalculation.period.split("/");
+                    $("#loginYear").val(parts[0]);
+                    $("#loginMonth").val(parts[1]);
+                }
+
+                const selectedCompanyText = $("#companyCode option:selected").text();
+
+                if (selectedCompanyText) {
+                    loginContext.companyText = selectedCompanyText;
+                }
+            }
+
+            function getConfiguredStorage() {
+                if (restoreStorageMode === "off") {
+                    return null;
+                }
+
+                try {
+                    return restoreStorageMode === "local"
+                        ? window.localStorage
+                        : window.sessionStorage;
+                } catch (error) {
+                    return null;
+                }
+            }
+
+            function normalizeRestoreStorageMode(value) {
+                const mode = (value || "session").toString().toLowerCase();
+
+                if (mode === "off" || mode === "local") {
+                    return mode;
+                }
+
+                return "session";
+            }
+
+            function isFinishedStatus(status) {
+                return status === "Completed" || status === "Failed";
             }
 
             function finishProcess() {

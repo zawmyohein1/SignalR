@@ -16,7 +16,9 @@ namespace Timesoft.Solution.Api.Web3.Services
 
         public XmlLeaveCalculationStore()
         {
-            string configuredPath = ConfigurationManager.AppSettings["LeaveCalculationXmlPath"];
+            string configuredPath = AppSettings.Read(
+                "LeaveCalculation-XmlPath",
+                "LeaveCalculationXmlPath");
             _xmlPath = ResolvePath(configuredPath);
         }
 

@@ -18,7 +18,9 @@ namespace Timesoft.Solution.Api.Web3.Services
         public RealtimeNotifier()
         {
             _leaveCalculationNotificationEndpoint =
-                ConfigurationManager.AppSettings["RealtimeHubLeaveCalculationNotificationEndpoint"]
+                AppSettings.Read(
+                    "RealtimeHub-LeaveCalculationNotificationEndpoint",
+                    "RealtimeHubLeaveCalculationNotificationEndpoint")
                 ?? "https://localhost:5003/api/notifications/leave-calculation-status";
 
             var handler = new HttpClientHandler();
@@ -63,8 +65,12 @@ namespace Timesoft.Solution.Api.Web3.Services
 
         private static AuthenticationHeaderValue CreateBasicAuthHeader()
         {
-            string username = ConfigurationManager.AppSettings["RealtimeHubNotificationUsername"] ?? "sample-api";
-            string password = ConfigurationManager.AppSettings["RealtimeHubNotificationPassword"] ?? "sample-secret";
+            string username = AppSettings.Read(
+                "RealtimeHub-NotificationUsername",
+                "RealtimeHubNotificationUsername") ?? "sample-api";
+            string password = AppSettings.Read(
+                "RealtimeHub-NotificationPassword",
+                "RealtimeHubNotificationPassword") ?? "sample-secret";
             string rawValue = username + ":" + password;
             string encodedValue = Convert.ToBase64String(Encoding.UTF8.GetBytes(rawValue));
 

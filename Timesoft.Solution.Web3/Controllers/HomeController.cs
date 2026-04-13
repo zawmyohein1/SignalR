@@ -10,7 +10,9 @@ namespace Timesoft.Solution.Web3.Controllers
     {
         public ActionResult Index()
         {
-            string configuredApiBaseUrl = ConfigurationManager.AppSettings["LeaveCalculationApiBaseUrl"];
+            string configuredApiBaseUrl = ReadAppSetting(
+                "LeaveCalculationDemo-ApiBaseUrl",
+                "LeaveCalculationApiBaseUrl");
             string apiBaseUrl = string.IsNullOrWhiteSpace(configuredApiBaseUrl)
                 || string.Equals(configuredApiBaseUrl, "auto", StringComparison.OrdinalIgnoreCase)
                     ? $"{Request.Url.Scheme}://localhost:5002"
@@ -19,11 +21,18 @@ namespace Timesoft.Solution.Web3.Controllers
             var model = new LeaveCalculationPageViewModel
             {
                 ApiBaseUrl = apiBaseUrl,
-                HubUrl = ConfigurationManager.AppSettings["RealtimeHubUrl"] ?? "https://localhost:5003/hubs/jobstatus",
+                HubUrl = ReadAppSetting(
+                    "LeaveCalculationDemo-HubUrl",
+                    "RealtimeHubUrl") ?? "https://localhost:5003/hubs/jobstatus",
                 SignalREnabled = !string.Equals(
-                    ConfigurationManager.AppSettings["SignalREnabled"],
+                    ReadAppSetting(
+                        "LeaveCalculationDemo-SignalREnabled",
+                        "SignalREnabled"),
                     "false",
                     StringComparison.OrdinalIgnoreCase),
+                RestoreStorageMode = NormalizeRestoreStorageMode(ReadAppSetting(
+                    "LeaveCalculationDemo-RestoreStorage",
+                    "LeaveCalculationRestoreStorage")),
                 CurrentYear = DateTime.Now.Year,
                 Companies = BuildCompanies(),
                 Departments = BuildDepartments(),
@@ -31,6 +40,11 @@ namespace Timesoft.Solution.Web3.Controllers
             };
 
             return View(model);
+        }
+
+        public ActionResult ViewLeave()
+        {
+            return View();
         }
 
         private static IReadOnlyList<DemoOption> BuildCompanies()
@@ -80,6 +94,30 @@ namespace Timesoft.Solution.Web3.Controllers
                 new DemoOption("8040", "8040 - COPY UNICE CHENG"),
                 new DemoOption("805", "805 - VIVIAN CHIA")
             };
+        }
+
+        private static string NormalizeRestoreStorageMode(string configuredMode)
+        {
+            if (string.Equals(configuredMode, "off", StringComparison.OrdinalIgnoreCase))
+            {
+                return "off";
+            }
+
+            if (string.Equals(configuredMode, "local", StringComparison.OrdinalIgnoreCase))
+            {
+                return "local";
+            }
+
+            return "session";
+        }
+
+        private static string ReadAppSetting(string primaryKey, string fallbackKey)
+        {
+            string value = ConfigurationManager.AppSettings[primaryKey];
+
+            return string.IsNullOrWhiteSpace(value)
+                ? ConfigurationManager.AppSettings[fallbackKey]
+                : value;
         }
 
     }

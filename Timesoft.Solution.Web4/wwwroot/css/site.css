@@ -36,8 +36,46 @@ body {
     border-bottom: 1px solid #d8e1e8;
 }
 
+.app-menu {
+    gap: 0.35rem;
+    margin-left: 1rem;
+}
+
+.app-menu-link {
+    border-radius: 6px;
+    color: #52616d;
+    font-weight: 600;
+    padding-left: 0.85rem;
+    padding-right: 0.85rem;
+}
+
+.app-menu-link:hover {
+    background: #edf4f6;
+    color: #141f33;
+}
+
+.app-menu-link.active {
+    background: #dcecef;
+    color: #155e63;
+}
+
+.app-framework-label {
+    color: #687887;
+    margin-left: auto;
+}
+
 .leave-demo {
     padding-bottom: 2rem;
+}
+
+.navigation-test {
+    max-width: 720px;
+    padding: 2rem 0;
+}
+
+.navigation-test p {
+    color: #52616d;
+    line-height: 1.6;
 }
 
 .login-stage {

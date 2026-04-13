@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+@{
+    var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+    var isLeaveCalculationActive = string.Equals(currentAction, "Index", StringComparison.OrdinalIgnoreCase);
+    var isViewLeaveActive = string.Equals(currentAction, "ViewLeave", StringComparison.OrdinalIgnoreCase);
+}
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -18,11 +23,21 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                    <ul class="navbar-nav app-menu flex-grow-1">
                         <li class="nav-item">
-                            <span class="nav-link text-muted">ASP.NET Core MVC on .NET 8</span>
+                            <a class="nav-link app-menu-link @(isLeaveCalculationActive ? "active" : "")"
+                               asp-area=""
+                               asp-controller="Home"
+                               asp-action="Index">Leave Calculation</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link app-menu-link @(isViewLeaveActive ? "active" : "")"
+                               asp-area=""
+                               asp-controller="Home"
+                               asp-action="ViewLeave">View Leave</a>
                         </li>
                     </ul>
+                    <span class="navbar-text app-framework-label">.NET 8</span>
                 </div>
             </div>
         </nav>

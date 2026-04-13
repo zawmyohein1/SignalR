@@ -8,6 +8,8 @@ public sealed class LeaveCalculationPageViewModel
 
     public bool SignalREnabled { get; set; } = true;
 
+    public string RestoreStorageMode { get; set; } = "session";
+
     public int CurrentYear { get; set; }
 
     public IReadOnlyList<DemoOption> Companies { get; set; } = [];

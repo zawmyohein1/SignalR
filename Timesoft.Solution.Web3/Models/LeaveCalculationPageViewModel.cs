@@ -10,6 +10,8 @@ namespace Timesoft.Solution.Web3.Models
 
         public bool SignalREnabled { get; set; }
 
+        public string RestoreStorageMode { get; set; }
+
         public int CurrentYear { get; set; }
 
         public IReadOnlyList<DemoOption> Companies { get; set; }

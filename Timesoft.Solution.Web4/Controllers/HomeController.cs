@@ -22,6 +22,7 @@ public class HomeController : Controller
             ApiBaseUrl = _configuration["LeaveCalculationDemo:ApiBaseUrl"] ?? "https://localhost:5102",
             HubUrl = _configuration["LeaveCalculationDemo:HubUrl"] ?? "https://localhost:5003/hubs/jobstatus",
             SignalREnabled = _configuration.GetValue("LeaveCalculationDemo:SignalREnabled", true),
+            RestoreStorageMode = NormalizeRestoreStorageMode(_configuration["LeaveCalculationDemo:RestoreStorage"]),
             CurrentYear = DateTime.Now.Year,
             Companies = BuildCompanies(),
             Departments = BuildDepartments(),
@@ -32,6 +33,11 @@ public class HomeController : Controller
     }
 
     public IActionResult Privacy()
+    {
+        return View();
+    }
+
+    public IActionResult ViewLeave()
     {
         return View();
     }
@@ -89,6 +95,16 @@ public class HomeController : Controller
             new("8040", "8040 - COPY UNICE CHENG"),
             new("805", "805 - VIVIAN CHIA")
         ];
+    }
+
+    private static string NormalizeRestoreStorageMode(string? configuredMode)
+    {
+        return configuredMode?.Trim().ToLowerInvariant() switch
+        {
+            "off" => "off",
+            "local" => "local",
+            _ => "session"
+        };
     }
 
 }

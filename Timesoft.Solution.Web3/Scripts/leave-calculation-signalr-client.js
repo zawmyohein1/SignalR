@@ -49,12 +49,45 @@
         state.currentLoginUserId = response.loginUserId;
 
         if (canUseSignalR()) {
-            await connectToHub(response);
-            notifyLog("SignalR", "Connected and joined the company/user/calculation group.", new Date());
-            return;
+            try {
+                await connectToHub(response);
+                notifyLog("SignalR", "Connected and joined the company/user/calculation group.", new Date());
+                return;
+            } catch (error) {
+                notifySignalRState("Polling", "text-bg-warning");
+                notifyLog("SignalR", "Could not connect to SignalR. Snapshot polling is used instead.", new Date());
+            }
+        } else {
+            useSnapshotPollingFallback();
         }
 
-        useSnapshotPollingFallback();
+        startPollingSnapshot(state.currentCalculationId);
+    }
+
+    async function resume(savedCalculation) {
+        ensureConfigured();
+
+        stopPollingSnapshot();
+        await stopConnection();
+
+        state.currentCalculationId = savedCalculation.calculationId;
+        state.currentHubAccessToken = savedCalculation.hubAccessToken;
+        state.currentCompanyCode = savedCalculation.companyCode;
+        state.currentLoginUserId = savedCalculation.loginUserId;
+
+        if (canUseSignalR() && state.currentHubAccessToken) {
+            try {
+                await connectToHub(savedCalculation);
+                notifyLog("SignalR", "Reconnected to the saved calculation group.", new Date());
+                return;
+            } catch (error) {
+                notifySignalRState("Polling", "text-bg-warning");
+                notifyLog("SignalR", "Could not reconnect to SignalR. Snapshot polling is used instead.", new Date());
+            }
+        } else {
+            useSnapshotPollingFallback();
+        }
+
         startPollingSnapshot(state.currentCalculationId);
     }
 
@@ -73,6 +106,8 @@
         if (calculation.status === "Completed" || calculation.status === "Failed") {
             notifyFinish();
         }
+
+        return calculation;
     }
 
     async function connectToHub(response) {
@@ -228,6 +263,7 @@
         configure: configure,
         reset: reset,
         start: start,
+        resume: resume,
         refreshSnapshot: refreshSnapshot
     };
 })(window, jQuery);

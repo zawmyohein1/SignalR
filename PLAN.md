@@ -1,5 +1,161 @@
 # PLAN.md
 
+## Feature Plan: Restore Leave Calculation Status After Navigation
+
+### Purpose
+
+Add configurable browser-side restore behavior for the Leave Calculation page.
+
+When a user starts a calculation, navigates to another page, and returns to the Leave Calculation page, the page should reload the latest calculation state from the API. If the process is still running, the page should show the running status and reconnect to SignalR. If the process is complete, the page should show the completed status and progress history.
+
+### Configuration
+
+Add a storage mode setting for both Web3 and Web4.
+
+Supported values:
+
+- `off`: Do not remember or restore the active calculation.
+- `session`: Use `sessionStorage`. Restore only within the same browser tab/session.
+- `local`: Use `localStorage`. Restore after browser close/reopen when browser storage still exists.
+
+Web4 setting:
+
+```json
+"LeaveCalculationDemo": {
+  "RestoreStorage": "session"
+}
+```
+
+Web3 setting:
+
+```xml
+<add key="LeaveCalculationDemo-RestoreStorage" value="session" />
+```
+
+### Pages
+
+Add a second simple navigation page in both MVC UI projects.
+
+Required behavior:
+
+- Leave Calculation page includes a link to the second page.
+- Second page includes a link back to Leave Calculation.
+- This gives a clear manual test for leaving and returning while a calculation is running.
+
+Suggested route names:
+
+- Web4: `Home/ViewLeave`
+- Web3: `Home/ViewLeave`
+
+### Browser State
+
+When a calculation starts successfully, store the active calculation context according to the configured storage mode.
+
+Store:
+
+- `calculationId`
+- `companyCode`
+- `companyText`
+- `loginUserId`
+- `period`
+- `hubAccessToken`
+- `executionMode`
+- `signalREnabled`
+- `startedAt`
+
+Do not store anything when storage mode is `off`.
+
+### Restore Flow
+
+On Leave Calculation page load:
+
+1. Read configured storage mode.
+2. Try to load the saved active calculation.
+3. If no saved calculation exists, show the normal login screen.
+4. If saved calculation exists, rebuild the login context and show the calculation panel.
+5. Call the existing details endpoint for the saved `calculationId`.
+6. Rebuild the status panel and progress log from the API snapshot/history.
+7. If status is `Completed` or `Failed`, keep the final status visible and enable the Process button.
+8. If status is still running, disable the Process button, reconnect to SignalR, join the calculation group, and refresh the snapshot again after connecting.
+
+### SignalR Client Updates
+
+Update both SignalR client scripts so they can resume an existing calculation, not only start a new one.
+
+Add a method similar to:
+
+```text
+resume(savedCalculation)
+```
+
+Responsibilities:
+
+- Set current calculation id, token, company, and user.
+- Connect to SignalR when enabled and available.
+- Join the correct company/user/calculation group.
+- Fall back to polling if SignalR is disabled or the client script is unavailable.
+- Refresh the latest snapshot after reconnecting.
+
+### UI Updates
+
+Update both Leave Calculation pages to:
+
+- Read restore storage mode from server-rendered data attributes.
+- Save active calculation state after `Start` succeeds.
+- Restore active calculation state on page load.
+- Show a clear log row when the page restores from browser storage.
+- Keep completed calculations visible when returning to the page.
+- Allow a new Process click after `Completed` or `Failed`.
+
+### Files To Update
+
+Web4:
+
+- `Timesoft.Solution.Web4/appsettings.json`
+- `Timesoft.Solution.Web4/Models/LeaveCalculationPageViewModel.cs`
+- `Timesoft.Solution.Web4/Controllers/HomeController.cs`
+- `Timesoft.Solution.Web4/Views/Home/Index.cshtml`
+- `Timesoft.Solution.Web4/Views/Home/ViewLeave.cshtml`
+- `Timesoft.Solution.Web4/wwwroot/js/leave-calculation-signalr-client.js`
+
+Web3:
+
+- `Timesoft.Solution.Web3/Web.config`
+- `Timesoft.Solution.Web3/Models/LeaveCalculationPageViewModel.cs`
+- `Timesoft.Solution.Web3/Controllers/HomeController.cs`
+- `Timesoft.Solution.Web3/Views/Home/Index.cshtml`
+- `Timesoft.Solution.Web3/Views/Home/ViewLeave.cshtml`
+- `Timesoft.Solution.Web3/Scripts/leave-calculation-signalr-client.js`
+
+### Manual Test Cases
+
+1. Set restore mode to `session`, start a calculation, navigate to the second page, return before completion, and confirm the page shows the running status and receives new updates.
+2. Set restore mode to `session`, start a calculation, navigate away until completion, return, and confirm the page shows `Completed` and the full progress log.
+3. Set restore mode to `local`, start a calculation, close/reopen the browser if possible, and confirm the page restores the latest status.
+4. Set restore mode to `off`, start a calculation, navigate away and return, and confirm the page starts fresh.
+5. Disable SignalR and confirm the restore flow still loads the latest snapshot through the details endpoint.
+6. Use separate browser tabs/users and confirm one saved calculation does not overwrite another tab when `session` mode is used.
+
+### Build Verification
+
+Run:
+
+```powershell
+dotnet build D:\Zaw\SignalR\Timesoft.Solution.Web4\Timesoft.Solution.Web4.csproj --no-restore
+```
+
+Run:
+
+```powershell
+& 'C:\Program Files\Microsoft Visual Studio\18\Community\MSBuild\Current\Bin\MSBuild.exe' D:\Zaw\SignalR\Timesoft.Solution.Web3\Timesoft.Solution.Web3.csproj /t:Build /p:Configuration=Debug /p:Platform=AnyCPU /nologo /v:m
+```
+
+### Notes
+
+The API XML store remains the source of truth. Browser storage is only a bookmark to the active calculation and the data needed to rejoin the SignalR group.
+
+For production, prefer issuing a fresh hub token during restore instead of keeping a long-lived token in browser storage.
+
 ## Purpose
 
 This plan explains how to implement the same SignalR realtime leave calculation feature in the existing project.

@@ -13,9 +13,9 @@ namespace Timesoft.Solution.Api.Web3.Services
         public DemoHubTokenService()
         {
             _secret = Encoding.UTF8.GetBytes(
-                ConfigurationManager.AppSettings["HubTokenSecret"] ?? "dev-only-demo-hub-token-secret");
+                AppSettings.Read("HubToken-Secret", "HubTokenSecret") ?? "dev-only-demo-hub-token-secret");
 
-            if (!int.TryParse(ConfigurationManager.AppSettings["HubTokenLifetimeMinutes"], out _tokenLifetimeMinutes))
+            if (!int.TryParse(AppSettings.Read("HubToken-LifetimeMinutes", "HubTokenLifetimeMinutes"), out _tokenLifetimeMinutes))
             {
                 _tokenLifetimeMinutes = 30;
             }

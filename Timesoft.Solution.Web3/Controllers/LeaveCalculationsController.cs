@@ -81,7 +81,9 @@ namespace Timesoft.Solution.Web3.Controllers
 
         private string ResolveApiBaseUrl()
         {
-            string configuredApiBaseUrl = ConfigurationManager.AppSettings["LeaveCalculationApiBaseUrl"];
+            string configuredApiBaseUrl = ReadAppSetting(
+                "LeaveCalculationDemo-ApiBaseUrl",
+                "LeaveCalculationApiBaseUrl");
 
             if (string.IsNullOrWhiteSpace(configuredApiBaseUrl)
                 || string.Equals(configuredApiBaseUrl, "auto", StringComparison.OrdinalIgnoreCase))
@@ -108,7 +110,7 @@ namespace Timesoft.Solution.Web3.Controllers
             return Json(
                 new
                 {
-                    message = "MVC UI could not call the Leave Calculation API. Make sure the API project is running on https://localhost:5002.",
+                    message = "MVC UI could not call the Leave Calculation API. Make sure the API project is running.",
                     detail = ex.Message
                 },
                 JsonRequestBehavior.AllowGet);
@@ -122,6 +124,15 @@ namespace Timesoft.Solution.Web3.Controllers
             Response.StatusCode = (int)apiResponse.StatusCode;
 
             return Content(responseBody, contentType);
+        }
+
+        private static string ReadAppSetting(string primaryKey, string fallbackKey)
+        {
+            string value = ConfigurationManager.AppSettings[primaryKey];
+
+            return string.IsNullOrWhiteSpace(value)
+                ? ConfigurationManager.AppSettings[fallbackKey]
+                : value;
         }
     }
 }

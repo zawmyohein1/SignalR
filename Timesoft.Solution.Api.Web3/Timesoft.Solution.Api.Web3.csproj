@@ -55,6 +55,7 @@
     <Compile Include="App_Start\LeaveCalculationCompositionRoot.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\LeaveCalculationsController.cs" />
+    <Compile Include="Services\AppSettings.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
