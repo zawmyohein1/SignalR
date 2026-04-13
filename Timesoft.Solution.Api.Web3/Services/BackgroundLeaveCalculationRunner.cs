@@ -170,7 +170,7 @@ namespace Timesoft.Solution.Api.Web3.Services
                 await PublishStatusAsync(
                     info.CalculationId,
                     CalculatingStatus,
-                    $"[{employee.DisplayName}] done.",
+                    $"[{info.CompanyCode}]-[{employee.DisplayName}] done.",
                     cancellationToken);
             }
         }

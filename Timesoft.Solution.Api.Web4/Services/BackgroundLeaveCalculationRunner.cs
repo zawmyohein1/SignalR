@@ -154,7 +154,7 @@ public sealed class BackgroundLeaveCalculationRunner(
             await PublishStatusAsync(
                 info.CalculationId,
                 CalculatingStatus,
-                $"[{employee.DisplayName}] done.",
+                $"[{info.CompanyCode}]-[{employee.DisplayName}] done.",
                 cancellationToken);
         }
     }

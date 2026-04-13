@@ -156,15 +156,32 @@ namespace Timesoft.Solution.Api.Web3.Services
             // Create App_Data file on first run.
             string directory = Path.GetDirectoryName(_xmlPath);
 
-            if (!Directory.Exists(directory))
+            if (!string.IsNullOrWhiteSpace(directory) && !Directory.Exists(directory))
             {
                 Directory.CreateDirectory(directory);
             }
 
-            if (!File.Exists(_xmlPath))
+            if (!File.Exists(_xmlPath) || IsEmptyXmlFile(_xmlPath))
             {
-                new XDocument(new XElement("leaveCalculations")).Save(_xmlPath);
+                CreateEmptyDocument().Save(_xmlPath);
             }
+        }
+
+        private static bool IsEmptyXmlFile(string path)
+        {
+            var fileInfo = new FileInfo(path);
+
+            if (fileInfo.Length == 0)
+            {
+                return true;
+            }
+
+            return string.IsNullOrWhiteSpace(File.ReadAllText(path));
+        }
+
+        private static XDocument CreateEmptyDocument()
+        {
+            return new XDocument(new XElement("leaveCalculations"));
         }
 
         private static XElement ToElement(LeaveCalculationInfo info)

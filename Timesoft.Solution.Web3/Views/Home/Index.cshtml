@@ -270,7 +270,12 @@
 
                 $button.prop("disabled", true).html(processingButtonHtml);
                 await resetProcessUi();
-                appendLog("HTTP request", "Posting Leave Calculation request. The browser will not wait for the full calculation to finish.", new Date());
+
+                const msg = signalREnabled
+                            ? 'The browser will not wait for the full calculation to finish'
+                            : 'The browser will wait for the full calculation to finish';
+
+                appendLog("HTTP request", `Posting Leave Calculation request. ${msg}`, new Date());
 
                 try {
                     const response = await startCalculation(buildStartPayload());
