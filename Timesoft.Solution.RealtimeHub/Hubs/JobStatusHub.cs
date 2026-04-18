@@ -8,27 +8,27 @@ public sealed class JobStatusHub(DemoHubTokenService tokenService) : Hub
     public static string CalculationGroupName(string companyCode, string loginUserId, string calculationId)
         => $"company:{companyCode}:user:{loginUserId}:calculation:{calculationId}";
 
-    public Task JoinCalculationGroup(string companyCode, string loginUserId, string calculationId)
+    public Task JoinCalculationGroup(string companyCode, string loginUserId, string calculationId, string hubAccessToken)
     {
         // Browser must prove it owns this calculation before joining.
-        ValidateCalculationAccess(companyCode, loginUserId, calculationId);
+        ValidateCalculationAccess(companyCode, loginUserId, calculationId, hubAccessToken);
 
         return Groups.AddToGroupAsync(
             Context.ConnectionId,
             CalculationGroupName(companyCode.Trim(), loginUserId.Trim(), calculationId.Trim()));
     }
 
-    public Task LeaveCalculationGroup(string companyCode, string loginUserId, string calculationId)
+    public Task LeaveCalculationGroup(string companyCode, string loginUserId, string calculationId, string hubAccessToken)
     {
         // Remove this connection from the calculation-specific group.
-        ValidateCalculationAccess(companyCode, loginUserId, calculationId);
+        ValidateCalculationAccess(companyCode, loginUserId, calculationId, hubAccessToken);
 
         return Groups.RemoveFromGroupAsync(
             Context.ConnectionId,
             CalculationGroupName(companyCode.Trim(), loginUserId.Trim(), calculationId.Trim()));
     }
 
-    private void ValidateCalculationAccess(string companyCode, string loginUserId, string calculationId)
+    private void ValidateCalculationAccess(string companyCode, string loginUserId, string calculationId, string? hubAccessToken)
     {
         if (string.IsNullOrWhiteSpace(companyCode))
         {
@@ -45,7 +45,9 @@ public sealed class JobStatusHub(DemoHubTokenService tokenService) : Hub
             throw new HubException("A calculationId is required.");
         }
 
-        var token = GetAccessToken();
+        var token = string.IsNullOrWhiteSpace(hubAccessToken)
+            ? GetAccessToken()
+            : hubAccessToken.Trim();
 
         if (!tokenService.TryValidate(token, companyCode.Trim(), loginUserId.Trim(), calculationId.Trim(), out _))
         {

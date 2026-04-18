@@ -9,7 +9,8 @@
          data-calculation-proxy-url="@Url.Content("~/LeaveCalculations")"
          data-hub-url="@Model.HubUrl"
          data-signalr-enabled="@Model.SignalREnabled.ToString().ToLowerInvariant()"
-         data-restore-storage="@Model.RestoreStorageMode">
+         data-restore-storage="@Model.RestoreStorageMode"
+         data-signalr-provider="@Model.SignalRProvider">
     <div id="loginPanel" class="login-stage">
         <div class="login-copy">
             <p class="eyebrow">TIMES SOFTWARE SAMPLE</p>
@@ -131,6 +132,10 @@
 
             <div class="status-panel">
                 <div class="status-row">
+                    <span>SignalR Provider</span>
+                    <strong id="signalrProviderDisplay" class="badge signalr-provider-badge text-bg-secondary">@Model.SignalRProvider</strong>
+                </div>
+                <div class="status-row">
                     <span>SignalR</span>
                     <strong id="signalrState" class="badge text-bg-secondary">Disconnected</strong>
                 </div>
@@ -209,6 +214,7 @@
             realtimeClient.configure({
                 calculationProxyUrl: calculationProxyUrl,
                 hubUrl: hubUrl,
+                signalRProvider: $app.data("signalrProvider") || "Local",
                 signalREnabled: signalREnabled,
                 callbacks: {
                     onSignalRState: setSignalRState,

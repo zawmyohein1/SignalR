@@ -17,12 +17,17 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
+        var signalRProvider = _configuration["LeaveCalculationDemo:SignalRProvider"] ?? "Local";
+        var signalREnabled = _configuration.GetValue("LeaveCalculationDemo:SignalREnabled", true)
+            && !string.Equals(signalRProvider, "Disabled", StringComparison.OrdinalIgnoreCase);
+
         var model = new LeaveCalculationPageViewModel
         {
             ApiBaseUrl = _configuration["LeaveCalculationDemo:ApiBaseUrl"] ?? "https://localhost:5102",
             HubUrl = _configuration["LeaveCalculationDemo:HubUrl"] ?? "https://localhost:5003/hubs/jobstatus",
-            SignalREnabled = _configuration.GetValue("LeaveCalculationDemo:SignalREnabled", true),
+            SignalREnabled = signalREnabled,
             RestoreStorageMode = NormalizeRestoreStorageMode(_configuration["LeaveCalculationDemo:RestoreStorage"]),
+            SignalRProvider = signalRProvider,
             CurrentYear = DateTime.Now.Year,
             Companies = BuildCompanies(),
             Departments = BuildDepartments(),

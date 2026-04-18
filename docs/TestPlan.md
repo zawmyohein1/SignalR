@@ -18,8 +18,8 @@ Run these projects together:
 
 | Project | URL |
 | --- | --- |
-| `Timesoft.Solution.Web3` | `http://localhost:56540` |
-| `Timesoft.Solution.Api.Web3` | `http://localhost:56541` |
+| `Timesoft.Solution.Web3` | `http://localhost:57635` |
+| `Timesoft.Solution.Api.Web3` | `http://localhost:57636` |
 | `Timesoft.Solution.RealtimeHub` | `https://localhost:5003` |
 
 Optional parity test:
@@ -35,7 +35,8 @@ For Web3:
 
 ```text
 Timesoft.Solution.Web3\Web.config
-LeaveCalculationDemo-SignalREnabled=true
+SignalREnabled=true
+SignalRProvider=Azure
 
 Timesoft.Solution.Api.Web3\Web.config
 SignalREnabled=true
@@ -46,6 +47,7 @@ For Web4:
 ```text
 Timesoft.Solution.Web4\appsettings.json
 LeaveCalculationDemo:SignalREnabled=true
+LeaveCalculationDemo:SignalRProvider=Azure
 
 Timesoft.Solution.Api.Web4\appsettings.json
 SignalREnabled=true

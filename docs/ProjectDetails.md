@@ -207,6 +207,79 @@ This makes the timeout problem easy to demonstrate.
 
 When SignalR is enabled but the browser cannot connect to RealtimeHub, the page uses snapshot polling against the calculation `Details` endpoint. Polling is a fallback for display only; the calculation still runs in Api.
 
+## Current Working Ports
+
+The demo is currently wired to these local ports:
+
+| Project | URL |
+| --- | --- |
+| `Timesoft.Solution.Web3` | `http://localhost:57635` |
+| `Timesoft.Solution.Api.Web3` | `http://localhost:57636` |
+| `Timesoft.Solution.RealtimeHub` | `https://localhost:5003` |
+| `Timesoft.Solution.Web4` | `https://localhost:5101` |
+| `Timesoft.Solution.Api.Web4` | `https://localhost:5102` |
+
+Web3 and Web4 both use the same RealtimeHub route:
+
+```text
+/hubs/jobstatus
+```
+
+Web3 and Web3.Api are configured for Azure SignalR testing, while Web4 remains the newer .NET 8 path that also uses the same hub.
+
+## Azure SignalR Service
+
+The realtime hub can run with Azure SignalR Service by configuration.
+
+Required settings:
+
+| Setting | Purpose |
+| --- | --- |
+| `SignalR:Provider` | Selects `Local` or `Azure` provider mode |
+| `Azure:SignalR:ConnectionString` | Azure SignalR access string used by `Timesoft.Solution.RealtimeHub` |
+
+Behavior:
+
+- Keep the hub route unchanged: `/hubs/jobstatus`
+- Keep the calculation group rule unchanged
+- Use Azure SignalR only for the realtime transport and scale-out layer
+- Keep local SignalR available for development or rollback
+
+This lets the same Leave Calculation Page and API flow work without changing the business process.
+
+## Final Working Setup
+
+The repo currently runs with these local endpoints:
+
+| Project | URL |
+| --- | --- |
+| `Timesoft.Solution.Web3` | `http://localhost:57635` |
+| `Timesoft.Solution.Api.Web3` | `http://localhost:57636` |
+| `Timesoft.Solution.RealtimeHub` | `https://localhost:5003` |
+| `Timesoft.Solution.Web4` | `https://localhost:5101` |
+| `Timesoft.Solution.Api.Web4` | `https://localhost:5102` |
+
+Final configuration for Azure SignalR testing:
+
+| Project | Key settings |
+| --- | --- |
+| `Timesoft.Solution.Web3` | `LeaveCalculationApiBaseUrl=http://localhost:57636`, `RealtimeHubUrl=https://localhost:5003/hubs/jobstatus`, `SignalREnabled=true`, `SignalRProvider=Azure` |
+| `Timesoft.Solution.Web4` | `ApiBaseUrl=https://localhost:5102`, `HubUrl=https://localhost:5003/hubs/jobstatus`, `SignalREnabled=true`, `SignalRProvider=Azure` |
+| `Timesoft.Solution.RealtimeHub` | `SignalR:Provider=Azure`, `Azure:SignalR:ConnectionString=<Azure connection string>` |
+
+RealtimeHub CORS must include the browser origins used by the demo, especially:
+
+- `http://localhost:57635`
+- `https://localhost:57635`
+- `http://localhost:57636`
+- `https://localhost:57636`
+
+The hub route remains unchanged:
+
+```text
+/hubs/jobstatus
+```
+
 ## Pros
 
 - Leave Calculation Page does not wait for the full calculation.

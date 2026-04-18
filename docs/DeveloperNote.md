@@ -261,6 +261,25 @@ This makes the page still usable even when realtime mode is off.
 
 ---
 
+## Azure SignalR Provider
+
+The standalone realtime server can be switched to Azure SignalR without changing the hub route or the calculation flow.
+
+Important configuration:
+
+- `SignalR:Provider=Azure`
+- `Azure:SignalR:ConnectionString=<Azure SignalR connection string>`
+
+The browser still connects to:
+
+```text
+/hubs/jobstatus
+```
+
+The page and API continue to use the same calculation group rule. Azure SignalR only replaces the realtime transport layer behind `Timesoft.Solution.RealtimeHub`.
+
+---
+
 ## Navigation Restore Implementation
 
 The navigation restore feature is implemented in the Leave Calculation page script.
@@ -431,6 +450,31 @@ The hub is mapped here:
 ```
 
 The browser SignalR client connects to this URL.
+
+### Azure SignalR Provider
+
+File:
+
+```text
+Timesoft.Solution.RealtimeHub\Program.cs
+```
+
+The hub startup can switch between local SignalR and Azure SignalR by configuration.
+
+Configuration keys:
+
+```text
+SignalR:Provider
+Azure:SignalR:ConnectionString
+```
+
+Behavior:
+
+- `Local` keeps the existing in-process SignalR path.
+- `Azure` enables Azure SignalR Service and requires the connection string.
+- The hub route stays `/hubs/jobstatus` in both modes.
+
+This keeps the realtime contract stable for Web3 and Web4 while allowing managed scale-out when needed.
 
 ---
 
@@ -660,4 +704,3 @@ For production, improve:
 - monitoring
 - load testing
 - multi-server SignalR scale-out
-

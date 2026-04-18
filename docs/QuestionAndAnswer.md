@@ -299,3 +299,18 @@ It exists so the demo can prove this behavior:
 4. See the current running status or completed result.
 
 `View Leave` does not run calculation logic and does not own calculation state. The important feature is the restore flow on the Leave Calculation Page.
+
+---
+
+### 22. How does Azure SignalR fit into this demo?
+
+Azure SignalR Service replaces the local realtime transport layer only.
+
+The Leave Calculation Page still connects to the same hub route, and Web3.Api still sends the same calculation notifications. The difference is that `Timesoft.Solution.RealtimeHub` uses Azure SignalR behind the scenes when `SignalR:Provider` is set to `Azure`.
+
+Recommended configuration:
+
+- `SignalR:Provider = Azure`
+- `Azure:SignalR:ConnectionString = ...`
+
+This keeps the business flow unchanged while giving the demo a managed realtime service for browser delivery.

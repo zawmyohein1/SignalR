@@ -18,9 +18,12 @@
         state.config = {
             calculationProxyUrl: options.calculationProxyUrl,
             hubUrl: options.hubUrl,
+            signalRProvider: options.signalRProvider || "Local",
             signalREnabled: options.signalREnabled,
             callbacks: options.callbacks || {}
         };
+
+        setSignalRProvider(state.config.signalRProvider);
     }
 
     async function reset() {
@@ -167,7 +170,8 @@
             "JoinCalculationGroup",
             response.companyCode,
             response.loginUserId,
-            response.calculationId);
+            response.calculationId,
+            state.currentHubAccessToken);
     }
 
     function useSnapshotPollingFallback() {
@@ -235,6 +239,14 @@
 
     function notifySignalRState(text, badgeClass) {
         invokeCallback("onSignalRState", text, badgeClass);
+    }
+
+    function setSignalRProvider(provider) {
+        const normalizedProvider = (provider || "Local").toString();
+        $("#signalrProviderDisplay")
+            .removeClass("text-bg-secondary text-bg-success text-bg-primary text-bg-dark signalr-provider-local signalr-provider-azure signalr-provider-disabled")
+            .addClass(`signalr-provider-${normalizedProvider.toLowerCase()}`)
+            .text(normalizedProvider);
     }
 
     function notifyStatus(status, message) {

@@ -8,34 +8,38 @@ namespace Timesoft.Solution.Web3.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
-        {
-            string configuredApiBaseUrl = ReadAppSetting(
-                "LeaveCalculationDemo-ApiBaseUrl",
-                "LeaveCalculationApiBaseUrl");
-            string apiBaseUrl = string.IsNullOrWhiteSpace(configuredApiBaseUrl)
-                || string.Equals(configuredApiBaseUrl, "auto", StringComparison.OrdinalIgnoreCase)
-                    ? $"{Request.Url.Scheme}://localhost:5002"
+    public ActionResult Index()
+    {
+        string configuredApiBaseUrl = ReadAppSetting(
+            "LeaveCalculationDemo-ApiBaseUrl",
+            "LeaveCalculationApiBaseUrl");
+        string signalRProvider = ConfigurationManager.AppSettings["SignalRProvider"] ?? "Local";
+        string apiBaseUrl = string.IsNullOrWhiteSpace(configuredApiBaseUrl)
+            || string.Equals(configuredApiBaseUrl, "auto", StringComparison.OrdinalIgnoreCase)
+                    ? "https://localhost:5002"
                     : configuredApiBaseUrl;
 
-            var model = new LeaveCalculationPageViewModel
-            {
-                ApiBaseUrl = apiBaseUrl,
-                HubUrl = ReadAppSetting(
+        var model = new LeaveCalculationPageViewModel
+        {
+            ApiBaseUrl = apiBaseUrl,
+            HubUrl = ReadAppSetting(
                     "LeaveCalculationDemo-HubUrl",
                     "RealtimeHubUrl") ?? "https://localhost:5003/hubs/jobstatus",
-                SignalREnabled = !string.Equals(
+            SignalREnabled =
+                !string.Equals(
                     ReadAppSetting(
                         "LeaveCalculationDemo-SignalREnabled",
                         "SignalREnabled"),
                     "false",
-                    StringComparison.OrdinalIgnoreCase),
-                RestoreStorageMode = NormalizeRestoreStorageMode(ReadAppSetting(
-                    "LeaveCalculationDemo-RestoreStorage",
-                    "LeaveCalculationRestoreStorage")),
-                CurrentYear = DateTime.Now.Year,
-                Companies = BuildCompanies(),
-                Departments = BuildDepartments(),
+                    StringComparison.OrdinalIgnoreCase)
+                && !string.Equals(signalRProvider, "Disabled", StringComparison.OrdinalIgnoreCase),
+            RestoreStorageMode = NormalizeRestoreStorageMode(ReadAppSetting(
+                "LeaveCalculationDemo-RestoreStorage",
+                "LeaveCalculationRestoreStorage")),
+            SignalRProvider = signalRProvider,
+            CurrentYear = DateTime.Now.Year,
+            Companies = BuildCompanies(),
+            Departments = BuildDepartments(),
                 Employees = BuildEmployees()
             };
 
@@ -118,7 +122,6 @@ namespace Timesoft.Solution.Web3.Controllers
             return string.IsNullOrWhiteSpace(value)
                 ? ConfigurationManager.AppSettings[fallbackKey]
                 : value;
-        }
-
     }
+}
 }

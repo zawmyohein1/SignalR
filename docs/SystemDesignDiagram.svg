@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
   <title id="title">SignalR System Design Diagram</title>
-  <desc id="desc">Web Leave Calculation Page calls Api. Api saves status and history in XML, notifies RealtimeHub, and the page can restore status after navigation by reloading the Api snapshot.</desc>
+  <desc id="desc">Web3 Leave Calculation Page calls Web3.Api. Web3.Api saves status and history in XML, notifies RealtimeHub, and RealtimeHub uses local SignalR or Azure SignalR by configuration to push updates to the correct Leave Calculation Page only. The page can restore status after navigation by reloading the Api snapshot.</desc>
 
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
@@ -14,7 +14,7 @@
     SignalR System Design
   </text>
   <text x="640" y="100" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="17" fill="#64748b">
-    Api owns calculation status. SignalR pushes live updates. Navigation restore reloads the latest Api snapshot.
+    Web3.Api owns calculation status. SignalR pushes live updates. RealtimeHub uses local SignalR or Azure SignalR by configuration. Navigation restore reloads the latest Api snapshot.
   </text>
 
   <!-- Main boxes -->
@@ -46,6 +46,9 @@
   </text>
   <text x="1044" y="324" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">
     Pushes JobStatusUpdated
+  </text>
+  <text x="1044" y="346" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="600" fill="#6b21a8">
+    Local SignalR or Azure SignalR by config
   </text>
 
   <!-- Arrows -->
@@ -102,6 +105,6 @@
   <!-- Legend -->
   <rect x="86" y="642" width="1108" height="42" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
   <text x="640" y="668" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">
-    Web = Web3 or Web4 MVC    |    Api = Web3.Api or Web4.Api    |    RealtimeHub = Timesoft.Solution.RealtimeHub
+    Web3 = Timesoft.Solution.Web3    |    Web3.Api = Timesoft.Solution.Api.Web3    |    RealtimeHub = Timesoft.Solution.RealtimeHub (Local or Azure SignalR)
   </text>
 </svg>

@@ -246,6 +246,11 @@ Add realtime progress updates for long-running Leave Calculation.
 
 The user should not wait on one long HTTP request when SignalR is enabled.
 
+Support both SignalR modes by configuration:
+
+- local in-app SignalR
+- Azure SignalR Service
+
 The page should show:
 
 - Calculation Id
@@ -294,28 +299,46 @@ Do not edit code before this baseline is understood.
 
 ## Phase 2: Add Configuration
 
-Add configuration to control SignalR mode.
+Add configuration to control SignalR provider and runtime behavior.
 
 Required behavior:
 
 ```text
-SignalR enabled:
-    return 202 Accepted quickly
-    run calculation in background
-    send realtime progress
-
 SignalR disabled:
-    run calculation inside normal HTTP request
-    return final Completed response
+    use existing in-app SignalR path
+    keep current behavior
+
+SignalR enabled with local provider:
+    use in-app SignalR
+    keep current hub route and logic
+
+SignalR enabled with Azure provider:
+    use Azure SignalR Service
+    keep current hub route and logic
 ```
 
-Keep configuration simple. Avoid too many on/off flags.
+Keep configuration simple. Avoid too many flags.
 
-Recommended setting:
+Recommended settings:
 
 ```text
-SignalREnabled
+SignalR:Provider = Disabled | Local | Azure
+Azure:SignalR:ConnectionString = ...
 ```
+
+Add a fallback rule:
+
+```text
+If provider is Azure but the connection string is missing, fail fast at startup.
+```
+
+Task list:
+
+1. Define the config keys and default provider.
+2. Update `Timesoft.Solution.RealtimeHub` startup to choose the provider by config.
+3. Keep the hub route `/hubs/jobstatus` unchanged.
+4. Add Azure SignalR package and wiring only when Azure provider is selected.
+5. Keep local SignalR as the default path for development.
 
 ---
 
@@ -403,6 +426,9 @@ Timesoft.Solution.RealtimeHub
 Required features:
 
 - SignalR hub route: `/hubs/jobstatus`
+- provider selection by configuration
+- local SignalR fallback
+- Azure SignalR Service support
 - HTTP notification endpoint
 - CORS for Web3 and Web4
 - browser hub token validation
@@ -566,10 +592,10 @@ Keep documents presentation-friendly.
 
 If SignalR causes issues:
 
-1. Set `SignalREnabled` to false.
-2. Use normal HTTP request mode.
+1. Set `SignalR:Provider` to `Local` or `Disabled`.
+2. Remove or ignore the Azure SignalR connection string.
 3. Keep existing calculation behavior available.
-4. Disable RealtimeHub dependency for the affected page.
+4. Disable RealtimeHub dependency for the affected page if needed.
 
 This allows the existing system to continue working while SignalR is investigated.
 
@@ -589,4 +615,3 @@ Before production:
 - Confirm WebSocket support in hosting environment.
 - Decide scale-out strategy.
 - Document support and troubleshooting steps.
-

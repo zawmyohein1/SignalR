@@ -89,7 +89,7 @@ namespace Timesoft.Solution.Web3.Controllers
                 || string.Equals(configuredApiBaseUrl, "auto", StringComparison.OrdinalIgnoreCase))
             {
                 // Default demo API endpoint for Framework API.
-                return "https://localhost:5002";
+                return "http://localhost:57636";
             }
 
             return configuredApiBaseUrl.TrimEnd('/');

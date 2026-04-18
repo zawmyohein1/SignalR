@@ -1,3 +1,5 @@
+using Timesoft.Solution.RealtimeHub.Configuration;
+
 var builder = WebApplication.CreateBuilder(args);
 
 const string MvcUiCorsPolicy = "MvcUi";
@@ -18,11 +20,29 @@ builder.Services.AddCors(options =>
     });
 });
 builder.Services.AddControllers();
-builder.Services.AddSignalR();
+
+var signalRProvider = builder.Configuration.GetSignalRProvider();
+var signalRBuilder = builder.Services.AddSignalR();
+
+if (signalRProvider == SignalRProvider.Azure)
+{
+    var connectionString = builder.Configuration["Azure:SignalR:ConnectionString"];
+
+    if (string.IsNullOrWhiteSpace(connectionString))
+    {
+        throw new InvalidOperationException(
+            "SignalR:Provider is Azure, but Azure:SignalR:ConnectionString is missing.");
+    }
+
+    signalRBuilder.AddAzureSignalR(connectionString);
+}
+
 builder.Services.AddSingleton<Timesoft.Solution.RealtimeHub.Services.BasicNotificationAuthService>();
 builder.Services.AddSingleton<Timesoft.Solution.RealtimeHub.Services.DemoHubTokenService>();
 
 var app = builder.Build();
+
+app.Logger.LogInformation("SignalR provider: {SignalRProvider}", signalRProvider);
 
 if (!app.Environment.IsDevelopment())
 {

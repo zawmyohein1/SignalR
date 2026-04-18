@@ -10,6 +10,8 @@ public sealed class LeaveCalculationPageViewModel
 
     public string RestoreStorageMode { get; set; } = "session";
 
+    public string SignalRProvider { get; set; } = "Local";
+
     public int CurrentYear { get; set; }
 
     public IReadOnlyList<DemoOption> Companies { get; set; } = [];
