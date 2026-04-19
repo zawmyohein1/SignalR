@@ -1,5 +1,70 @@
 # PLAN.md
 
+## Feature Plan: Replace API-to-Hub HTTP Notification Path with Azure Service Bus
+
+### Current Status
+
+Planned, not started.
+
+### Purpose
+
+Replace the API -> RealtimeHub HTTP notification hop with Azure Service Bus while keeping XML storage unchanged as the source of truth.
+
+### Goal
+
+The API should publish live status updates to a queue.
+The realtime hub should consume those updates and push them to the correct SignalR group.
+
+### Target Architecture
+
+```text
+Api project
+    |
+    | publish status event
+    v
+Azure Service Bus queue
+    |
+    | consume event
+    v
+RealtimeHub
+    |
+    | SignalR group push
+    v
+Correct Leave Calculation Page only
+```
+
+### Phase 1: Add Queue Publishing
+
+1. Add Service Bus connection settings to Web3 and Web4.
+2. Replace `HttpClient` notification logic with queue publish logic.
+3. Keep XML writes unchanged.
+
+### Phase 2: Add Realtime Consumer
+
+1. Add a queue consumer in `Timesoft.Solution.RealtimeHub`.
+2. Deserialize the notification payload.
+3. Forward the message through the existing `NotificationPublisher`.
+
+### Phase 3: Verify Behavior
+
+1. Confirm XML still stores every status update.
+2. Confirm the browser still receives live SignalR updates.
+3. Confirm the system still works if the consumer is restarted.
+
+### Task List
+
+- Add Service Bus settings and package references for Web3 and Web4.
+- Replace the existing API notifier implementation with Service Bus publish.
+- Add a consumer hosted service in RealtimeHub.
+- Keep `XmlLeaveCalculationStore` as the saved history source.
+- Remove the old HTTP notification endpoint only after the queue path is verified.
+
+### Notes
+
+- Use one queue first, not a topic, to keep the migration small.
+- Do not change the browser client unless the payload shape changes.
+- If queue publish fails, log the error and keep the XML update already saved.
+
 ## Feature Plan: Restore Leave Calculation Status After Navigation
 
 ### Current Status

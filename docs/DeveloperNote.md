@@ -418,8 +418,8 @@ Important setup:
 AddCors
 AddControllers
 AddSignalR
-AddSingleton BasicNotificationAuthService
-AddSingleton DemoHubTokenService
+AddSingleton NotificationPublisher
+AddSingleton HubTokenService
 ```
 
 Important routes:
@@ -478,12 +478,12 @@ This keeps the realtime contract stable for Web3 and Web4 while allowing managed
 
 ---
 
-## JobStatusHub
+## NotificationHub
 
 File:
 
 ```text
-Timesoft.Solution.RealtimeHub\Hubs\JobStatusHub.cs
+Timesoft.Solution.RealtimeHub\Hubs\NotificationHub.cs
 ```
 
 This is the SignalR hub class.
@@ -531,7 +531,7 @@ If validation fails, the browser cannot join the group.
 File:
 
 ```text
-Timesoft.Solution.RealtimeHub\Services\DemoHubTokenService.cs
+Timesoft.Solution.RealtimeHub\Services\HubTokenService.cs
 ```
 
 The hub token protects browser-to-hub group joining.
@@ -553,30 +553,18 @@ The browser cannot freely join another group just by changing JavaScript values.
 
 ---
 
-## API-to-Hub Notification Endpoint
+## Service Bus Notification Flow
 
 File:
 
 ```text
-Timesoft.Solution.RealtimeHub\Controllers\NotificationsController.cs
+Timesoft.Solution.RealtimeHub\Services\NotificationConsumer.cs
+Timesoft.Solution.RealtimeHub\Services\NotificationPublisher.cs
 ```
 
-Endpoint:
+Web3.Api and Web4.Api publish calculation status messages to Azure Service Bus.
 
-```text
-POST /api/notifications/leave-calculation-status
-```
-
-Web3.Api calls this endpoint when calculation status changes.
-
-The endpoint validates:
-
-- API-to-Hub basic authentication
-- calculation id
-- company code
-- login user id
-
-Then it sends:
+The consumer reads each queued message and the publisher sends:
 
 ```text
 LeaveCalculationStatusUpdated
@@ -592,26 +580,25 @@ Only browsers in that group receive the update.
 
 ---
 
-## API-to-Hub Basic Authentication
+## Hub Token Validation
 
 File:
 
 ```text
-Timesoft.Solution.RealtimeHub\Services\BasicNotificationAuthService.cs
+Timesoft.Solution.RealtimeHub\Services\HubTokenService.cs
 ```
 
-This service protects the notification endpoint.
+This service protects browser group joining.
 
-Web3.Api must send a Basic Authentication header. RealtimeHub checks the configured username and password.
+The browser sends a hub access token. RealtimeHub checks the configured secret and validates the company, user, and calculation id.
 
 Configuration:
 
 ```text
-NotificationAuth:Username
-NotificationAuth:Password
+HubToken:Secret
 ```
 
-In this demo, the credentials are simple. In production, use stronger service-to-service authentication.
+In this demo, the secret is simple. In production, use a stronger token strategy.
 
 ---
 

@@ -1,15 +1,15 @@
-using JobRealtimeSample.Api.Models;
-using JobRealtimeSample.Api.Options;
+using Timesoft.Solution.Api.Web4.Models;
+using Timesoft.Solution.Api.Web4.Options;
 using Microsoft.Extensions.Options;
 
-namespace JobRealtimeSample.Api.Services;
+namespace Timesoft.Solution.Api.Web4.Services;
 
-public sealed class BackgroundLeaveCalculationRunner(
-    XmlLeaveCalculationStore store,
-    RealtimeNotifier realtimeNotifier,
+public sealed class LeaveCalculationRunner(
+    LeaveCalculationStore store,
+    NotificationPublisher notificationPublisher,
     IConfiguration configuration,
     IOptions<LeaveCalculationOptions> options,
-    ILogger<BackgroundLeaveCalculationRunner> logger)
+    ILogger<LeaveCalculationRunner> logger)
 {
     private readonly LeaveCalculationOptions _options = options.Value;
 
@@ -18,7 +18,7 @@ public sealed class BackgroundLeaveCalculationRunner(
     private const string CompletedStatus = "Completed";
     private const string FailedStatus = "Failed";
 
-    private static readonly DemoEmployee[] DemoEmployees =
+    private static readonly CalculationEmployee[] CalculationEmployees =
     [
         new("001", "ANDY LOW"),
         new("002", "BEN LIM"),
@@ -40,7 +40,7 @@ public sealed class BackgroundLeaveCalculationRunner(
         new("805", "VIVIAN CHIA")
     ];
 
-    private static readonly string[] DemoLeaveCodes =
+    private static readonly string[] LeaveCodes =
     [
         "ANNU",
         "SICK",
@@ -128,7 +128,7 @@ public sealed class BackgroundLeaveCalculationRunner(
             return;
         }
 
-        var wasSent = await realtimeNotifier.NotifyLeaveCalculationAsync(notification, cancellationToken);
+        var wasSent = await notificationPublisher.NotifyLeaveCalculationAsync(notification, cancellationToken);
 
         if (!wasSent)
         {
@@ -143,10 +143,10 @@ public sealed class BackgroundLeaveCalculationRunner(
         LeaveCalculationInfo info,
         CancellationToken cancellationToken)
     {
-        // Demo work: each employee waits through the configured leave-code loop.
+        // Simulated work: each employee waits through the configured leave-code loop.
         foreach (var employee in ResolveEmployees(info))
         {
-            foreach (var _ in DemoLeaveCodes)
+            foreach (var _ in LeaveCodes)
             {
                 await DelayAsync(_options.LeaveCodeDelaySeconds, cancellationToken);
             }
@@ -159,17 +159,17 @@ public sealed class BackgroundLeaveCalculationRunner(
         }
     }
 
-    private static IEnumerable<DemoEmployee> ResolveEmployees(LeaveCalculationInfo info)
+    private static IEnumerable<CalculationEmployee> ResolveEmployees(LeaveCalculationInfo info)
     {
         if (string.Equals(info.EmployeeNo, "ALL", StringComparison.OrdinalIgnoreCase))
         {
-            return DemoEmployees;
+            return CalculationEmployees;
         }
 
-        var employee = DemoEmployees.FirstOrDefault(
+        var employee = CalculationEmployees.FirstOrDefault(
             item => string.Equals(item.EmployeeNo, info.EmployeeNo, StringComparison.OrdinalIgnoreCase));
 
-        return [employee ?? new DemoEmployee(info.EmployeeNo, info.EmployeeNo)];
+        return [employee ?? new CalculationEmployee(info.EmployeeNo, info.EmployeeNo)];
     }
 
     private static Task DelayAsync(double seconds, CancellationToken cancellationToken)
@@ -177,7 +177,7 @@ public sealed class BackgroundLeaveCalculationRunner(
         return Task.Delay(TimeSpan.FromSeconds(Math.Max(0, seconds)), cancellationToken);
     }
 
-    private sealed record DemoEmployee(string EmployeeNo, string EmployeeName)
+    private sealed record CalculationEmployee(string EmployeeNo, string EmployeeName)
     {
         public string DisplayName => $"{EmployeeNo}-{EmployeeName}";
     }

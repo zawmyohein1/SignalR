@@ -1,31 +1,30 @@
 using System;
 using Timesoft.Solution.Api.Web3.Services;
-using Timesoft.Solution.Api.Web3.Vendors;
 
 namespace Timesoft.Solution.Api.Web3
 {
     public static class LeaveCalculationCompositionRoot
     {
-        private static readonly Lazy<XmlLeaveCalculationStore> Store =
-            new Lazy<XmlLeaveCalculationStore>(() => new XmlLeaveCalculationStore());
+        private static readonly Lazy<LeaveCalculationStore> Store =
+            new Lazy<LeaveCalculationStore>(() => new LeaveCalculationStore());
 
-        private static readonly Lazy<RealtimeNotifier> RealtimeNotifier =
-            new Lazy<RealtimeNotifier>(() => new RealtimeNotifier());
+        private static readonly Lazy<NotificationPublisher> Publisher =
+            new Lazy<NotificationPublisher>(() => new NotificationPublisher());
 
-        private static readonly Lazy<DemoHubTokenService> HubTokenService =
-            new Lazy<DemoHubTokenService>(() => new DemoHubTokenService());
+        private static readonly Lazy<HubTokenService> TokenService =
+            new Lazy<HubTokenService>(() => new HubTokenService());
 
-        private static readonly Lazy<BackgroundLeaveCalculationRunner> BackgroundRunner =
-            new Lazy<BackgroundLeaveCalculationRunner>(
-                () => new BackgroundLeaveCalculationRunner(Store.Value, RealtimeNotifier.Value));
+        private static readonly Lazy<LeaveCalculationRunner> BackgroundRunner =
+            new Lazy<LeaveCalculationRunner>(
+                () => new LeaveCalculationRunner(Store.Value, Publisher.Value));
 
-        private static readonly Lazy<LeaveCalculationsVendor> VendorInstance =
-            new Lazy<LeaveCalculationsVendor>(
-                () => new LeaveCalculationsVendor(
+        private static readonly Lazy<LeaveCalculationService> ServiceInstance =
+            new Lazy<LeaveCalculationService>(
+                () => new LeaveCalculationService(
                     Store.Value,
-                    HubTokenService.Value,
+                    TokenService.Value,
                     BackgroundRunner.Value));
 
-        public static LeaveCalculationsVendor Vendor => VendorInstance.Value;
+        public static LeaveCalculationService Service => ServiceInstance.Value;
     }
 }

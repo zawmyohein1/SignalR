@@ -1,4 +1,4 @@
-namespace JobRealtimeSample.Api.Options;
+namespace Timesoft.Solution.Api.Web4.Options;
 
 public sealed class LeaveCalculationOptions
 {

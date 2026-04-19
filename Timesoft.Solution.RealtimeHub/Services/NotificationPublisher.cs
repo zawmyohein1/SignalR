@@ -4,13 +4,13 @@ using Timesoft.Solution.RealtimeHub.Models;
 
 namespace Timesoft.Solution.RealtimeHub.Services;
 
-public sealed class JobStatusNotifier(
-    IHubContext<JobStatusHub> hubContext,
-    ILogger<JobStatusNotifier> logger)
+public sealed class NotificationPublisher(
+    IHubContext<NotificationHub> hubContext,
+    ILogger<NotificationPublisher> logger)
 {
-    public async Task SendLeaveCalculationStatusAsync(LeaveCalculationStatusNotification notification)
+    public async Task PublishAsync(LeaveCalculationStatusNotification notification)
     {
-        var groupName = JobStatusHub.CalculationGroupName(
+        var groupName = NotificationHub.GroupName(
             notification.CompanyCode.Trim(),
             notification.LoginUserId.Trim(),
             notification.CalculationId.Trim());

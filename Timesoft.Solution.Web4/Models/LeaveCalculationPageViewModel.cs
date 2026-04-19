@@ -1,4 +1,4 @@
-namespace JobRealtimeSample.MvcUi.Models;
+namespace Timesoft.Solution.Web4.Models;
 
 public sealed class LeaveCalculationPageViewModel
 {
@@ -14,9 +14,9 @@ public sealed class LeaveCalculationPageViewModel
 
     public int CurrentYear { get; set; }
 
-    public IReadOnlyList<DemoOption> Companies { get; set; } = [];
+    public IReadOnlyList<SelectOption> Companies { get; set; } = [];
 
-    public IReadOnlyList<DemoOption> Departments { get; set; } = [];
+    public IReadOnlyList<SelectOption> Departments { get; set; } = [];
 
-    public IReadOnlyList<DemoOption> Employees { get; set; } = [];
+    public IReadOnlyList<SelectOption> Employees { get; set; } = [];
 }

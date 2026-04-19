@@ -1,13 +1,13 @@
 using System.Security.Cryptography;
 using System.Text;
-using JobRealtimeSample.Api.Options;
+using Timesoft.Solution.Api.Web4.Options;
 using Microsoft.Extensions.Options;
 
-namespace JobRealtimeSample.Api.Services;
+namespace Timesoft.Solution.Api.Web4.Services;
 
-public sealed class DemoHubTokenService(IOptions<HubTokenOptions> options)
+public sealed class HubTokenService(IOptions<HubAccessTokenOptions> options)
 {
-    private readonly HubTokenOptions _options = options.Value;
+    private readonly HubAccessTokenOptions _options = options.Value;
 
     public string CreateToken(string companyCode, string loginUserId, string calculationId)
     {

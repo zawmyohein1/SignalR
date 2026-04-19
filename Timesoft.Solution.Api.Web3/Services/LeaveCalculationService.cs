@@ -3,36 +3,36 @@ using System.Threading.Tasks;
 using Timesoft.Solution.Api.Web3.Models;
 using Timesoft.Solution.Api.Web3.Services;
 
-namespace Timesoft.Solution.Api.Web3.Vendors
+namespace Timesoft.Solution.Api.Web3.Services
 {
-    public sealed class LeaveCalculationsVendor
+    public sealed class LeaveCalculationService
     {
         private const string BackgroundSignalRMode = "BackgroundSignalR";
         private const string SynchronousHttpMode = "SynchronousHttp";
 
-        private readonly XmlLeaveCalculationStore _store;
-        private readonly DemoHubTokenService _hubTokenService;
-        private readonly BackgroundLeaveCalculationRunner _backgroundRunner;
+        private readonly LeaveCalculationStore _store;
+        private readonly HubTokenService _hubTokenService;
+        private readonly LeaveCalculationRunner _backgroundRunner;
 
-        public LeaveCalculationsVendor(
-            XmlLeaveCalculationStore store,
-            DemoHubTokenService hubTokenService,
-            BackgroundLeaveCalculationRunner backgroundRunner)
+        public LeaveCalculationService(
+            LeaveCalculationStore store,
+            HubTokenService hubTokenService,
+            LeaveCalculationRunner backgroundRunner)
         {
             _store = store;
             _hubTokenService = hubTokenService;
             _backgroundRunner = backgroundRunner;
         }
 
-        public async Task<StartLeaveCalculationResult> StartAsync(
-            LeaveCalculationStartRequest request,
+        public async Task<LeaveCalculationResult> StartAsync(
+            LeaveCalculationRequest request,
             CancellationToken cancellationToken)
         {
             string validationMessage = ValidateStartRequest(request);
 
             if (validationMessage != null)
             {
-                return new StartLeaveCalculationResult(
+                return new LeaveCalculationResult(
                     false,
                     null,
                     validationMessage);
@@ -50,7 +50,7 @@ namespace Timesoft.Solution.Api.Web3.Vendors
                 // SignalR mode returns fast and continues work in the background.
                 _backgroundRunner.RunInBackground(calculation.CalculationId);
 
-                return new StartLeaveCalculationResult(
+                return new LeaveCalculationResult(
                     true,
                     BuildStartResponse(calculation, hubAccessToken, BackgroundSignalRMode));
             }
@@ -60,7 +60,7 @@ namespace Timesoft.Solution.Api.Web3.Vendors
 
             LeaveCalculationInfo completedCalculation = _store.Get(calculation.CalculationId) ?? calculation;
 
-            return new StartLeaveCalculationResult(
+            return new LeaveCalculationResult(
                 false,
                 BuildStartResponse(completedCalculation, hubAccessToken, SynchronousHttpMode));
         }
@@ -70,7 +70,7 @@ namespace Timesoft.Solution.Api.Web3.Vendors
             return _store.Get(calculationId);
         }
 
-        private static string ValidateStartRequest(LeaveCalculationStartRequest request)
+        private static string ValidateStartRequest(LeaveCalculationRequest request)
         {
             if (request == null)
             {
@@ -95,12 +95,12 @@ namespace Timesoft.Solution.Api.Web3.Vendors
             return null;
         }
 
-        private StartLeaveCalculationResponse BuildStartResponse(
+        private LeaveCalculationResponse BuildStartResponse(
             LeaveCalculationInfo calculation,
             string hubAccessToken,
             string executionMode)
         {
-            return new StartLeaveCalculationResponse
+            return new LeaveCalculationResponse
             {
                 CalculationId = calculation.CalculationId,
                 CompanyCode = calculation.CompanyCode,

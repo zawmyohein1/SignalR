@@ -56,7 +56,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\DemoOption.cs" />
+    <Compile Include="Models\SelectOption.cs" />
     <Compile Include="Models\LeaveCalculationPageViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -8,38 +8,30 @@ namespace Timesoft.Solution.Web3.Controllers
 {
     public class HomeController : Controller
     {
-    public ActionResult Index()
-    {
-        string configuredApiBaseUrl = ReadAppSetting(
-            "LeaveCalculationDemo-ApiBaseUrl",
-            "LeaveCalculationApiBaseUrl");
-        string signalRProvider = ConfigurationManager.AppSettings["SignalRProvider"] ?? "Local";
-        string apiBaseUrl = string.IsNullOrWhiteSpace(configuredApiBaseUrl)
-            || string.Equals(configuredApiBaseUrl, "auto", StringComparison.OrdinalIgnoreCase)
-                    ? "https://localhost:5002"
-                    : configuredApiBaseUrl;
-
-        var model = new LeaveCalculationPageViewModel
+        public ActionResult Index()
         {
-            ApiBaseUrl = apiBaseUrl,
-            HubUrl = ReadAppSetting(
-                    "LeaveCalculationDemo-HubUrl",
-                    "RealtimeHubUrl") ?? "https://localhost:5003/hubs/jobstatus",
-            SignalREnabled =
-                !string.Equals(
-                    ReadAppSetting(
-                        "LeaveCalculationDemo-SignalREnabled",
-                        "SignalREnabled"),
-                    "false",
-                    StringComparison.OrdinalIgnoreCase)
-                && !string.Equals(signalRProvider, "Disabled", StringComparison.OrdinalIgnoreCase),
-            RestoreStorageMode = NormalizeRestoreStorageMode(ReadAppSetting(
-                "LeaveCalculationDemo-RestoreStorage",
-                "LeaveCalculationRestoreStorage")),
-            SignalRProvider = signalRProvider,
-            CurrentYear = DateTime.Now.Year,
-            Companies = BuildCompanies(),
-            Departments = BuildDepartments(),
+            string configuredApiBaseUrl = ReadAppSetting("LeaveCalculation-ApiBaseUrl");
+            string signalRProvider = ConfigurationManager.AppSettings["SignalRProvider"] ?? "Local";
+            string apiBaseUrl = string.IsNullOrWhiteSpace(configuredApiBaseUrl)
+                || string.Equals(configuredApiBaseUrl, "auto", StringComparison.OrdinalIgnoreCase)
+                ? "https://localhost:5002"
+                : configuredApiBaseUrl;
+
+            var model = new LeaveCalculationPageViewModel
+            {
+                ApiBaseUrl = apiBaseUrl,
+                HubUrl = ReadAppSetting("LeaveCalculation-HubUrl") ?? "https://localhost:5003/hubs/jobstatus",
+                SignalREnabled =
+                    !string.Equals(
+                        ReadAppSetting("LeaveCalculation-SignalREnabled"),
+                        "false",
+                        StringComparison.OrdinalIgnoreCase)
+                    && !string.Equals(signalRProvider, "Disabled", StringComparison.OrdinalIgnoreCase),
+                RestoreStorageMode = NormalizeRestoreStorageMode(ReadAppSetting("LeaveCalculation-RestoreStorage")),
+                SignalRProvider = signalRProvider,
+                CurrentYear = DateTime.Now.Year,
+                Companies = BuildCompanies(),
+                Departments = BuildDepartments(),
                 Employees = BuildEmployees()
             };
 
@@ -51,52 +43,52 @@ namespace Timesoft.Solution.Web3.Controllers
             return View();
         }
 
-        private static IReadOnlyList<DemoOption> BuildCompanies()
+        private static IReadOnlyList<SelectOption> BuildCompanies()
         {
             return new[]
             {
-                new DemoOption("COMPANY_A", "Company A - TSTAFF demo"),
-                new DemoOption("COMPANY_B", "Company B - CLIENT2 demo"),
-                new DemoOption("COMPANY_C", "Company C - SAAS demo")
+                new SelectOption("COMPANY_A", "Company A - TSTAFF"),
+                new SelectOption("COMPANY_B", "Company B - CLIENT2"),
+                new SelectOption("COMPANY_C", "Company C - SAAS")
             };
         }
 
-        private static IReadOnlyList<DemoOption> BuildDepartments()
+        private static IReadOnlyList<SelectOption> BuildDepartments()
         {
             return new[]
             {
-                new DemoOption("HR", "HUMAN RESOURCE DEPARTMENT"),
-                new DemoOption("FIN", "FINANCE DEPARTMENT"),
-                new DemoOption("IT", "IT DEPARTMENT"),
-                new DemoOption("SALES", "SALES DEPARTMENT"),
-                new DemoOption("PUR", "PURCHASING DEPARTMENT"),
-                new DemoOption("SG", "SINGAPORE DIVISION")
+                new SelectOption("HR", "HUMAN RESOURCE DEPARTMENT"),
+                new SelectOption("FIN", "FINANCE DEPARTMENT"),
+                new SelectOption("IT", "IT DEPARTMENT"),
+                new SelectOption("SALES", "SALES DEPARTMENT"),
+                new SelectOption("PUR", "PURCHASING DEPARTMENT"),
+                new SelectOption("SG", "SINGAPORE DIVISION")
             };
         }
 
-        private static IReadOnlyList<DemoOption> BuildEmployees()
+        private static IReadOnlyList<SelectOption> BuildEmployees()
         {
             return new[]
             {
-                new DemoOption("ALL", "All selected employees"),
-                new DemoOption("001", "001 - ANDY LOW"),
-                new DemoOption("002", "002 - BEN LIM"),
-                new DemoOption("003", "003 - COLIN KOH"),
-                new DemoOption("004", "004 - DAVID GAN"),
-                new DemoOption("005", "005 - EUGENE ONG"),
-                new DemoOption("006", "006 - FRASER PANG"),
-                new DemoOption("101", "101 - ANGELA GOH"),
-                new DemoOption("102", "102 - BETTY CHIA"),
-                new DemoOption("103", "103 - CECILIA NG"),
-                new DemoOption("104", "104 - DAPHNE TAN"),
-                new DemoOption("105", "105 - EMILY WONG"),
-                new DemoOption("106", "106 - FIONA WONG"),
-                new DemoOption("801", "801 - RACHEL WONG"),
-                new DemoOption("802", "802 - SUSAN TAY"),
-                new DemoOption("803", "803 - TERESA TAN"),
-                new DemoOption("804", "804 - UNICE CHENG"),
-                new DemoOption("8040", "8040 - COPY UNICE CHENG"),
-                new DemoOption("805", "805 - VIVIAN CHIA")
+                new SelectOption("ALL", "All selected employees"),
+                new SelectOption("001", "001 - ANDY LOW"),
+                new SelectOption("002", "002 - BEN LIM"),
+                new SelectOption("003", "003 - COLIN KOH"),
+                new SelectOption("004", "004 - DAVID GAN"),
+                new SelectOption("005", "005 - EUGENE ONG"),
+                new SelectOption("006", "006 - FRASER PANG"),
+                new SelectOption("101", "101 - ANGELA GOH"),
+                new SelectOption("102", "102 - BETTY CHIA"),
+                new SelectOption("103", "103 - CECILIA NG"),
+                new SelectOption("104", "104 - DAPHNE TAN"),
+                new SelectOption("105", "105 - EMILY WONG"),
+                new SelectOption("106", "106 - FIONA WONG"),
+                new SelectOption("801", "801 - RACHEL WONG"),
+                new SelectOption("802", "802 - SUSAN TAY"),
+                new SelectOption("803", "803 - TERESA TAN"),
+                new SelectOption("804", "804 - UNICE CHENG"),
+                new SelectOption("8040", "8040 - COPY UNICE CHENG"),
+                new SelectOption("805", "805 - VIVIAN CHIA")
             };
         }
 
@@ -115,13 +107,9 @@ namespace Timesoft.Solution.Web3.Controllers
             return "session";
         }
 
-        private static string ReadAppSetting(string primaryKey, string fallbackKey)
+        private static string ReadAppSetting(string key)
         {
-            string value = ConfigurationManager.AppSettings[primaryKey];
-
-            return string.IsNullOrWhiteSpace(value)
-                ? ConfigurationManager.AppSettings[fallbackKey]
-                : value;
+            return ConfigurationManager.AppSettings[key];
+        }
     }
-}
 }

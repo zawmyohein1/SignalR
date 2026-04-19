@@ -1,10 +1,10 @@
 namespace Timesoft.Solution.Api.Web3.Models
 {
-    public sealed class StartLeaveCalculationResult
+    public sealed class LeaveCalculationResult
     {
-        public StartLeaveCalculationResult(
+        public LeaveCalculationResult(
             bool accepted,
-            StartLeaveCalculationResponse response,
+            LeaveCalculationResponse response,
             string validationMessage = null)
         {
             Accepted = accepted;
@@ -14,7 +14,7 @@ namespace Timesoft.Solution.Api.Web3.Models
 
         public bool Accepted { get; }
 
-        public StartLeaveCalculationResponse Response { get; }
+        public LeaveCalculationResponse Response { get; }
 
         public string ValidationMessage { get; }
     }

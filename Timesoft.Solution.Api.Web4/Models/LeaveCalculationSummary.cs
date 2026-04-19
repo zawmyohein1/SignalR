@@ -1,6 +1,6 @@
-namespace JobRealtimeSample.Api.Models;
+namespace Timesoft.Solution.Api.Web4.Models;
 
-public sealed class StartLeaveCalculationResponse
+public class LeaveCalculationSummary
 {
     public string CalculationId { get; set; } = string.Empty;
 
@@ -8,11 +8,11 @@ public sealed class StartLeaveCalculationResponse
 
     public string LoginUserId { get; set; } = string.Empty;
 
-    public string HubAccessToken { get; set; } = string.Empty;
+    public string DepartmentCode { get; set; } = string.Empty;
 
-    public bool SignalREnabled { get; set; }
+    public string EmployeeNo { get; set; } = string.Empty;
 
-    public string ExecutionMode { get; set; } = string.Empty;
+    public int Year { get; set; }
 
     public string Status { get; set; } = string.Empty;
 

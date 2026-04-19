@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Web.Http.Dependencies;
 using Timesoft.Solution.Api.Web3.Controllers;
-using Timesoft.Solution.Api.Web3.Vendors;
+using Timesoft.Solution.Api.Web3.Services;
 
 namespace Timesoft.Solution.Api.Web3
 {
@@ -10,14 +10,14 @@ namespace Timesoft.Solution.Api.Web3
     {
         public object GetService(Type serviceType)
         {
-            if (serviceType == typeof(LeaveCalculationsVendor))
+            if (serviceType == typeof(LeaveCalculationService))
             {
-                return LeaveCalculationCompositionRoot.Vendor;
+                return LeaveCalculationCompositionRoot.Service;
             }
 
             if (serviceType == typeof(LeaveCalculationsController))
             {
-                return new LeaveCalculationsController(LeaveCalculationCompositionRoot.Vendor);
+                return new LeaveCalculationsController(LeaveCalculationCompositionRoot.Service);
             }
 
             return null;

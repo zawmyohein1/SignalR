@@ -3,25 +3,25 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Timesoft.Solution.Api.Web3.Models;
-using Timesoft.Solution.Api.Web3.Vendors;
+using Timesoft.Solution.Api.Web3.Services;
 
 namespace Timesoft.Solution.Api.Web3.Controllers
 {
     [RoutePrefix("api/leave-calculations")]
     public sealed class LeaveCalculationsController : ApiController
     {
-        private readonly LeaveCalculationsVendor _vendor;
+        private readonly LeaveCalculationService _service;
 
-        public LeaveCalculationsController(LeaveCalculationsVendor vendor)
+        public LeaveCalculationsController(LeaveCalculationService service)
         {
-            _vendor = vendor;
+            _service = service;
         }
 
         [HttpPost]
         [Route("start")]
-        public async Task<IHttpActionResult> Start(LeaveCalculationStartRequest request)
+        public async Task<IHttpActionResult> Start(LeaveCalculationRequest request)
         {
-            StartLeaveCalculationResult result = await _vendor.StartAsync(request, CancellationToken.None);
+            LeaveCalculationResult result = await _service.StartAsync(request, CancellationToken.None);
 
             if (result.ValidationMessage != null)
             {
@@ -40,7 +40,7 @@ namespace Timesoft.Solution.Api.Web3.Controllers
         [Route("{calculationId}")]
         public IHttpActionResult GetById(string calculationId)
         {
-            LeaveCalculationInfo calculation = _vendor.GetById(calculationId);
+            LeaveCalculationInfo calculation = _service.GetById(calculationId);
 
             if (calculation == null)
             {

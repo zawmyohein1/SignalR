@@ -1,12 +1,12 @@
 using Timesoft.Solution.RealtimeHub.Configuration;
+using Timesoft.Solution.RealtimeHub.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration.AddJsonFile("appsettings.Local.json", optional: true, reloadOnChange: true);
+
 const string MvcUiCorsPolicy = "MvcUi";
-var allowedOrigins = builder.Configuration
-    .GetSection("Cors:AllowedOrigins")
-    .Get<string[]>()
-    ?? ["https://localhost:5001", "http://localhost:5001", "https://localhost:5101", "http://localhost:5101"];
+var allowedOrigins = ReadAllowedOrigins(builder.Configuration);
 
 builder.Services.AddCors(options =>
 {
@@ -19,27 +19,9 @@ builder.Services.AddCors(options =>
             .AllowCredentials();
     });
 });
-builder.Services.AddControllers();
 
 var signalRProvider = builder.Configuration.GetSignalRProvider();
-var signalRBuilder = builder.Services.AddSignalR();
-
-if (signalRProvider == SignalRProvider.Azure)
-{
-    var connectionString = builder.Configuration["Azure:SignalR:ConnectionString"];
-
-    if (string.IsNullOrWhiteSpace(connectionString))
-    {
-        throw new InvalidOperationException(
-            "SignalR:Provider is Azure, but Azure:SignalR:ConnectionString is missing.");
-    }
-
-    signalRBuilder.AddAzureSignalR(connectionString);
-}
-
-builder.Services.AddSingleton<Timesoft.Solution.RealtimeHub.Services.BasicNotificationAuthService>();
-builder.Services.AddSingleton<Timesoft.Solution.RealtimeHub.Services.DemoHubTokenService>();
-builder.Services.AddSingleton<Timesoft.Solution.RealtimeHub.Services.JobStatusNotifier>();
+builder.Services.AddRealtimeHubServices(builder.Configuration, signalRProvider);
 
 var app = builder.Build();
 
@@ -56,8 +38,29 @@ app.UseRouting();
 app.UseCors(MvcUiCorsPolicy);
 
 app.MapControllers();
-app.MapHub<Timesoft.Solution.RealtimeHub.Hubs.JobStatusHub>("/hubs/jobstatus");
+app.MapHub<Timesoft.Solution.RealtimeHub.Hubs.NotificationHub>("/hubs/jobstatus");
 app.MapGet("/", () => Results.Ok("Timesoft.Solution.RealtimeHub is running."));
 app.Map("/error", () => Results.Problem("An unexpected realtime hub error occurred."));
 
 app.Run();
+
+static string[] ReadAllowedOrigins(IConfiguration configuration)
+{
+    var allowedOrigins = configuration
+        .GetSection("Cors:AllowedOrigins")
+        .GetChildren()
+        .SelectMany(section => (section.Value ?? string.Empty)
+            .Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries))
+        .Select(origin => origin.Trim())
+        .Where(origin => !string.IsNullOrWhiteSpace(origin) &&
+                         !string.Equals(origin, "xxxx", StringComparison.OrdinalIgnoreCase))
+        .Distinct(StringComparer.OrdinalIgnoreCase)
+        .ToArray();
+
+    if (allowedOrigins.Length == 0)
+    {
+        throw new InvalidOperationException("Cors:AllowedOrigins is missing.");
+    }
+
+    return allowedOrigins;
+}

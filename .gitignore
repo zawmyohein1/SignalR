@@ -28,6 +28,11 @@ project.assets.json
 Timesoft.Solution.Api.Web3/App_Data/LeaveCalculationJobs.xml
 Timesoft.Solution.Api.Web4/App_Data/LeaveCalculationJobs.xml
 
+# Local-only configuration overlays
+Timesoft.Solution.Api.Web3/Web.local.config
+Timesoft.Solution.Api.Web4/appsettings.Local.json
+Timesoft.Solution.RealtimeHub/appsettings.Local.json
+
 # OS files
 .DS_Store
 Thumbs.db

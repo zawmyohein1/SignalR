@@ -1,8 +1,8 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using JobRealtimeSample.MvcUi.Models;
+using Timesoft.Solution.Web4.Models;
 
-namespace JobRealtimeSample.MvcUi.Controllers;
+namespace Timesoft.Solution.Web4.Controllers;
 
 public class HomeController : Controller
 {
@@ -17,16 +17,16 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        var signalRProvider = _configuration["LeaveCalculationDemo:SignalRProvider"] ?? "Local";
-        var signalREnabled = _configuration.GetValue("LeaveCalculationDemo:SignalREnabled", true)
+        var signalRProvider = _configuration["LeaveCalculation:SignalRProvider"] ?? "Local";
+        var signalREnabled = _configuration.GetValue("LeaveCalculation:SignalREnabled", true)
             && !string.Equals(signalRProvider, "Disabled", StringComparison.OrdinalIgnoreCase);
 
         var model = new LeaveCalculationPageViewModel
         {
-            ApiBaseUrl = _configuration["LeaveCalculationDemo:ApiBaseUrl"] ?? "https://localhost:5102",
-            HubUrl = _configuration["LeaveCalculationDemo:HubUrl"] ?? "https://localhost:5003/hubs/jobstatus",
+            ApiBaseUrl = _configuration["LeaveCalculation:ApiBaseUrl"] ?? "https://localhost:5102",
+            HubUrl = _configuration["LeaveCalculation:HubUrl"] ?? "https://localhost:5003/hubs/jobstatus",
             SignalREnabled = signalREnabled,
-            RestoreStorageMode = NormalizeRestoreStorageMode(_configuration["LeaveCalculationDemo:RestoreStorage"]),
+            RestoreStorageMode = NormalizeRestoreStorageMode(_configuration["LeaveCalculation:RestoreStorage"]),
             SignalRProvider = signalRProvider,
             CurrentYear = DateTime.Now.Year,
             Companies = BuildCompanies(),
@@ -53,17 +53,17 @@ public class HomeController : Controller
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 
-    private static IReadOnlyList<DemoOption> BuildCompanies()
+    private static IReadOnlyList<SelectOption> BuildCompanies()
     {
         return
         [
-            new("COMPANY_A", "Company A - TSTAFF demo"),
-            new("COMPANY_B", "Company B - CLIENT2 demo"),
-            new("COMPANY_C", "Company C - SAAS demo")
+            new("COMPANY_A", "Company A - TSTAFF"),
+            new("COMPANY_B", "Company B - CLIENT2"),
+            new("COMPANY_C", "Company C - SAAS")
         ];
     }
 
-    private static IReadOnlyList<DemoOption> BuildDepartments()
+    private static IReadOnlyList<SelectOption> BuildDepartments()
     {
         return
         [
@@ -76,7 +76,7 @@ public class HomeController : Controller
         ];
     }
 
-    private static IReadOnlyList<DemoOption> BuildEmployees()
+    private static IReadOnlyList<SelectOption> BuildEmployees()
     {
         return
         [

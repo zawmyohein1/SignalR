@@ -1,11 +1,11 @@
-using Timesoft.Solution.RealtimeHub.Services;
 using Microsoft.AspNetCore.SignalR;
+using Timesoft.Solution.RealtimeHub.Services;
 
 namespace Timesoft.Solution.RealtimeHub.Hubs;
 
-public sealed class JobStatusHub(DemoHubTokenService tokenService) : Hub
+public sealed class NotificationHub(HubTokenService tokenService) : Hub
 {
-    public static string CalculationGroupName(string companyCode, string loginUserId, string calculationId)
+    public static string GroupName(string companyCode, string loginUserId, string calculationId)
         => $"company:{companyCode}:user:{loginUserId}:calculation:{calculationId}";
 
     public Task JoinCalculationGroup(string companyCode, string loginUserId, string calculationId, string hubAccessToken)
@@ -15,7 +15,7 @@ public sealed class JobStatusHub(DemoHubTokenService tokenService) : Hub
 
         return Groups.AddToGroupAsync(
             Context.ConnectionId,
-            CalculationGroupName(companyCode.Trim(), loginUserId.Trim(), calculationId.Trim()));
+            GroupName(companyCode.Trim(), loginUserId.Trim(), calculationId.Trim()));
     }
 
     private void ValidateCalculationAccess(string companyCode, string loginUserId, string calculationId, string? hubAccessToken)

@@ -1,18 +1,15 @@
 var builder = WebApplication.CreateBuilder(args);
 
-const string MvcUiCorsPolicy = "MvcUi";
-var allowedOrigins = builder.Configuration
-    .GetSection("Cors:AllowedOrigins")
-    .Get<string[]>()
-    ?? ["https://localhost:5001", "http://localhost:5001", "https://localhost:5101", "http://localhost:5101"];
+builder.Configuration.AddJsonFile("appsettings.Local.json", optional: true, reloadOnChange: true);
 
-builder.Services.Configure<JobRealtimeSample.Api.Options.RealtimeHubOptions>(
-    builder.Configuration.GetSection("RealtimeHub"));
-builder.Services.Configure<JobRealtimeSample.Api.Options.GenericJobOptions>(
-    builder.Configuration.GetSection("GenericJob"));
-builder.Services.Configure<JobRealtimeSample.Api.Options.LeaveCalculationOptions>(
+const string MvcUiCorsPolicy = "MvcUi";
+var allowedOrigins = ReadAllowedOrigins(builder.Configuration);
+
+builder.Services.Configure<Timesoft.Solution.Api.Web4.Options.ServiceBusOptions>(
+    builder.Configuration.GetSection("ServiceBus"));
+builder.Services.Configure<Timesoft.Solution.Api.Web4.Options.LeaveCalculationOptions>(
     builder.Configuration.GetSection("LeaveCalculation"));
-builder.Services.Configure<JobRealtimeSample.Api.Options.HubTokenOptions>(
+builder.Services.Configure<Timesoft.Solution.Api.Web4.Options.HubAccessTokenOptions>(
     builder.Configuration.GetSection("HubToken"));
 
 builder.Services.AddControllers();
@@ -26,27 +23,22 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod();
     });
 });
-builder.Services
-    .AddHttpClient(nameof(JobRealtimeSample.Api.Services.RealtimeNotifier))
-    .ConfigurePrimaryHttpMessageHandler(() =>
+builder.Services.AddSingleton(sp =>
+{
+    var options = sp.GetRequiredService<Microsoft.Extensions.Options.IOptions<Timesoft.Solution.Api.Web4.Options.ServiceBusOptions>>().Value;
+
+    if (string.IsNullOrWhiteSpace(options.ConnectionString))
     {
-        var handler = new HttpClientHandler();
+        throw new InvalidOperationException("ServiceBus:ConnectionString is missing.");
+    }
 
-        if (builder.Environment.IsDevelopment())
-        {
-            // The sample uses three local HTTPS endpoints. This keeps API-to-hub
-            // callbacks working even before the developer certificate is trusted.
-            handler.ServerCertificateCustomValidationCallback =
-                HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
-        }
-
-        return handler;
-    });
-builder.Services.AddSingleton<JobRealtimeSample.Api.Services.RealtimeNotifier>();
-builder.Services.AddSingleton<JobRealtimeSample.Api.Services.XmlLeaveCalculationStore>();
-builder.Services.AddSingleton<JobRealtimeSample.Api.Services.DemoHubTokenService>();
-builder.Services.AddSingleton<JobRealtimeSample.Api.Services.BackgroundLeaveCalculationRunner>();
-builder.Services.AddSingleton<JobRealtimeSample.Api.Vendors.LeaveCalculationsVendor>();
+    return new Azure.Messaging.ServiceBus.ServiceBusClient(options.ConnectionString);
+});
+builder.Services.AddSingleton<Timesoft.Solution.Api.Web4.Services.NotificationPublisher>();
+builder.Services.AddSingleton<Timesoft.Solution.Api.Web4.Services.LeaveCalculationStore>();
+builder.Services.AddSingleton<Timesoft.Solution.Api.Web4.Services.HubTokenService>();
+builder.Services.AddSingleton<Timesoft.Solution.Api.Web4.Services.LeaveCalculationRunner>();
+builder.Services.AddSingleton<Timesoft.Solution.Api.Web4.Services.LeaveCalculationService>();
 
 var app = builder.Build();
 
@@ -66,3 +58,24 @@ app.MapControllers();
 app.Map("/error", () => Results.Problem("An unexpected API error occurred."));
 
 app.Run();
+
+static string[] ReadAllowedOrigins(IConfiguration configuration)
+{
+    var allowedOrigins = configuration
+        .GetSection("Cors:AllowedOrigins")
+        .GetChildren()
+        .SelectMany(section => (section.Value ?? string.Empty)
+            .Split(new[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries))
+        .Select(origin => origin.Trim())
+        .Where(origin => !string.IsNullOrWhiteSpace(origin) &&
+                         !string.Equals(origin, "xxxx", StringComparison.OrdinalIgnoreCase))
+        .Distinct(StringComparer.OrdinalIgnoreCase)
+        .ToArray();
+
+    if (allowedOrigins.Length == 0)
+    {
+        throw new InvalidOperationException("Cors:AllowedOrigins is missing.");
+    }
+
+    return allowedOrigins;
+}

@@ -1,4 +1,4 @@
-namespace JobRealtimeSample.MvcUi.Models;
+namespace Timesoft.Solution.Web4.Models;
 
 public class ErrorViewModel
 {

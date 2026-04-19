@@ -19,7 +19,7 @@ namespace Timesoft.Solution.Web3.Controllers
         [HttpPost]
         public async Task<ActionResult> Start()
         {
-            // Browser calls MVC; MVC forwards to API server-side.
+            // Browser posts to MVC, which forwards the request to the API.
             string requestBody;
 
             using (var reader = new StreamReader(Request.InputStream, Encoding.UTF8))
@@ -36,23 +36,23 @@ namespace Timesoft.Solution.Web3.Controllers
                         $"{ResolveApiBaseUrl()}/api/leave-calculations/start",
                         content);
 
-                    return await CreateProxyResultAsync(apiResponse);
+                    return await CreatePassthroughResultAsync(apiResponse);
                 }
             }
             catch (HttpRequestException ex)
             {
-                return CreateApiUnavailableResult(ex);
+                return CreateUnavailableResult(ex);
             }
             catch (TaskCanceledException ex)
             {
-                return CreateApiUnavailableResult(ex);
+                return CreateUnavailableResult(ex);
             }
         }
 
         [HttpGet]
         public async Task<ActionResult> Details(string id)
         {
-            // Snapshot reads also go through MVC, not directly from browser to API.
+            // Snapshot reads also proxy through MVC so the browser stays on one origin.
             if (string.IsNullOrWhiteSpace(id))
             {
                 Response.StatusCode = 400;
@@ -66,29 +66,27 @@ namespace Timesoft.Solution.Web3.Controllers
                     HttpResponseMessage apiResponse = await client.GetAsync(
                         $"{ResolveApiBaseUrl()}/api/leave-calculations/{Uri.EscapeDataString(id)}");
 
-                    return await CreateProxyResultAsync(apiResponse);
+                    return await CreatePassthroughResultAsync(apiResponse);
                 }
             }
             catch (HttpRequestException ex)
             {
-                return CreateApiUnavailableResult(ex);
+                return CreateUnavailableResult(ex);
             }
             catch (TaskCanceledException ex)
             {
-                return CreateApiUnavailableResult(ex);
+                return CreateUnavailableResult(ex);
             }
         }
 
         private string ResolveApiBaseUrl()
         {
-            string configuredApiBaseUrl = ReadAppSetting(
-                "LeaveCalculationDemo-ApiBaseUrl",
-                "LeaveCalculationApiBaseUrl");
+            string configuredApiBaseUrl = ReadAppSetting("LeaveCalculation-ApiBaseUrl");
 
             if (string.IsNullOrWhiteSpace(configuredApiBaseUrl)
                 || string.Equals(configuredApiBaseUrl, "auto", StringComparison.OrdinalIgnoreCase))
             {
-                // Default demo API endpoint for Framework API.
+                // Default local API endpoint for the legacy MVC app.
                 return "http://localhost:57636";
             }
 
@@ -103,7 +101,7 @@ namespace Timesoft.Solution.Web3.Controllers
             };
         }
 
-        private ActionResult CreateApiUnavailableResult(Exception ex)
+        private ActionResult CreateUnavailableResult(Exception ex)
         {
             Response.StatusCode = 502;
 
@@ -116,7 +114,7 @@ namespace Timesoft.Solution.Web3.Controllers
                 JsonRequestBehavior.AllowGet);
         }
 
-        private async Task<ActionResult> CreateProxyResultAsync(HttpResponseMessage apiResponse)
+        private async Task<ActionResult> CreatePassthroughResultAsync(HttpResponseMessage apiResponse)
         {
             string responseBody = await apiResponse.Content.ReadAsStringAsync();
             string contentType = apiResponse.Content.Headers.ContentType?.ToString() ?? "application/json";
@@ -126,13 +124,9 @@ namespace Timesoft.Solution.Web3.Controllers
             return Content(responseBody, contentType);
         }
 
-        private static string ReadAppSetting(string primaryKey, string fallbackKey)
+        private static string ReadAppSetting(string key)
         {
-            string value = ConfigurationManager.AppSettings[primaryKey];
-
-            return string.IsNullOrWhiteSpace(value)
-                ? ConfigurationManager.AppSettings[fallbackKey]
-                : value;
+            return ConfigurationManager.AppSettings[key];
         }
     }
 }

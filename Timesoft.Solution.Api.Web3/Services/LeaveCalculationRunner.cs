@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
@@ -9,10 +8,10 @@ using Timesoft.Solution.Api.Web3.Models;
 
 namespace Timesoft.Solution.Api.Web3.Services
 {
-    public sealed class BackgroundLeaveCalculationRunner
+    public sealed class LeaveCalculationRunner
     {
-        private readonly XmlLeaveCalculationStore _store;
-        private readonly RealtimeNotifier _realtimeNotifier;
+        private readonly LeaveCalculationStore _store;
+        private readonly NotificationPublisher _notificationPublisher;
         private readonly int _initialDelaySeconds;
         private readonly int _stepDelaySeconds;
         private readonly double _leaveCodeDelaySeconds;
@@ -22,29 +21,29 @@ namespace Timesoft.Solution.Api.Web3.Services
         private const string CompletedStatus = "Completed";
         private const string FailedStatus = "Failed";
 
-        private static readonly DemoEmployee[] DemoEmployees = new[]
+        private static readonly CalculationEmployee[] CalculationEmployees = new[]
         {
-            new DemoEmployee("001", "ANDY LOW"),
-            new DemoEmployee("002", "BEN LIM"),
-            new DemoEmployee("003", "COLIN KOH"),
-            new DemoEmployee("004", "DAVID GAN"),
-            new DemoEmployee("005", "EUGENE ONG"),
-            new DemoEmployee("006", "FRASER PANG"),
-            new DemoEmployee("101", "ANGELA GOH"),
-            new DemoEmployee("102", "BETTY CHIA"),
-            new DemoEmployee("103", "CECILIA NG"),
-            new DemoEmployee("104", "DAPHNE TAN"),
-            new DemoEmployee("105", "EMILY WONG"),
-            new DemoEmployee("106", "FIONA WONG"),
-            new DemoEmployee("801", "RACHEL WONG"),
-            new DemoEmployee("802", "SUSAN TAY"),
-            new DemoEmployee("803", "TERESA TAN"),
-            new DemoEmployee("804", "UNICE CHENG"),
-            new DemoEmployee("8040", "COPY UNICE CHENG"),
-            new DemoEmployee("805", "VIVIAN CHIA")
+            new CalculationEmployee("001", "ANDY LOW"),
+            new CalculationEmployee("002", "BEN LIM"),
+            new CalculationEmployee("003", "COLIN KOH"),
+            new CalculationEmployee("004", "DAVID GAN"),
+            new CalculationEmployee("005", "EUGENE ONG"),
+            new CalculationEmployee("006", "FRASER PANG"),
+            new CalculationEmployee("101", "ANGELA GOH"),
+            new CalculationEmployee("102", "BETTY CHIA"),
+            new CalculationEmployee("103", "CECILIA NG"),
+            new CalculationEmployee("104", "DAPHNE TAN"),
+            new CalculationEmployee("105", "EMILY WONG"),
+            new CalculationEmployee("106", "FIONA WONG"),
+            new CalculationEmployee("801", "RACHEL WONG"),
+            new CalculationEmployee("802", "SUSAN TAY"),
+            new CalculationEmployee("803", "TERESA TAN"),
+            new CalculationEmployee("804", "UNICE CHENG"),
+            new CalculationEmployee("8040", "COPY UNICE CHENG"),
+            new CalculationEmployee("805", "VIVIAN CHIA")
         };
 
-        private static readonly string[] DemoLeaveCodes = new[]
+        private static readonly string[] LeaveCodes = new[]
         {
             "ANNU",
             "SICK",
@@ -60,21 +59,18 @@ namespace Timesoft.Solution.Api.Web3.Services
             "TRAINING"
         };
 
-        public BackgroundLeaveCalculationRunner(XmlLeaveCalculationStore store, RealtimeNotifier realtimeNotifier)
+        public LeaveCalculationRunner(LeaveCalculationStore store, NotificationPublisher notificationPublisher)
         {
             _store = store;
-            _realtimeNotifier = realtimeNotifier;
+            _notificationPublisher = notificationPublisher;
             _initialDelaySeconds = ReadSeconds(
                 "LeaveCalculation-InitialDelaySeconds",
-                "LeaveCalculationInitialDelaySeconds",
                 1);
             _stepDelaySeconds = ReadSeconds(
                 "LeaveCalculation-StepDelaySeconds",
-                "LeaveCalculationStepDelaySeconds",
                 4);
             _leaveCodeDelaySeconds = ReadDoubleSeconds(
                 "LeaveCalculation-LeaveCodeDelaySeconds",
-                "LeaveCalculationLeaveCodeDelaySeconds",
                 3);
             SignalREnabled = ReadBoolean("SignalREnabled", true);
         }
@@ -153,7 +149,7 @@ namespace Timesoft.Solution.Api.Web3.Services
                 return;
             }
 
-            bool wasSent = await _realtimeNotifier.NotifyLeaveCalculationAsync(notification, cancellationToken);
+            bool wasSent = await _notificationPublisher.NotifyLeaveCalculationAsync(notification, cancellationToken);
 
             if (!wasSent)
             {
@@ -168,10 +164,10 @@ namespace Timesoft.Solution.Api.Web3.Services
             LeaveCalculationInfo info,
             CancellationToken cancellationToken)
         {
-            // Demo work: each employee waits through the configured leave-code loop.
-            foreach (DemoEmployee employee in ResolveEmployees(info))
+            // Simulated work: each employee waits through the configured leave-code loop.
+            foreach (CalculationEmployee employee in ResolveEmployees(info))
             {
-                foreach (string _ in DemoLeaveCodes)
+                foreach (string _ in LeaveCodes)
                 {
                     await DelayAsync(_leaveCodeDelaySeconds, cancellationToken);
                 }
@@ -184,19 +180,19 @@ namespace Timesoft.Solution.Api.Web3.Services
             }
         }
 
-        private static IEnumerable<DemoEmployee> ResolveEmployees(LeaveCalculationInfo info)
+        private static IEnumerable<CalculationEmployee> ResolveEmployees(LeaveCalculationInfo info)
         {
             if (string.Equals(info.EmployeeNo, "ALL", StringComparison.OrdinalIgnoreCase))
             {
-                return DemoEmployees;
+                return CalculationEmployees;
             }
 
-            DemoEmployee employee = DemoEmployees.FirstOrDefault(
+            CalculationEmployee employee = CalculationEmployees.FirstOrDefault(
                 item => string.Equals(item.EmployeeNo, info.EmployeeNo, StringComparison.OrdinalIgnoreCase));
 
             return new[]
             {
-                employee ?? new DemoEmployee(info.EmployeeNo, info.EmployeeNo)
+                employee ?? new CalculationEmployee(info.EmployeeNo, info.EmployeeNo)
             };
         }
 
@@ -205,11 +201,11 @@ namespace Timesoft.Solution.Api.Web3.Services
             return Task.Delay(TimeSpan.FromSeconds(Math.Max(0, seconds)), cancellationToken);
         }
 
-        private static int ReadSeconds(string key, string fallbackKey, int defaultValue)
+        private static int ReadSeconds(string key, int defaultValue)
         {
             int value;
 
-            if (!int.TryParse(AppSettings.Read(key, fallbackKey), out value) || value < 0)
+            if (!int.TryParse(AppSettings.Read(key), out value) || value < 0)
             {
                 return defaultValue;
             }
@@ -217,12 +213,12 @@ namespace Timesoft.Solution.Api.Web3.Services
             return value;
         }
 
-        private static double ReadDoubleSeconds(string key, string fallbackKey, double defaultValue)
+        private static double ReadDoubleSeconds(string key, double defaultValue)
         {
             double value;
 
             if (!double.TryParse(
-                    AppSettings.Read(key, fallbackKey),
+                    AppSettings.Read(key),
                     NumberStyles.Float,
                     CultureInfo.InvariantCulture,
                     out value)
@@ -243,9 +239,9 @@ namespace Timesoft.Solution.Api.Web3.Services
                 : defaultValue;
         }
 
-        private sealed class DemoEmployee
+        private sealed class CalculationEmployee
         {
-            public DemoEmployee(string employeeNo, string employeeName)
+            public CalculationEmployee(string employeeNo, string employeeName)
             {
                 EmployeeNo = employeeNo;
                 EmployeeName = employeeName;

@@ -1,6 +1,6 @@
 namespace Timesoft.Solution.Api.Web3.Models
 {
-    public sealed class StartLeaveCalculationResponse
+    public sealed class LeaveCalculationResponse
     {
         public string CalculationId { get; set; }
 

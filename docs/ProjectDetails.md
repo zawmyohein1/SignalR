@@ -9,8 +9,36 @@ Key idea:
 - Leave Calculation Page starts the process.
 - Api project returns a calculation id quickly.
 - Api project continues processing in the background.
-- Api project sends progress to the standalone SignalR hub.
+- Api project sends progress to Azure Service Bus.
+- RealtimeHub consumes the queue message and pushes to SignalR.
 - SignalR pushes updates only to the correct Leave Calculation Page group.
+
+## Service Bus Migration
+
+### What Changed
+
+- Replaced the direct API-to-RealtimeHub HTTP notification path with Azure Service Bus.
+- Added a queue consumer to `Timesoft.Solution.RealtimeHub`.
+- Kept XML storage unchanged as the source of truth for progress history.
+- Kept the browser SignalR client behavior the same.
+
+### Why We Needed The Change
+
+- The old HTTP callback path made the API depend on the realtime hub being available for every update.
+- Frequent progress notifications made the direct API-to-hub hop less scalable.
+- A queue gives a cleaner handoff between calculation work and realtime delivery.
+- The API can publish and continue work without waiting on realtime delivery.
+
+### What The Solution Is
+
+- API projects publish `LeaveCalculationStatusNotification` messages to one Azure Service Bus queue.
+- `Timesoft.Solution.RealtimeHub` runs a background `NotificationConsumer` to read the queue.
+- The consumer forwards each message to the existing `NotificationPublisher`.
+- `NotificationPublisher` still uses SignalR group delivery, so only the correct page receives the update.
+
+```text
+API -> Azure Service Bus queue -> RealtimeHub consumer -> SignalR hub -> browser
+```
 
 ## Coding Guide
 
@@ -20,23 +48,23 @@ Use this document as the first place to check before changing the realtime flow.
 
 | Concern | Primary files | What they own |
 | --- | --- | --- |
-| SignalR server event path | `Timesoft.Solution.RealtimeHub\Controllers\NotificationsController.cs`, `Timesoft.Solution.RealtimeHub\Services\JobStatusNotifier.cs`, `Timesoft.Solution.RealtimeHub\Hubs\JobStatusHub.cs` | Accept Api notifications, build the target group, push `LeaveCalculationStatusUpdated`, and let the browser join the right group. |
+| SignalR server event path | `Timesoft.Solution.RealtimeHub\Services\NotificationConsumer.cs`, `Timesoft.Solution.RealtimeHub\Services\NotificationPublisher.cs`, `Timesoft.Solution.RealtimeHub\Hubs\NotificationHub.cs` | Accept queued notifications, build the target group, push `LeaveCalculationStatusUpdated`, and let the browser join the right group. |
 | SignalR browser client | `Timesoft.Solution.Web3\Scripts\leave-calculation-signalr-client.js`, `Timesoft.Solution.Web4\wwwroot\js\leave-calculation-signalr-client.js` | Open the hub connection, join the group, handle realtime updates, and fall back to snapshot polling when needed. |
-| Security | `Timesoft.Solution.RealtimeHub\Services\BasicNotificationAuthService.cs`, `Timesoft.Solution.RealtimeHub\Services\DemoHubTokenService.cs` | Protect the Api-to-hub notification route and validate the browser hub token. |
-| Configuration | `Timesoft.Solution.Web3\Web.config`, `Timesoft.Solution.Web4\appsettings.json`, `Timesoft.Solution.Api.Web3\Web.config`, `Timesoft.Solution.Api.Web4\appsettings.json`, `Timesoft.Solution.RealtimeHub\appsettings.json` | Set Api URLs, hub URLs, restore mode, and SignalR provider settings. |
+| Security | `Timesoft.Solution.RealtimeHub\Services\HubTokenService.cs` | Validate the browser hub token before group join. |
+| Configuration | `Timesoft.Solution.Web3\Web.config`, `Timesoft.Solution.Web4\appsettings.json`, `Timesoft.Solution.Api.Web3\Web.config`, `Timesoft.Solution.Api.Web4\appsettings.json`, `Timesoft.Solution.RealtimeHub\appsettings.json` | Set Api URLs, hub URLs, restore mode, SignalR provider settings, and Service Bus settings. |
 
 ### Change rules
 
 - If you change the hub event name, update the hub, both browser clients, the notifier, and this doc together.
 - If you change the group name rule, update the hub join logic, the notifier, and the browser client token flow together.
-- If you change notification security, update the Api notification client and the hub auth service together.
+- If you change Service Bus notification settings, update the Api publisher and RealtimeHub consumer together.
 - If you change an endpoint or port, update the matching Web and Api configuration together.
 - If you add a new realtime state, decide first whether it belongs in browser storage, Api XML storage, or the live SignalR message.
 
 ### Quick read order
 
-1. Read `Timesoft.Solution.RealtimeHub\Hubs\JobStatusHub.cs` to understand group membership.
-2. Read `Timesoft.Solution.RealtimeHub\Controllers\NotificationsController.cs` and `Services\JobStatusNotifier.cs` to understand how Api sends updates.
+1. Read `Timesoft.Solution.RealtimeHub\Hubs\NotificationHub.cs` to understand group membership.
+2. Read `Timesoft.Solution.RealtimeHub\Services\NotificationConsumer.cs` and `Services\NotificationPublisher.cs` to understand how queued updates reach SignalR.
 3. Read `Timesoft.Solution.Web3\Scripts\leave-calculation-signalr-client.js` or `Timesoft.Solution.Web4\wwwroot\js\leave-calculation-signalr-client.js` to understand the browser side.
 4. Read the configuration tables below to confirm the current URLs and provider mode.
 
@@ -65,9 +93,13 @@ Api project
   |
   | Return calculationId quickly
   | Run calculation in background
-  | Send progress notification
+  | Publish progress notification
   v
-RealtimeHub
+Azure Service Bus
+  |
+  | Deliver queued message
+  v
+RealtimeHub consumer
   |
   | Push LeaveCalculationStatusUpdated
   v
@@ -189,9 +221,9 @@ Used by:
 | `Controllers/LeaveCalculationsController.cs` | Api start and status endpoints |
 | `Vendors/LeaveCalculationsVendor.cs` | Main start-process flow |
 | `Services/BackgroundLeaveCalculationRunner.cs` | Runs calculation in background or synchronous mode |
-| `Services/RealtimeNotifier.cs` | Sends HTTP notification to RealtimeHub |
+| `Services/RealtimeNotifier.cs` | Publishes queue messages to Azure Service Bus |
 | `Services/XmlLeaveCalculationStore.cs` | Saves calculation state and history in XML |
-| `Services/DemoHubTokenService.cs` | Creates demo page token for hub connection |
+| `Services/HubTokenService.cs` | Creates page token for hub connection |
 
 Main Api functions:
 
@@ -200,7 +232,7 @@ Main Api functions:
 - Return fast when SignalR is enabled.
 - Run background calculation.
 - Save each progress update.
-- Notify RealtimeHub for each update.
+- Publish each progress update to the Service Bus queue.
 
 ### RealtimeHub Project
 
@@ -210,18 +242,17 @@ Used by:
 
 | File | Purpose |
 | --- | --- |
-| `Hubs/JobStatusHub.cs` | Leave Calculation Page connects and joins the SignalR group |
-| `Controllers/NotificationsController.cs` | Api projects post status updates here |
-| `Services/BasicNotificationAuthService.cs` | Protects Api-to-hub notification endpoint |
-| `Services/DemoHubTokenService.cs` | Validates page hub token |
+| `Hubs/NotificationHub.cs` | Leave Calculation Page connects and joins the SignalR group |
+| `Services/HubTokenService.cs` | Validates page hub token |
 | `Models/LeaveCalculationStatusNotification.cs` | Realtime status message payload |
-| `Program.cs` | Configures SignalR hub route and notification endpoint |
+| `Services/NotificationConsumer.cs` | Reads queue messages and forwards them to SignalR |
+| `Program.cs` | Configures SignalR hub route, Azure SignalR, and queue consumer |
 
 Main hub functions:
 
 - Validate page token.
 - Add Leave Calculation Page to correct group.
-- Receive Api notification.
+- Receive queued notification.
 - Push `LeaveCalculationStatusUpdated` to matching group only.
 
 ## SignalR Enabled vs Disabled

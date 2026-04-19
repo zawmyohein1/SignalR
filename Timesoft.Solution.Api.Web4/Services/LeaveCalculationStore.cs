@@ -1,24 +1,24 @@
 using System.Globalization;
 using System.Xml.Linq;
-using JobRealtimeSample.Api.Models;
-using JobRealtimeSample.Api.Options;
+using Timesoft.Solution.Api.Web4.Models;
+using Timesoft.Solution.Api.Web4.Options;
 using Microsoft.Extensions.Options;
 
-namespace JobRealtimeSample.Api.Services;
+namespace Timesoft.Solution.Api.Web4.Services;
 
-public sealed class XmlLeaveCalculationStore
+public sealed class LeaveCalculationStore
 {
     private static readonly object FileLock = new();
     private readonly string _xmlPath;
 
-    public XmlLeaveCalculationStore(IOptions<LeaveCalculationOptions> options, IHostEnvironment environment)
+    public LeaveCalculationStore(IOptions<LeaveCalculationOptions> options, IHostEnvironment environment)
     {
         _xmlPath = ResolvePath(options.Value.XmlPath, environment.ContentRootPath);
     }
 
-    public LeaveCalculationInfo Create(LeaveCalculationStartRequest request)
+    public LeaveCalculationInfo Create(LeaveCalculationRequest request)
     {
-        // XML file is the demo persistence store.
+        // XML file is the persistence store.
         var now = DateTimeOffset.UtcNow;
         var calculationId = Guid.NewGuid().ToString("N");
         const string message = "Leave entitlement process accepted and started in background.";
@@ -105,6 +105,48 @@ public sealed class XmlLeaveCalculationStore
         }
     }
 
+    private static LeaveCalculationSummary ReadSummary(XElement element)
+    {
+        return new LeaveCalculationSummary
+        {
+            CalculationId = ReadString(element, "calculationId"),
+            CompanyCode = ReadString(element, "companyCode"),
+            LoginUserId = ReadString(element, "loginUserId"),
+            DepartmentCode = ReadString(element, "departmentCode"),
+            EmployeeNo = ReadString(element, "employeeNo"),
+            Year = ReadInt(element, "year"),
+            Status = ReadString(element, "status"),
+            Message = ReadString(element, "message")
+        };
+    }
+
+    private static T CopySummary<T>(T target, LeaveCalculationSummary source)
+        where T : LeaveCalculationSummary
+    {
+        target.CalculationId = source.CalculationId;
+        target.CompanyCode = source.CompanyCode;
+        target.LoginUserId = source.LoginUserId;
+        target.DepartmentCode = source.DepartmentCode;
+        target.EmployeeNo = source.EmployeeNo;
+        target.Year = source.Year;
+        target.Status = source.Status;
+        target.Message = source.Message;
+        return target;
+    }
+
+    private static void WriteSummary(XElement element, LeaveCalculationSummary summary)
+    {
+        element.Add(
+            new XElement("calculationId", summary.CalculationId),
+            new XElement("companyCode", summary.CompanyCode),
+            new XElement("loginUserId", summary.LoginUserId),
+            new XElement("departmentCode", summary.DepartmentCode),
+            new XElement("employeeNo", summary.EmployeeNo),
+            new XElement("year", summary.Year.ToString(CultureInfo.InvariantCulture)),
+            new XElement("status", summary.Status),
+            new XElement("message", summary.Message));
+    }
+
     private static XElement? FindCalculation(XDocument document, string calculationId)
     {
         return document.Root!
@@ -116,23 +158,16 @@ public sealed class XmlLeaveCalculationStore
     }
 
     private static LeaveCalculationStatusNotification CreateNotification(
-        LeaveCalculationInfo info,
+        LeaveCalculationSummary summary,
         string status,
         string message,
         DateTimeOffset timestamp)
     {
-        return new LeaveCalculationStatusNotification
-        {
-            CalculationId = info.CalculationId,
-            CompanyCode = info.CompanyCode,
-            LoginUserId = info.LoginUserId,
-            DepartmentCode = info.DepartmentCode,
-            EmployeeNo = info.EmployeeNo,
-            Year = info.Year,
-            Status = status,
-            Message = message,
-            Timestamp = timestamp
-        };
+        var notification = CopySummary(new LeaveCalculationStatusNotification(), summary);
+        notification.Status = status;
+        notification.Message = message;
+        notification.Timestamp = timestamp;
+        return notification;
     }
 
     private XDocument LoadDocument()
@@ -182,51 +217,28 @@ public sealed class XmlLeaveCalculationStore
 
     private static XElement ToElement(LeaveCalculationInfo info)
     {
-        return new XElement(
-            "calculation",
-            new XElement("calculationId", info.CalculationId),
-            new XElement("companyCode", info.CompanyCode),
-            new XElement("loginUserId", info.LoginUserId),
-            new XElement("departmentCode", info.DepartmentCode),
-            new XElement("employeeNo", info.EmployeeNo),
-            new XElement("year", info.Year.ToString(CultureInfo.InvariantCulture)),
-            new XElement("status", info.Status),
-            new XElement("message", info.Message),
+        var element = new XElement("calculation");
+        WriteSummary(element, info);
+        element.Add(
             new XElement("createdAt", FormatDate(info.CreatedAt)),
             new XElement("updatedAt", FormatDate(info.UpdatedAt)),
             new XElement("history", info.History.Select(ToHistoryElement)));
+        return element;
     }
 
     private static XElement ToHistoryElement(LeaveCalculationStatusNotification item)
     {
-        return new XElement(
-            "entry",
-            new XElement("calculationId", item.CalculationId),
-            new XElement("companyCode", item.CompanyCode),
-            new XElement("loginUserId", item.LoginUserId),
-            new XElement("departmentCode", item.DepartmentCode),
-            new XElement("employeeNo", item.EmployeeNo),
-            new XElement("year", item.Year.ToString(CultureInfo.InvariantCulture)),
-            new XElement("status", item.Status),
-            new XElement("message", item.Message),
-            new XElement("timestamp", FormatDate(item.Timestamp)));
+        var element = new XElement("entry");
+        WriteSummary(element, item);
+        element.Add(new XElement("timestamp", FormatDate(item.Timestamp)));
+        return element;
     }
 
     private static LeaveCalculationInfo FromElement(XElement element)
     {
-        var info = new LeaveCalculationInfo
-        {
-            CalculationId = ReadString(element, "calculationId"),
-            CompanyCode = ReadString(element, "companyCode"),
-            LoginUserId = ReadString(element, "loginUserId"),
-            DepartmentCode = ReadString(element, "departmentCode"),
-            EmployeeNo = ReadString(element, "employeeNo"),
-            Year = ReadInt(element, "year"),
-            Status = ReadString(element, "status"),
-            Message = ReadString(element, "message"),
-            CreatedAt = ReadDate(element, "createdAt"),
-            UpdatedAt = ReadDate(element, "updatedAt")
-        };
+        var info = CopySummary(new LeaveCalculationInfo(), ReadSummary(element));
+        info.CreatedAt = ReadDate(element, "createdAt");
+        info.UpdatedAt = ReadDate(element, "updatedAt");
 
         var history = element.Element("history");
 
@@ -240,18 +252,9 @@ public sealed class XmlLeaveCalculationStore
 
     private static LeaveCalculationStatusNotification FromHistoryElement(XElement element)
     {
-        return new LeaveCalculationStatusNotification
-        {
-            CalculationId = ReadString(element, "calculationId"),
-            CompanyCode = ReadString(element, "companyCode"),
-            LoginUserId = ReadString(element, "loginUserId"),
-            DepartmentCode = ReadString(element, "departmentCode"),
-            EmployeeNo = ReadString(element, "employeeNo"),
-            Year = ReadInt(element, "year"),
-            Status = ReadString(element, "status"),
-            Message = ReadString(element, "message"),
-            Timestamp = ReadDate(element, "timestamp")
-        };
+        var notification = CopySummary(new LeaveCalculationStatusNotification(), ReadSummary(element));
+        notification.Timestamp = ReadDate(element, "timestamp");
+        return notification;
     }
 
     private static string ResolvePath(string configuredPath, string contentRootPath)

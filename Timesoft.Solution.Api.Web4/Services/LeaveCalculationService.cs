@@ -1,25 +1,25 @@
-using JobRealtimeSample.Api.Models;
-using JobRealtimeSample.Api.Services;
+using Timesoft.Solution.Api.Web4.Models;
+using Timesoft.Solution.Api.Web4.Services;
 
-namespace JobRealtimeSample.Api.Vendors;
+namespace Timesoft.Solution.Api.Web4.Services;
 
-public sealed class LeaveCalculationsVendor(
-    XmlLeaveCalculationStore store,
-    DemoHubTokenService hubTokenService,
-    BackgroundLeaveCalculationRunner backgroundRunner)
+public sealed class LeaveCalculationService(
+    LeaveCalculationStore store,
+    HubTokenService hubTokenService,
+    LeaveCalculationRunner backgroundRunner)
 {
     private const string BackgroundSignalRMode = "BackgroundSignalR";
     private const string SynchronousHttpMode = "SynchronousHttp";
 
-    public async Task<StartLeaveCalculationResult> StartAsync(
-        LeaveCalculationStartRequest? request,
+    public async Task<LeaveCalculationResult> StartAsync(
+        LeaveCalculationRequest? request,
         CancellationToken cancellationToken)
     {
         var validationMessage = ValidateStartRequest(request);
 
         if (validationMessage is not null)
         {
-            return new StartLeaveCalculationResult(
+            return new LeaveCalculationResult(
                 Accepted: false,
                 Response: null,
                 ValidationMessage: validationMessage);
@@ -37,7 +37,7 @@ public sealed class LeaveCalculationsVendor(
             // SignalR mode returns fast and continues work in the background.
             backgroundRunner.RunInBackground(calculation.CalculationId);
 
-            return new StartLeaveCalculationResult(
+            return new LeaveCalculationResult(
                 Accepted: true,
             Response: BuildStartResponse(calculation, hubAccessToken, BackgroundSignalRMode));
         }
@@ -47,7 +47,7 @@ public sealed class LeaveCalculationsVendor(
 
         var completedCalculation = store.Get(calculation.CalculationId) ?? calculation;
 
-        return new StartLeaveCalculationResult(
+        return new LeaveCalculationResult(
             Accepted: false,
             Response: BuildStartResponse(completedCalculation, hubAccessToken, SynchronousHttpMode));
     }
@@ -57,7 +57,7 @@ public sealed class LeaveCalculationsVendor(
         return store.Get(calculationId);
     }
 
-    private static string? ValidateStartRequest(LeaveCalculationStartRequest? request)
+    private static string? ValidateStartRequest(LeaveCalculationRequest? request)
     {
         if (request is null)
         {
@@ -82,12 +82,12 @@ public sealed class LeaveCalculationsVendor(
         return null;
     }
 
-    private StartLeaveCalculationResponse BuildStartResponse(
+    private LeaveCalculationResponse BuildStartResponse(
         LeaveCalculationInfo calculation,
         string hubAccessToken,
         string executionMode)
     {
-        return new StartLeaveCalculationResponse
+        return new LeaveCalculationResponse
         {
             CalculationId = calculation.CalculationId,
             CompanyCode = calculation.CompanyCode,

@@ -1,6 +1,6 @@
-namespace JobRealtimeSample.Api.Models;
+namespace Timesoft.Solution.Api.Web4.Models;
 
-public sealed class LeaveCalculationStartRequest
+public sealed class LeaveCalculationRequest
 {
     public string? CompanyCode { get; set; }
 

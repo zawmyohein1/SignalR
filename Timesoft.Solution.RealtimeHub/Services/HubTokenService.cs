@@ -4,10 +4,10 @@ using Timesoft.Solution.RealtimeHub.Models;
 
 namespace Timesoft.Solution.RealtimeHub.Services;
 
-public sealed class DemoHubTokenService(IConfiguration configuration)
+public sealed class HubTokenService(IConfiguration configuration)
 {
     private readonly byte[] _secret = Encoding.UTF8.GetBytes(
-        configuration["HubToken:Secret"] ?? "dev-only-demo-hub-token-secret");
+        configuration["HubToken:Secret"] ?? "dev-only-hub-token-secret");
 
     public bool TryValidate(
         string? token,

@@ -8,7 +8,7 @@ namespace Timesoft.Solution.Api.Web3
     {
         public static void Register(HttpConfiguration config)
         {
-            config.MessageHandlers.Add(new SimpleCorsHandler());
+            config.MessageHandlers.Add(new CorsHandler());
             config.DependencyResolver = new FrameworkApiDependencyResolver();
             config.MapHttpAttributeRoutes();
 

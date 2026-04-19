@@ -1,11 +1,11 @@
-@model JobRealtimeSample.MvcUi.Models.LeaveCalculationPageViewModel
+@model Timesoft.Solution.Web4.Models.LeaveCalculationPageViewModel
 @{
     ViewData["Title"] = "Leave Calculation";
     var signalRClientUrl = "https://cdn.jsdelivr.net/npm/@microsoft/signalr@8/dist/browser/signalr.min.js";
 }
 
 <section id="leaveCalculationApp"
-         class="leave-demo"
+         class="leave-calculation-app"
          data-calculation-proxy-url="@Url.Content("~/LeaveCalculations")"
          data-hub-url="@Model.HubUrl"
          data-signalr-enabled="@Model.SignalREnabled.ToString().ToLowerInvariant()"
@@ -15,8 +15,8 @@
     @* Login screen *@
     <div id="loginPanel" class="login-stage">
         <div class="login-copy">
-            <p class="eyebrow">TIMES SOFTWARE SAMPLE</p>
-            <h1>Leave Calculation realtime demo</h1>
+            <p class="eyebrow">TIMES SOFTWARE</p>
+            <h1>Leave Calculation realtime experience</h1>
             <p>
                 Select a company, sign in as an HR user, then start a leave entitlement process.
                 The API returns a calculation id fast while progress arrives later through SignalR.
@@ -43,7 +43,7 @@
 
             <div class="mb-3">
                 <label for="loginPassword" class="form-label">Password</label>
-                <input id="loginPassword" class="form-control" type="password" value="demo" maxlength="30" />
+                <input id="loginPassword" class="form-control" type="password" value="password" maxlength="30" />
             </div>
 
             <div class="mb-4">
@@ -71,7 +71,7 @@
             </div>
 
             <button id="loginButton" type="button" class="btn btn-outline-primary login-button">Login</button>
-            <p class="demo-hint">Demo only. No production authentication is used here.</p>
+            <p class="login-hint">Test-only access. No production authentication is used here.</p>
         </div>
     </div>
 
@@ -228,19 +228,19 @@
             });
 
             bindEvents();
-            updateDemoLoginUser();
+            updateLoginUserFromCompany();
             restoreSavedCalculation().catch(function (error) {
                 appendLog("Failed", getAjaxErrorMessage(error), new Date());
             });
 
             function bindEvents() {
-                $("#companyCode").on("change", updateDemoLoginUser);
+                $("#companyCode").on("change", updateLoginUserFromCompany);
                 $("#loginButton").on("click", handleLoginClick);
                 $("#processButton").on("click", handleProcessClick);
             }
 
-            function updateDemoLoginUser() {
-                // Demo login follows the company.
+            function updateLoginUserFromCompany() {
+                // Keep the login id aligned with the selected company.
                 const companyCode = $("#companyCode").val();
                 const suffix = companyCode === "COMPANY_A" ? "A" : companyCode === "COMPANY_B" ? "B" : "C";
 
@@ -251,7 +251,7 @@
                 const loginUserId = ($("#loginUserId").val() || "").trim();
 
                 if (!loginUserId) {
-                    alert("Login Id is required for the demo.");
+                    alert("Login Id is required.");
                     return;
                 }
 

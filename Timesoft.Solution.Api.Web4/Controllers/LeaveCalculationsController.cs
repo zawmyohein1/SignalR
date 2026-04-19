@@ -1,19 +1,19 @@
-using JobRealtimeSample.Api.Models;
-using JobRealtimeSample.Api.Vendors;
+using Timesoft.Solution.Api.Web4.Models;
+using Timesoft.Solution.Api.Web4.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace JobRealtimeSample.Api.Controllers;
+namespace Timesoft.Solution.Api.Web4.Controllers;
 
 [ApiController]
 [Route("api/leave-calculations")]
-public sealed class LeaveCalculationsController(LeaveCalculationsVendor vendor) : ControllerBase
+public sealed class LeaveCalculationsController(LeaveCalculationService service) : ControllerBase
 {
     [HttpPost("start")]
-    public async Task<ActionResult<StartLeaveCalculationResponse>> Start(
-        LeaveCalculationStartRequest? request,
+    public async Task<ActionResult<LeaveCalculationResponse>> Start(
+        LeaveCalculationRequest? request,
         CancellationToken cancellationToken)
     {
-        var result = await vendor.StartAsync(request!, cancellationToken);
+        var result = await service.StartAsync(request!, cancellationToken);
 
         if (result.ValidationMessage is not null)
         {
@@ -28,7 +28,7 @@ public sealed class LeaveCalculationsController(LeaveCalculationsVendor vendor) 
     [HttpGet("{calculationId}")]
     public ActionResult<LeaveCalculationInfo> GetById(string calculationId)
     {
-        var calculation = vendor.GetById(calculationId);
+        var calculation = service.GetById(calculationId);
 
         return calculation is null
             ? NotFound(new { message = $"Leave calculation '{calculationId}' was not found." })

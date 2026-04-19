@@ -1,7 +1,7 @@
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
 
-namespace JobRealtimeSample.MvcUi.Controllers;
+namespace Timesoft.Solution.Web4.Controllers;
 
 [Route("LeaveCalculations")]
 public sealed class LeaveCalculationsController(
@@ -64,7 +64,7 @@ public sealed class LeaveCalculationsController(
 
     private string ResolveApiBaseUrl()
     {
-        var configuredApiBaseUrl = configuration["LeaveCalculationDemo:ApiBaseUrl"];
+        var configuredApiBaseUrl = configuration["LeaveCalculation:ApiBaseUrl"];
 
         return string.IsNullOrWhiteSpace(configuredApiBaseUrl)
             ? "https://localhost:5102"

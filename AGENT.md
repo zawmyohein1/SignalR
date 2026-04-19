@@ -155,10 +155,10 @@ Timesoft.Solution.Api.Web3\Controllers\LeaveCalculationsController.cs
 Timesoft.Solution.Api.Web3\Vendors\LeaveCalculationsVendor.cs
 Timesoft.Solution.Api.Web3\Services\BackgroundLeaveCalculationRunner.cs
 Timesoft.Solution.RealtimeHub\Program.cs
-Timesoft.Solution.RealtimeHub\Hubs\JobStatusHub.cs
-Timesoft.Solution.RealtimeHub\Controllers\NotificationsController.cs
-Timesoft.Solution.RealtimeHub\Services\DemoHubTokenService.cs
-Timesoft.Solution.RealtimeHub\Services\BasicNotificationAuthService.cs
+Timesoft.Solution.RealtimeHub\Hubs\NotificationHub.cs
+Timesoft.Solution.RealtimeHub\Services\HubTokenService.cs
+Timesoft.Solution.RealtimeHub\Services\NotificationPublisher.cs
+Timesoft.Solution.RealtimeHub\Services\NotificationConsumer.cs
 ```
 
 ---
@@ -275,4 +275,3 @@ Timesoft.Solution.Api.Web4\App_Data\LeaveCalculationJobs.xml
 ```
 
 Treat these as test/runtime data, not source-code changes.
-

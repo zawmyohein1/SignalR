@@ -4,19 +4,12 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Timesoft.Solution.Api.Web3.Services;
 
 namespace Timesoft.Solution.Api.Web3
 {
-    public sealed class SimpleCorsHandler : DelegatingHandler
+    public sealed class CorsHandler : DelegatingHandler
     {
-        private static readonly string[] AllowedOrigins =
-        {
-            "https://localhost:5001",
-            "http://localhost:5001",
-            "https://localhost:5101",
-            "http://localhost:5101"
-        };
-
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             string allowedOrigin = GetAllowedOrigin(request);
@@ -45,8 +38,24 @@ namespace Timesoft.Solution.Api.Web3
                 return null;
             }
 
-            return origins.FirstOrDefault(origin => AllowedOrigins.Any(allowedOrigin =>
+            string[] web3Origins = FilterPlaceholderOrigins(AppSettings.ReadList("Cors-AllowedOrigins-Web3"));
+            string[] web4Origins = FilterPlaceholderOrigins(AppSettings.ReadList("Cors-AllowedOrigins-Web4"));
+            string[] allowedOrigins = web3Origins.Concat(web4Origins).ToArray();
+
+            if (allowedOrigins == null || allowedOrigins.Length == 0)
+            {
+                return null;
+            }
+
+            return origins.FirstOrDefault(origin => allowedOrigins.Any(allowedOrigin =>
                 string.Equals(origin, allowedOrigin, StringComparison.OrdinalIgnoreCase)));
+        }
+
+        private static string[] FilterPlaceholderOrigins(string[] origins)
+        {
+            return (origins ?? Array.Empty<string>())
+                .Where(origin => !string.Equals(origin, "xxxx", StringComparison.OrdinalIgnoreCase))
+                .ToArray();
         }
 
         private static void AddCorsHeaders(HttpResponseMessage response, string allowedOrigin)

@@ -9,22 +9,21 @@ using Timesoft.Solution.Api.Web3.Models;
 
 namespace Timesoft.Solution.Api.Web3.Services
 {
-    public sealed class XmlLeaveCalculationStore
+    public sealed class LeaveCalculationStore
     {
         private static readonly object FileLock = new object();
         private readonly string _xmlPath;
 
-        public XmlLeaveCalculationStore()
+        public LeaveCalculationStore()
         {
             string configuredPath = AppSettings.Read(
-                "LeaveCalculation-XmlPath",
-                "LeaveCalculationXmlPath");
+                "LeaveCalculation-XmlPath");
             _xmlPath = ResolvePath(configuredPath);
         }
 
-        public LeaveCalculationInfo Create(LeaveCalculationStartRequest request)
+        public LeaveCalculationInfo Create(LeaveCalculationRequest request)
         {
-            // XML file is the demo persistence store.
+            // XML file is the persistence store.
             DateTimeOffset now = DateTimeOffset.UtcNow;
             string calculationId = Guid.NewGuid().ToString("N");
             string message = "Leave entitlement process accepted and started in background.";

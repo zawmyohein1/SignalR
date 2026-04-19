@@ -5,17 +5,17 @@ using System.Text;
 
 namespace Timesoft.Solution.Api.Web3.Services
 {
-    public sealed class DemoHubTokenService
+    public sealed class HubTokenService
     {
         private readonly byte[] _secret;
         private readonly int _tokenLifetimeMinutes;
 
-        public DemoHubTokenService()
+        public HubTokenService()
         {
             _secret = Encoding.UTF8.GetBytes(
-                AppSettings.Read("HubToken-Secret", "HubTokenSecret") ?? "dev-only-demo-hub-token-secret");
+                AppSettings.Read("HubToken-Secret") ?? "dev-only-hub-token-secret");
 
-            if (!int.TryParse(AppSettings.Read("HubToken-LifetimeMinutes", "HubTokenLifetimeMinutes"), out _tokenLifetimeMinutes))
+            if (!int.TryParse(AppSettings.Read("HubToken-LifetimeMinutes"), out _tokenLifetimeMinutes))
             {
                 _tokenLifetimeMinutes = 30;
             }
