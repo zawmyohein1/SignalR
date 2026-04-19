@@ -45,7 +45,6 @@
         state.seenNotifications.clear();
         stopPollingSnapshot();
         await stopConnection();
-
         state.currentCalculationId = response.calculationId;
         state.currentHubAccessToken = response.hubAccessToken;
         state.currentCompanyCode = response.companyCode;

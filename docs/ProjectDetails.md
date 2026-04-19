@@ -7,10 +7,38 @@ This demo shows how a long-running Leave Calculation process can update the corr
 Key idea:
 
 - Leave Calculation Page starts the process.
-- Web3.Api returns a calculation id quickly.
-- Web3.Api continues processing in the background.
-- Web3.Api sends progress to the standalone SignalR hub.
+- Api project returns a calculation id quickly.
+- Api project continues processing in the background.
+- Api project sends progress to the standalone SignalR hub.
 - SignalR pushes updates only to the correct Leave Calculation Page group.
+
+## Coding Guide
+
+Use this document as the first place to check before changing the realtime flow.
+
+### What owns what
+
+| Concern | Primary files | What they own |
+| --- | --- | --- |
+| SignalR server event path | `Timesoft.Solution.RealtimeHub\Controllers\NotificationsController.cs`, `Timesoft.Solution.RealtimeHub\Services\JobStatusNotifier.cs`, `Timesoft.Solution.RealtimeHub\Hubs\JobStatusHub.cs` | Accept Api notifications, build the target group, push `LeaveCalculationStatusUpdated`, and let the browser join the right group. |
+| SignalR browser client | `Timesoft.Solution.Web3\Scripts\leave-calculation-signalr-client.js`, `Timesoft.Solution.Web4\wwwroot\js\leave-calculation-signalr-client.js` | Open the hub connection, join the group, handle realtime updates, and fall back to snapshot polling when needed. |
+| Security | `Timesoft.Solution.RealtimeHub\Services\BasicNotificationAuthService.cs`, `Timesoft.Solution.RealtimeHub\Services\DemoHubTokenService.cs` | Protect the Api-to-hub notification route and validate the browser hub token. |
+| Configuration | `Timesoft.Solution.Web3\Web.config`, `Timesoft.Solution.Web4\appsettings.json`, `Timesoft.Solution.Api.Web3\Web.config`, `Timesoft.Solution.Api.Web4\appsettings.json`, `Timesoft.Solution.RealtimeHub\appsettings.json` | Set Api URLs, hub URLs, restore mode, and SignalR provider settings. |
+
+### Change rules
+
+- If you change the hub event name, update the hub, both browser clients, the notifier, and this doc together.
+- If you change the group name rule, update the hub join logic, the notifier, and the browser client token flow together.
+- If you change notification security, update the Api notification client and the hub auth service together.
+- If you change an endpoint or port, update the matching Web and Api configuration together.
+- If you add a new realtime state, decide first whether it belongs in browser storage, Api XML storage, or the live SignalR message.
+
+### Quick read order
+
+1. Read `Timesoft.Solution.RealtimeHub\Hubs\JobStatusHub.cs` to understand group membership.
+2. Read `Timesoft.Solution.RealtimeHub\Controllers\NotificationsController.cs` and `Services\JobStatusNotifier.cs` to understand how Api sends updates.
+3. Read `Timesoft.Solution.Web3\Scripts\leave-calculation-signalr-client.js` or `Timesoft.Solution.Web4\wwwroot\js\leave-calculation-signalr-client.js` to understand the browser side.
+4. Read the configuration tables below to confirm the current URLs and provider mode.
 
 ## Projects
 
@@ -33,7 +61,7 @@ Web3
   |
   | POST /api/leave-calculations/start
   v
-Web3.Api
+Api project
   |
   | Return calculationId quickly
   | Run calculation in background
@@ -41,7 +69,7 @@ Web3.Api
   v
 RealtimeHub
   |
-  | Push JobStatusUpdated
+  | Push LeaveCalculationStatusUpdated
   v
 Correct Leave Calculation Page only
 ```
@@ -158,7 +186,7 @@ Used by:
 
 | File | Purpose |
 | --- | --- |
-| `Controllers/LeaveCalculationsController.cs` | Web3.Api start and status endpoints |
+| `Controllers/LeaveCalculationsController.cs` | Api start and status endpoints |
 | `Vendors/LeaveCalculationsVendor.cs` | Main start-process flow |
 | `Services/BackgroundLeaveCalculationRunner.cs` | Runs calculation in background or synchronous mode |
 | `Services/RealtimeNotifier.cs` | Sends HTTP notification to RealtimeHub |
@@ -182,9 +210,9 @@ Used by:
 
 | File | Purpose |
 | --- | --- |
-| `Hubs/JobStatusHub.cs` | Leave Calculation Page connects and joins/leaves SignalR group |
-| `Controllers/NotificationsController.cs` | Web3.Api posts status updates here |
-| `Services/BasicNotificationAuthService.cs` | Protects Web3.Api-to-hub notification endpoint |
+| `Hubs/JobStatusHub.cs` | Leave Calculation Page connects and joins the SignalR group |
+| `Controllers/NotificationsController.cs` | Api projects post status updates here |
+| `Services/BasicNotificationAuthService.cs` | Protects Api-to-hub notification endpoint |
 | `Services/DemoHubTokenService.cs` | Validates page hub token |
 | `Models/LeaveCalculationStatusNotification.cs` | Realtime status message payload |
 | `Program.cs` | Configures SignalR hub route and notification endpoint |
@@ -193,8 +221,8 @@ Main hub functions:
 
 - Validate page token.
 - Add Leave Calculation Page to correct group.
-- Receive Web3.Api notification.
-- Push `JobStatusUpdated` to matching group only.
+- Receive Api notification.
+- Push `LeaveCalculationStatusUpdated` to matching group only.
 
 ## SignalR Enabled vs Disabled
 
@@ -297,7 +325,7 @@ The hub route remains unchanged:
 - Background task is in-process, so it is not durable if Web3.Api restarts.
 - No production authentication yet.
 - No SignalR scale-out/backplane.
-- No retry queue if Web3.Api-to-hub notification fails.
+- No retry queue if Api-to-hub notification fails.
 - Browser storage stores only the last active calculation pointer for that browser/session.
 - SignalR disabled mode can still hit normal HTTP timeout risk.
 

@@ -1,17 +1,14 @@
-using Timesoft.Solution.RealtimeHub.Hubs;
 using Timesoft.Solution.RealtimeHub.Models;
 using Timesoft.Solution.RealtimeHub.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
 
 namespace Timesoft.Solution.RealtimeHub.Controllers;
 
 [ApiController]
 [Route("api/notifications")]
 public sealed class NotificationsController(
-    IHubContext<JobStatusHub> hubContext,
-    BasicNotificationAuthService notificationAuth,
-    ILogger<NotificationsController> logger) : ControllerBase
+    JobStatusNotifier jobStatusNotifier,
+    BasicNotificationAuthService notificationAuth) : ControllerBase
 {
     [HttpPost("leave-calculation-status")]
     public async Task<IActionResult> PostLeaveCalculationStatus(LeaveCalculationStatusNotification notification)
@@ -38,21 +35,7 @@ public sealed class NotificationsController(
             return BadRequest(new { message = "loginUserId is required." });
         }
 
-        var groupName = JobStatusHub.CalculationGroupName(
-            notification.CompanyCode.Trim(),
-            notification.LoginUserId.Trim(),
-            notification.CalculationId.Trim());
-
-        // Push only to browsers that joined this exact calculation group.
-        await hubContext.Clients
-            .Group(groupName)
-            .SendAsync("LeaveCalculationStatusUpdated", notification);
-
-        logger.LogInformation(
-            "Pushed {Status} for calculation {CalculationId} to {GroupName}.",
-            notification.Status,
-            notification.CalculationId,
-            groupName);
+        await jobStatusNotifier.SendLeaveCalculationStatusAsync(notification);
 
         return Ok(new { message = "Leave calculation notification delivered." });
     }

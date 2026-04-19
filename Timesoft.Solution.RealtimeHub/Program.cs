@@ -39,6 +39,7 @@ if (signalRProvider == SignalRProvider.Azure)
 
 builder.Services.AddSingleton<Timesoft.Solution.RealtimeHub.Services.BasicNotificationAuthService>();
 builder.Services.AddSingleton<Timesoft.Solution.RealtimeHub.Services.DemoHubTokenService>();
+builder.Services.AddSingleton<Timesoft.Solution.RealtimeHub.Services.JobStatusNotifier>();
 
 var app = builder.Build();
 

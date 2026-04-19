@@ -510,11 +510,7 @@ ValidateCalculationAccess(...)
 
 If validation passes, the current SignalR connection is added to the group.
 
-### `LeaveCalculationGroup(...)`
-
-This method removes the browser connection from the group.
-
-It uses the same validation rule before removing.
+There is no separate `LeaveCalculationGroup(...)` hub method anymore. The browser disconnects or resets the connection when it no longer needs the group.
 
 ### Access Validation
 

@@ -18,16 +18,6 @@ public sealed class JobStatusHub(DemoHubTokenService tokenService) : Hub
             CalculationGroupName(companyCode.Trim(), loginUserId.Trim(), calculationId.Trim()));
     }
 
-    public Task LeaveCalculationGroup(string companyCode, string loginUserId, string calculationId, string hubAccessToken)
-    {
-        // Remove this connection from the calculation-specific group.
-        ValidateCalculationAccess(companyCode, loginUserId, calculationId, hubAccessToken);
-
-        return Groups.RemoveFromGroupAsync(
-            Context.ConnectionId,
-            CalculationGroupName(companyCode.Trim(), loginUserId.Trim(), calculationId.Trim()));
-    }
-
     private void ValidateCalculationAccess(string companyCode, string loginUserId, string calculationId, string? hubAccessToken)
     {
         if (string.IsNullOrWhiteSpace(companyCode))
