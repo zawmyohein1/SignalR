@@ -17,9 +17,8 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        var signalRProvider = _configuration["LeaveCalculation:SignalRProvider"] ?? "Local";
-        var signalREnabled = _configuration.GetValue("LeaveCalculation:SignalREnabled", true)
-            && !string.Equals(signalRProvider, "Disabled", StringComparison.OrdinalIgnoreCase);
+        var signalRProvider = _configuration["SignalR:Provider"] ?? "Local";
+        var signalREnabled = _configuration.GetValue("SignalR:Enabled", true);
 
         var model = new LeaveCalculationPageViewModel
         {

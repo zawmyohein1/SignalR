@@ -6,7 +6,7 @@ namespace Timesoft.Solution.Api.Web4.Services;
 
 public sealed class LeaveCalculationRunner(
     LeaveCalculationStore store,
-    NotificationPublisher notificationPublisher,
+    IRealtimeNotificationPublisher notificationPublisher,
     IConfiguration configuration,
     IOptions<LeaveCalculationOptions> options,
     ILogger<LeaveCalculationRunner> logger)
@@ -54,7 +54,7 @@ public sealed class LeaveCalculationRunner(
         "RO"
     ];
 
-    public bool SignalREnabled { get; } = configuration.GetValue("SignalREnabled", true);
+    public bool SignalREnabled { get; } = configuration.GetValue("SignalR:Enabled", true);
 
     public void RunInBackground(string calculationId)
     {

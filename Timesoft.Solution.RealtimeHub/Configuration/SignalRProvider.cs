@@ -2,14 +2,23 @@ namespace Timesoft.Solution.RealtimeHub.Configuration;
 
 internal enum SignalRProvider
 {
-    Disabled,
     Local,
     Azure
 }
 
+internal sealed record SignalRSettings(bool Enabled, SignalRProvider Provider);
+
 internal static class SignalRProviderConfigurationExtensions
 {
-    public static SignalRProvider GetSignalRProvider(this IConfiguration configuration)
+    public static SignalRSettings GetSignalRSettings(this IConfiguration configuration)
+    {
+        var enabled = configuration.GetValue("SignalR:Enabled", true);
+        var provider = configuration.GetSignalRProvider();
+
+        return new SignalRSettings(enabled, provider);
+    }
+
+    private static SignalRProvider GetSignalRProvider(this IConfiguration configuration)
     {
         var rawValue = configuration["SignalR:Provider"];
 
@@ -24,6 +33,6 @@ internal static class SignalRProviderConfigurationExtensions
         }
 
         throw new InvalidOperationException(
-            $"Invalid SignalR provider '{rawValue}'. Expected Disabled, Local, or Azure.");
+            $"Invalid SignalR provider '{rawValue}'. Expected Local or Azure.");
     }
 }

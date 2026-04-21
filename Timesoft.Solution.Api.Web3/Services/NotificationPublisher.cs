@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace Timesoft.Solution.Api.Web3.Services
 {
-    public sealed class NotificationPublisher : IDisposable
+    public sealed class NotificationPublisher : IRealtimeNotificationPublisher, IDisposable
     {
         private readonly ServiceBusClient _serviceBusClient;
         private readonly string _queueName;
@@ -24,7 +24,13 @@ namespace Timesoft.Solution.Api.Web3.Services
                     "ServiceBus-QueueName")
                 ?? "leave-calculation-status";
 
-            _serviceBusClient = new ServiceBusClient(connectionString);
+            _serviceBusClient = new ServiceBusClient(
+                connectionString,
+                new ServiceBusClientOptions
+                {
+                    TransportType = ServiceBusTransport.Parse(
+                        AppSettings.Read("ServiceBus-TransportType"))
+                });
         }
 
         public async Task<bool> NotifyLeaveCalculationAsync(
@@ -52,7 +58,7 @@ namespace Timesoft.Solution.Api.Web3.Services
                     await sender.DisposeAsync();
                 }
             }
-            catch (Exception ex) when (ex is ServiceBusException || ex is TaskCanceledException)
+            catch (Exception ex)
             {
                 System.Diagnostics.Trace.TraceWarning(
                     "Could not enqueue realtime notification for leave calculation {0}. {1}",

@@ -3,7 +3,7 @@ using Timesoft.Solution.RealtimeHub.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Configuration.AddJsonFile("appsettings.Local.json", optional: true, reloadOnChange: true);
+builder.Configuration.AddJsonFile("appsettings.local.json", optional: true, reloadOnChange: true);
 
 const string MvcUiCorsPolicy = "MvcUi";
 var allowedOrigins = ReadAllowedOrigins(builder.Configuration);
@@ -20,12 +20,15 @@ builder.Services.AddCors(options =>
     });
 });
 
-var signalRProvider = builder.Configuration.GetSignalRProvider();
-builder.Services.AddRealtimeHubServices(builder.Configuration, signalRProvider);
+var signalRSettings = builder.Configuration.GetSignalRSettings();
+builder.Services.AddRealtimeHubServices(builder.Configuration, signalRSettings);
 
 var app = builder.Build();
 
-app.Logger.LogInformation("SignalR provider: {SignalRProvider}", signalRProvider);
+app.Logger.LogInformation(
+    "SignalR enabled: {SignalREnabled}; provider: {SignalRProvider}",
+    signalRSettings.Enabled,
+    signalRSettings.Provider);
 
 if (!app.Environment.IsDevelopment())
 {
@@ -38,7 +41,10 @@ app.UseRouting();
 app.UseCors(MvcUiCorsPolicy);
 
 app.MapControllers();
-app.MapHub<Timesoft.Solution.RealtimeHub.Hubs.NotificationHub>("/hubs/jobstatus");
+if (signalRSettings.Enabled)
+{
+    app.MapHub<Timesoft.Solution.RealtimeHub.Hubs.NotificationHub>("/hubs/jobstatus");
+}
 app.MapGet("/", () => Results.Ok("Timesoft.Solution.RealtimeHub is running."));
 app.Map("/error", () => Results.Problem("An unexpected realtime hub error occurred."));
 

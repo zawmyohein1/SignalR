@@ -11,14 +11,18 @@ internal static class ServiceCollectionExtensions
     public static IServiceCollection AddRealtimeHubServices(
         this IServiceCollection services,
         IConfiguration configuration,
-        SignalRProvider signalRProvider)
+        SignalRSettings signalRSettings)
     {
         services.AddControllers();
-        services.Configure<ServiceBusOptions>(configuration.GetSection("ServiceBus"));
+
+        if (!signalRSettings.Enabled)
+        {
+            return services;
+        }
 
         var signalRBuilder = services.AddSignalR();
 
-        if (signalRProvider == SignalRProvider.Azure)
+        if (signalRSettings.Provider == SignalRProvider.Azure)
         {
             var connectionString = configuration["Azure:SignalR:ConnectionString"];
 
@@ -31,6 +35,7 @@ internal static class ServiceCollectionExtensions
             signalRBuilder.AddAzureSignalR(connectionString);
         }
 
+        services.Configure<ServiceBusOptions>(configuration.GetSection("ServiceBus"));
         services.AddSingleton<HubTokenService>();
         services.AddSingleton<NotificationPublisher>();
         services.AddSingleton(sp =>
@@ -42,7 +47,12 @@ internal static class ServiceCollectionExtensions
                 throw new InvalidOperationException("ServiceBus:ConnectionString is missing.");
             }
 
-            return new ServiceBusClient(options.ConnectionString);
+            return new ServiceBusClient(
+                options.ConnectionString,
+                new ServiceBusClientOptions
+                {
+                    TransportType = ServiceBusTransport.Parse(options.TransportType)
+                });
         });
         services.AddHostedService<NotificationConsumer>();
 

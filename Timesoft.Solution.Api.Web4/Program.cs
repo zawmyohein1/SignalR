@@ -1,6 +1,9 @@
+using Azure.Messaging.ServiceBus;
+using Timesoft.Solution.Api.Web4.Configuration;
+
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Configuration.AddJsonFile("appsettings.Local.json", optional: true, reloadOnChange: true);
+builder.Configuration.AddJsonFile("appsettings.local.json", optional: true, reloadOnChange: true);
 
 const string MvcUiCorsPolicy = "MvcUi";
 var allowedOrigins = ReadAllowedOrigins(builder.Configuration);
@@ -11,6 +14,8 @@ builder.Services.Configure<Timesoft.Solution.Api.Web4.Options.LeaveCalculationOp
     builder.Configuration.GetSection("LeaveCalculation"));
 builder.Services.Configure<Timesoft.Solution.Api.Web4.Options.HubAccessTokenOptions>(
     builder.Configuration.GetSection("HubToken"));
+
+var signalREnabled = builder.Configuration.GetValue("SignalR:Enabled", true);
 
 builder.Services.AddControllers();
 builder.Services.AddCors(options =>
@@ -23,18 +28,30 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod();
     });
 });
-builder.Services.AddSingleton(sp =>
+if (signalREnabled)
 {
-    var options = sp.GetRequiredService<Microsoft.Extensions.Options.IOptions<Timesoft.Solution.Api.Web4.Options.ServiceBusOptions>>().Value;
-
-    if (string.IsNullOrWhiteSpace(options.ConnectionString))
+    builder.Services.AddSingleton(sp =>
     {
-        throw new InvalidOperationException("ServiceBus:ConnectionString is missing.");
-    }
+        var options = sp.GetRequiredService<Microsoft.Extensions.Options.IOptions<Timesoft.Solution.Api.Web4.Options.ServiceBusOptions>>().Value;
 
-    return new Azure.Messaging.ServiceBus.ServiceBusClient(options.ConnectionString);
-});
-builder.Services.AddSingleton<Timesoft.Solution.Api.Web4.Services.NotificationPublisher>();
+        if (string.IsNullOrWhiteSpace(options.ConnectionString))
+        {
+            throw new InvalidOperationException("ServiceBus:ConnectionString is missing.");
+        }
+
+        return new ServiceBusClient(
+            options.ConnectionString,
+            new ServiceBusClientOptions
+            {
+                TransportType = ServiceBusTransport.Parse(options.TransportType)
+            });
+    });
+    builder.Services.AddSingleton<Timesoft.Solution.Api.Web4.Services.IRealtimeNotificationPublisher, Timesoft.Solution.Api.Web4.Services.NotificationPublisher>();
+}
+else
+{
+    builder.Services.AddSingleton<Timesoft.Solution.Api.Web4.Services.IRealtimeNotificationPublisher, Timesoft.Solution.Api.Web4.Services.DisabledRealtimeNotificationPublisher>();
+}
 builder.Services.AddSingleton<Timesoft.Solution.Api.Web4.Services.LeaveCalculationStore>();
 builder.Services.AddSingleton<Timesoft.Solution.Api.Web4.Services.HubTokenService>();
 builder.Services.AddSingleton<Timesoft.Solution.Api.Web4.Services.LeaveCalculationRunner>();

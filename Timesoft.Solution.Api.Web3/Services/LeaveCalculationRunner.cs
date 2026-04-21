@@ -11,7 +11,7 @@ namespace Timesoft.Solution.Api.Web3.Services
     public sealed class LeaveCalculationRunner
     {
         private readonly LeaveCalculationStore _store;
-        private readonly NotificationPublisher _notificationPublisher;
+        private readonly IRealtimeNotificationPublisher _notificationPublisher;
         private readonly int _initialDelaySeconds;
         private readonly int _stepDelaySeconds;
         private readonly double _leaveCodeDelaySeconds;
@@ -59,7 +59,7 @@ namespace Timesoft.Solution.Api.Web3.Services
             "TRAINING"
         };
 
-        public LeaveCalculationRunner(LeaveCalculationStore store, NotificationPublisher notificationPublisher)
+        public LeaveCalculationRunner(LeaveCalculationStore store, IRealtimeNotificationPublisher notificationPublisher)
         {
             _store = store;
             _notificationPublisher = notificationPublisher;
@@ -72,7 +72,7 @@ namespace Timesoft.Solution.Api.Web3.Services
             _leaveCodeDelaySeconds = ReadDoubleSeconds(
                 "LeaveCalculation-LeaveCodeDelaySeconds",
                 3);
-            SignalREnabled = ReadBoolean("SignalREnabled", true);
+            SignalREnabled = ReadBoolean("SignalR:Enabled", true);
         }
 
         public bool SignalREnabled { get; }

@@ -9,7 +9,7 @@ namespace Timesoft.Solution.Api.Web4.Services;
 public sealed class NotificationPublisher(
     ServiceBusClient serviceBusClient,
     IOptions<ServiceBusOptions> options,
-    ILogger<NotificationPublisher> logger)
+    ILogger<NotificationPublisher> logger) : IRealtimeNotificationPublisher
 {
     private readonly ServiceBusOptions _options = options.Value;
 
@@ -31,7 +31,7 @@ public sealed class NotificationPublisher(
 
             return true;
         }
-        catch (Exception ex) when (ex is ServiceBusException or TaskCanceledException)
+        catch (Exception ex)
         {
             logger.LogWarning(
                 ex,

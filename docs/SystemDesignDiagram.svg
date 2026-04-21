@@ -1,110 +1,91 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
-  <title id="title">SignalR System Design Diagram</title>
-  <desc id="desc">Web3 Leave Calculation Page calls Web3.Api. Web3.Api saves status and history in XML, notifies RealtimeHub, and RealtimeHub uses local SignalR or Azure SignalR by configuration to push updates to the correct Leave Calculation Page only. The page can restore status after navigation by reloading the Api snapshot.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="720" viewBox="0 0 1440 720" role="img" aria-labelledby="title desc">
+  <title id="title">SignalR System Design</title>
+  <desc id="desc">Simple left-to-right system design showing Browser UI, MVC Proxy, API, Azure Service Bus, RealtimeHub, XML Store, and Browser Storage.</desc>
 
   <defs>
-    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" orient="auto">
       <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155" />
     </marker>
+    <style>
+      .title { font: 700 32px 'Segoe UI', Arial, sans-serif; fill: #111827; }
+      .subtitle { font: 16px 'Segoe UI', Arial, sans-serif; fill: #64748b; }
+      .box-title { font: 700 20px 'Segoe UI', Arial, sans-serif; fill: #111827; }
+      .box-text { font: 15px 'Segoe UI', Arial, sans-serif; fill: #475569; }
+      .label { font: 14px 'Segoe UI', Arial, sans-serif; fill: #475569; }
+      .group-title { font: 700 18px 'Segoe UI', Arial, sans-serif; fill: #92400e; }
+      .group-code { font: 700 17px Consolas, 'Courier New', monospace; fill: #111827; }
+      .line { stroke: #334155; stroke-width: 4; fill: none; marker-end: url(#arrow); }
+    </style>
   </defs>
 
-  <rect width="1280" height="720" fill="#f8fafc" />
+  <rect width="1440" height="720" fill="#f8fafc" />
 
-  <text x="640" y="64" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="32" font-weight="700" fill="#111827">
-    SignalR System Design
-  </text>
-  <text x="640" y="100" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="17" fill="#64748b">
-    Web3.Api owns calculation status. SignalR pushes live updates. RealtimeHub uses local SignalR or Azure SignalR by configuration. Navigation restore reloads the latest Api snapshot.
-  </text>
+  <text x="720" y="56" text-anchor="middle" class="title">SignalR System Design</text>
+  <text x="720" y="90" text-anchor="middle" class="subtitle">Request flow, state storage, queue handoff, and realtime delivery.</text>
 
-  <!-- Main boxes -->
-  <rect x="86" y="210" width="300" height="150" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" />
-  <text x="236" y="258" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="700" fill="#1e3a8a">
-    Web
-  </text>
-  <text x="236" y="292" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="600" fill="#111827">
-    Leave Calculation Page
-  </text>
-  <text x="236" y="324" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">
-    Starts, resumes, and shows progress
-  </text>
+  <!-- Main row -->
+  <rect x="50" y="190" width="210" height="120" rx="10" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" />
+  <text x="155" y="232" text-anchor="middle" class="box-title">Browser UI</text>
+  <text x="155" y="262" text-anchor="middle" class="box-text">Leave Calculation Page</text>
+  <text x="155" y="286" text-anchor="middle" class="box-text">start, restore, show status</text>
 
-  <rect x="490" y="210" width="300" height="150" rx="8" fill="#f0fdf4" stroke="#22c55e" stroke-width="2" />
-  <text x="640" y="270" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#166534">
-    Api
-  </text>
-  <text x="640" y="306" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">
-    Starts calculation and owns status
-  </text>
+  <rect x="365" y="190" width="210" height="120" rx="10" fill="#ecfeff" stroke="#0891b2" stroke-width="2" />
+  <text x="470" y="232" text-anchor="middle" class="box-title">MVC Proxy</text>
+  <text x="470" y="262" text-anchor="middle" class="box-text">Web3 / Web4 controller</text>
+  <text x="470" y="286" text-anchor="middle" class="box-text">forwards Start and Details</text>
 
-  <rect x="894" y="210" width="300" height="150" rx="8" fill="#faf5ff" stroke="#8b5cf6" stroke-width="2" />
-  <text x="1044" y="258" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#5b21b6">
-    RealtimeHub
-  </text>
-  <text x="1044" y="292" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="600" fill="#111827">
-    NotificationHub
-  </text>
-  <text x="1044" y="324" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">
-    Pushes JobStatusUpdated
-  </text>
-  <text x="1044" y="346" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" font-weight="600" fill="#6b21a8">
-    Local SignalR or Azure SignalR by config
-  </text>
+  <rect x="680" y="190" width="210" height="120" rx="10" fill="#f0fdf4" stroke="#22c55e" stroke-width="2" />
+  <text x="785" y="232" text-anchor="middle" class="box-title">API</text>
+  <text x="785" y="262" text-anchor="middle" class="box-text">create id, run calculation</text>
+  <text x="785" y="286" text-anchor="middle" class="box-text">save state, publish progress</text>
 
-  <!-- Arrows -->
-  <line x1="386" y1="285" x2="490" y2="285" stroke="#334155" stroke-width="4" marker-end="url(#arrow)" />
-  <text x="438" y="258" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">
-    HTTP start / Details
-  </text>
+  <rect x="955" y="190" width="210" height="120" rx="10" fill="#fff7ed" stroke="#f59e0b" stroke-width="2" />
+  <text x="1060" y="232" text-anchor="middle" class="box-title">Azure Service Bus</text>
+  <text x="1060" y="262" text-anchor="middle" class="box-text">shared queue handoff</text>
+  <text x="1060" y="286" text-anchor="middle" class="box-text">leave-calculation-status</text>
 
-  <line x1="790" y1="285" x2="894" y2="285" stroke="#334155" stroke-width="4" marker-end="url(#arrow)" />
-  <text x="842" y="258" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">
-    status notification
-  </text>
+  <rect x="1245" y="190" width="155" height="120" rx="10" fill="#faf5ff" stroke="#8b5cf6" stroke-width="2" />
+  <text x="1322" y="232" text-anchor="middle" class="box-title">RealtimeHub</text>
+  <text x="1322" y="262" text-anchor="middle" class="box-text">consume queue message</text>
+  <text x="1322" y="286" text-anchor="middle" class="box-text">push SignalR to group</text>
 
-  <path d="M 1044 360 C 1044 505, 236 505, 236 360" fill="none" stroke="#334155" stroke-width="4" marker-end="url(#arrow)" />
-  <text x="640" y="490" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">
-    SignalR realtime update to matching page group only
-  </text>
+  <!-- Bottom row -->
+  <rect x="680" y="430" width="210" height="110" rx="10" fill="#ffffff" stroke="#16a34a" stroke-width="2" />
+  <text x="785" y="472" text-anchor="middle" class="box-title">XML Store</text>
+  <text x="785" y="500" text-anchor="middle" class="box-text">source of truth for</text>
+  <text x="785" y="524" text-anchor="middle" class="box-text">status and history</text>
 
-  <!-- State stores -->
-  <rect x="86" y="395" width="300" height="92" rx="8" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5" />
-  <text x="236" y="428" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="17" font-weight="700" fill="#334155">
-    Browser storage
-  </text>
-  <text x="236" y="455" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#475569">
-    active calculation id pointer only
-  </text>
-  <text x="236" y="476" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#475569">
-    session / local / off by config
-  </text>
+  <rect x="50" y="430" width="210" height="110" rx="10" fill="#ffffff" stroke="#94a3b8" stroke-width="2" />
+  <text x="155" y="472" text-anchor="middle" class="box-title">Browser Storage</text>
+  <text x="155" y="500" text-anchor="middle" class="box-text">active calculation pointer</text>
+  <text x="155" y="524" text-anchor="middle" class="box-text">session / local / off</text>
 
-  <rect x="490" y="395" width="300" height="92" rx="8" fill="#ffffff" stroke="#22c55e" stroke-width="1.5" />
-  <text x="640" y="428" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="17" font-weight="700" fill="#166534">
-    Api XML storage
-  </text>
-  <text x="640" y="455" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#475569">
-    source of truth for status
-  </text>
-  <text x="640" y="476" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#475569">
-    and progress history
-  </text>
+  <!-- Main arrows -->
+  <line x1="260" y1="250" x2="365" y2="250" class="line" />
+  <line x1="575" y1="250" x2="680" y2="250" class="line" />
+  <line x1="890" y1="250" x2="955" y2="250" class="line" />
+  <line x1="1165" y1="250" x2="1245" y2="250" class="line" />
 
-  <line x1="236" y1="360" x2="236" y2="395" stroke="#64748b" stroke-width="3" marker-end="url(#arrow)" />
-  <line x1="640" y1="360" x2="640" y2="395" stroke="#22c55e" stroke-width="3" marker-end="url(#arrow)" />
+  <!-- Support arrows -->
+  <line x1="785" y1="310" x2="785" y2="430" class="line" />
+  <line x1="155" y1="310" x2="155" y2="430" class="line" />
+
+  <!-- Return path -->
+  <polyline points="1322,190 1322,140 155,140 155,190" class="line" />
+  <polyline points="155,430 155,370 470,370 470,310" class="line" />
+
+  <!-- Labels -->
+  <text x="312" y="232" text-anchor="middle" class="label">HTTP Start / Details</text>
+  <text x="627" y="232" text-anchor="middle" class="label">server call</text>
+  <text x="922" y="232" text-anchor="middle" class="label">publish progress</text>
+  <text x="1205" y="214" text-anchor="middle" class="label">consume message</text>
+  <text x="803" y="382" text-anchor="start" class="label">read / write state</text>
+  <text x="178" y="382" text-anchor="start" class="label">save active pointer</text>
+  <text x="735" y="122" text-anchor="middle" class="label">SignalR update back to matching browser only</text>
+  <text x="365" y="354" text-anchor="middle" class="label">restore / polling via Details</text>
 
   <!-- Group rule -->
-  <rect x="170" y="545" width="940" height="76" rx="8" fill="#fff7ed" stroke="#f59e0b" stroke-width="2" />
-  <text x="640" y="575" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="17" font-weight="700" fill="#92400e">
-    SignalR Group Rule
-  </text>
-  <text x="640" y="604" text-anchor="middle" font-family="Consolas, 'Courier New', monospace" font-size="17" fill="#111827">
-    company:{companyCode}:user:{loginUserId}:calculation:{calculationId}
-  </text>
-
-  <!-- Legend -->
-  <rect x="86" y="642" width="1108" height="42" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
-  <text x="640" y="668" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#475569">
-    Web3 = Timesoft.Solution.Web3    |    Web3.Api = Timesoft.Solution.Api.Web3    |    RealtimeHub = Timesoft.Solution.RealtimeHub (Local or Azure SignalR)
-  </text>
+  <rect x="240" y="600" width="960" height="76" rx="10" fill="#fffbeb" stroke="#f59e0b" stroke-width="2" />
+  <text x="720" y="630" text-anchor="middle" class="group-title">SignalR Group Rule</text>
+  <text x="720" y="660" text-anchor="middle" class="group-code">company:{companyCode}:user:{loginUserId}:calculation:{calculationId}</text>
 </svg>

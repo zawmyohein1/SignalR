@@ -1,11 +1,11 @@
 using System;
-using System.Configuration;
 using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Timesoft.Solution.Web3.Services;
 
 namespace Timesoft.Solution.Web3.Controllers
 {
@@ -126,7 +126,7 @@ namespace Timesoft.Solution.Web3.Controllers
 
         private static string ReadAppSetting(string key)
         {
-            return ConfigurationManager.AppSettings[key];
+            return AppSettings.Read(key);
         }
     }
 }

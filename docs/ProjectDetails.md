@@ -1,370 +1,336 @@
-# Project Details - SignalR Realtime Demo
+# SignalR Realtime Demo
 
-## Purpose
+## Overview
 
-This demo shows how a long-running Leave Calculation process can update the correct Leave Calculation Page in realtime without keeping one HTTP request open.
+This solution demonstrates a leave calculation workflow where the browser starts a long-running process, the API returns quickly, and progress is pushed back to the correct page in realtime.
 
-Key idea:
+The current design supports both the legacy .NET Framework path (`Web3` / `Api.Web3`) and the .NET 8 path (`Web4` / `Api.Web4`) while sharing one standalone realtime server (`RealtimeHub`).
 
-- Leave Calculation Page starts the process.
-- Api project returns a calculation id quickly.
-- Api project continues processing in the background.
-- Api project sends progress to Azure Service Bus.
-- RealtimeHub consumes the queue message and pushes to SignalR.
-- SignalR pushes updates only to the correct Leave Calculation Page group.
+## Solution Structure
 
-## Service Bus Migration
+| Project | Technology | Responsibility |
+| --- | --- | --- |
+| `Timesoft.Solution.Web3` | ASP.NET MVC 5 / .NET Framework 4.8 | Legacy browser UI |
+| `Timesoft.Solution.Api.Web3` | ASP.NET Web API 2 / .NET Framework 4.8 | Legacy API and background calculation runner |
+| `Timesoft.Solution.Web4` | ASP.NET Core MVC / .NET 8 | .NET 8 browser UI |
+| `Timesoft.Solution.Api.Web4` | ASP.NET Core Web API / .NET 8 | .NET 8 API and background calculation runner |
+| `Timesoft.Solution.RealtimeHub` | ASP.NET Core SignalR / .NET 8 | Shared realtime delivery server |
 
-### What Changed
-
-- Replaced the direct API-to-RealtimeHub HTTP notification path with Azure Service Bus.
-- Added a queue consumer to `Timesoft.Solution.RealtimeHub`.
-- Kept XML storage unchanged as the source of truth for progress history.
-- Kept the browser SignalR client behavior the same.
-
-### Why We Needed The Change
-
-- The old HTTP callback path made the API depend on the realtime hub being available for every update.
-- Frequent progress notifications made the direct API-to-hub hop less scalable.
-- A queue gives a cleaner handoff between calculation work and realtime delivery.
-- The API can publish and continue work without waiting on realtime delivery.
-
-### What The Solution Is
-
-- API projects publish `LeaveCalculationStatusNotification` messages to one Azure Service Bus queue.
-- `Timesoft.Solution.RealtimeHub` runs a background `NotificationConsumer` to read the queue.
-- The consumer forwards each message to the existing `NotificationPublisher`.
-- `NotificationPublisher` still uses SignalR group delivery, so only the correct page receives the update.
+## End-to-End Flow
 
 ```text
-API -> Azure Service Bus queue -> RealtimeHub consumer -> SignalR hub -> browser
+Browser UI
+  -> MVC proxy controller
+  -> API start endpoint
+  -> calculation saved to XML store
+  -> background runner continues work
+  -> API publishes progress to Azure Service Bus
+  -> RealtimeHub consumes queue messages
+  -> RealtimeHub pushes SignalR updates to the correct browser group
 ```
 
-## Coding Guide
+When realtime is unavailable, the browser falls back to polling the calculation `Details` endpoint. The background process still runs in the API either way.
 
-Use this document as the first place to check before changing the realtime flow.
+## Why Azure Services
 
-### What owns what
+### Why Azure Service Bus
 
-| Concern | Primary files | What they own |
-| --- | --- | --- |
-| SignalR server event path | `Timesoft.Solution.RealtimeHub\Services\NotificationConsumer.cs`, `Timesoft.Solution.RealtimeHub\Services\NotificationPublisher.cs`, `Timesoft.Solution.RealtimeHub\Hubs\NotificationHub.cs` | Accept queued notifications, build the target group, push `LeaveCalculationStatusUpdated`, and let the browser join the right group. |
-| SignalR browser client | `Timesoft.Solution.Web3\Scripts\leave-calculation-signalr-client.js`, `Timesoft.Solution.Web4\wwwroot\js\leave-calculation-signalr-client.js` | Open the hub connection, join the group, handle realtime updates, and fall back to snapshot polling when needed. |
-| Security | `Timesoft.Solution.RealtimeHub\Services\HubTokenService.cs` | Validate the browser hub token before group join. |
-| Configuration | `Timesoft.Solution.Web3\Web.config`, `Timesoft.Solution.Web4\appsettings.json`, `Timesoft.Solution.Api.Web3\Web.config`, `Timesoft.Solution.Api.Web4\appsettings.json`, `Timesoft.Solution.RealtimeHub\appsettings.json` | Set Api URLs, hub URLs, restore mode, SignalR provider settings, and Service Bus settings. |
+- replaces the direct API-to-hub HTTP notification path with a queue-based handoff
+- fits better when employee count and progress update volume increase
+- lets the API publish progress without depending on the hub being available at that moment
+- gives one shared queue for both `Api.Web3` and `Api.Web4`
 
-### Change rules
+### Why Azure SignalR
 
-- If you change the hub event name, update the hub, both browser clients, the notifier, and this doc together.
-- If you change the group name rule, update the hub join logic, the notifier, and the browser client token flow together.
-- If you change Service Bus notification settings, update the Api publisher and RealtimeHub consumer together.
-- If you change an endpoint or port, update the matching Web and Api configuration together.
-- If you add a new realtime state, decide first whether it belongs in browser storage, Api XML storage, or the live SignalR message.
+- keeps the browser SignalR contract unchanged while moving realtime transport to a managed service
+- reduces the need for the app server to own all realtime connection scale concerns directly
+- lets both Web3 and Web4 use the same hub route and delivery model
+- keeps local fallback possible because provider mode can still switch between `Local` and `Azure`
 
-### Quick read order
+## Realtime Delivery Model
 
-1. Read `Timesoft.Solution.RealtimeHub\Hubs\NotificationHub.cs` to understand group membership.
-2. Read `Timesoft.Solution.RealtimeHub\Services\NotificationConsumer.cs` and `Services\NotificationPublisher.cs` to understand how queued updates reach SignalR.
-3. Read `Timesoft.Solution.Web3\Scripts\leave-calculation-signalr-client.js` or `Timesoft.Solution.Web4\wwwroot\js\leave-calculation-signalr-client.js` to understand the browser side.
-4. Read the configuration tables below to confirm the current URLs and provider mode.
+### SignalR Group Rule
 
-## Projects
-
-| Project | Technology | Role |
-| --- | --- | --- |
-| `Timesoft.Solution.Web3` | ASP.NET MVC 5 / .NET Framework 4.8 | Legacy MVC UI demo |
-| `Timesoft.Solution.Api.Web3` | ASP.NET Web API 2 / .NET Framework 4.8 | Legacy API demo |
-| `Timesoft.Solution.Web4` | ASP.NET Core MVC / .NET 8 | .NET 8 MVC UI demo |
-| `Timesoft.Solution.Api.Web4` | ASP.NET Core Web API / .NET 8 | .NET 8 API demo |
-| `Timesoft.Solution.RealtimeHub` | ASP.NET Core SignalR / .NET 8 | Shared realtime server |
-
-## SignalR Flow
-
-```text
-Leave Calculation Page
-  |
-  | Start Leave Calculation
-  v
-Web3
-  |
-  | POST /api/leave-calculations/start
-  v
-Api project
-  |
-  | Return calculationId quickly
-  | Run calculation in background
-  | Publish progress notification
-  v
-Azure Service Bus
-  |
-  | Deliver queued message
-  v
-RealtimeHub consumer
-  |
-  | Push LeaveCalculationStatusUpdated
-  v
-Correct Leave Calculation Page only
-```
-
-## Group Rule
-
-Each Leave Calculation Page joins a private SignalR group:
+Each browser joins a private group using:
 
 ```text
 company:{companyCode}:user:{loginUserId}:calculation:{calculationId}
 ```
 
-This prevents:
+This prevents updates from crossing between companies, users, or calculations.
 
-- Company A receiving Company B updates.
-- User A receiving User B updates.
-- Leave Calculation Page A receiving Leave Calculation Page B progress.
+### Hub Token
 
-## Navigation Restore Flow
+The API creates a hub access token that includes:
 
-The Leave Calculation Page can restore the last active calculation after the user navigates away and comes back.
+- company code
+- login user id
+- calculation id
+- expiry time
+
+`RealtimeHub` validates that token before allowing the browser to join the group.
 
 Important rule:
 
 ```text
-Browser storage keeps only the resume pointer.
-Web3.Api / Web4.Api XML storage remains the source of truth.
+The API and RealtimeHub must use the same hub token secret.
 ```
 
-When the user clicks `Process` in SignalR enabled mode:
+## Configuration Model
 
-1. Web sends a start request through the MVC proxy.
-2. Api creates the calculation id and saves the initial XML state.
-3. Api returns the calculation id quickly.
-4. Web saves the active calculation pointer in browser storage.
-5. Api continues the calculation in the background.
-6. SignalR and snapshot polling keep the page updated.
+### Shared SignalR Settings
 
-If the user goes to `View Leave` and then returns to `Leave Calculation`:
+The current source of truth is:
 
-1. Web reads the saved active calculation pointer.
-2. Web calls the MVC `Details` endpoint for the calculation id.
-3. MVC forwards the request to Api.
-4. Api loads the latest calculation status and history from XML.
-5. Web rebuilds the progress log from the returned history.
-6. If the calculation is still running, Web reconnects to SignalR and continues polling snapshots.
-7. If the calculation is completed or failed, Web shows the final status and keeps the Process button available for the next run.
+```text
+SignalR:Enabled
+SignalR:Provider
+```
 
-This means the browser can leave the page while the background process continues. Returning to the page shows the current running status or the completed result based on the latest API snapshot.
+Meaning:
 
-`View Leave` is only a navigation test page for this demo. It does not run or own the calculation process.
+- `SignalR:Enabled` controls whether realtime mode is active at all
+- `SignalR:Provider` chooses the transport provider when realtime is enabled
+- supported provider values are `Local` and `Azure`
 
-## Restore Storage Configuration
+### Service Bus Settings
 
-The restore behavior is controlled by configuration:
+The API projects publish progress to one queue and `RealtimeHub` consumes from the same queue.
 
-| Project | Key | Values |
-| --- | --- | --- |
-| `Timesoft.Solution.Web3` | `LeaveCalculationDemo-RestoreStorage` | `session`, `local`, `off` |
-| `Timesoft.Solution.Web4` | `LeaveCalculationDemo:RestoreStorage` | `session`, `local`, `off` |
+Current queue setting:
 
-Storage modes:
+```text
+leave-calculation-status
+```
 
-| Value | Behavior |
+The repo now supports a transport setting for local reliability:
+
+- `ServiceBus:TransportType` in .NET 8 apps
+- `ServiceBus-TransportType` in `Api.Web3`
+
+Recommended local value:
+
+```text
+AmqpWebSockets
+```
+
+### Azure SignalR Settings
+
+`RealtimeHub` reads:
+
+```text
+SignalR:Provider
+Azure:SignalR:ConnectionString
+```
+
+The browser still connects to the same hub route:
+
+```text
+/hubs/jobstatus
+```
+
+### Local Override Files
+
+Local machine settings are stored in:
+
+- `Timesoft.Solution.Api.Web3/Web.local.config`
+- `Timesoft.Solution.Web3/Web.local.config`
+- `Timesoft.Solution.Api.Web4/appsettings.local.json`
+- `Timesoft.Solution.Web4/appsettings.local.json`
+- `Timesoft.Solution.RealtimeHub/appsettings.local.json`
+
+These files are intentionally ignored by Git but included in the projects so they appear in Solution Explorer.
+
+## Local Development Setup
+
+### Current Local Ports
+
+| Project | URL |
 | --- | --- |
-| `session` | Restore inside the same browser tab/session. This is the recommended demo default. |
-| `local` | Restore even after closing and reopening the browser. |
-| `off` | Do not restore active calculation state from browser storage. |
+| `Timesoft.Solution.Web3` | `http://localhost:57635` |
+| `Timesoft.Solution.Api.Web3` | `http://localhost:57636` |
+| `Timesoft.Solution.RealtimeHub` | `https://localhost:5003` |
+| `Timesoft.Solution.Web4` | `https://localhost:5101` |
+| `Timesoft.Solution.Api.Web4` | `https://localhost:5102` |
 
-The active calculation storage key is:
+### Required Matching Settings
+
+For Azure realtime testing, keep these aligned:
+
+- both API projects publish to the same Service Bus queue
+- `RealtimeHub` consumes the same queue
+- API and `RealtimeHub` share the same hub token secret
+- browser `HubUrl` points to `https://localhost:5003/hubs/jobstatus`
+- `RealtimeHub` CORS allows the exact browser origins that are running
+
+Example:
+
+- Web3 origin: `http://localhost:57635`
+- Web4 origin: `https://localhost:5101`
+
+If the origin does not match exactly, the browser will fail SignalR connect and fall back to polling.
+
+## Runtime Behavior
+
+### SignalR Enabled
+
+When `SignalR:Enabled=true`:
+
+- API returns quickly
+- calculation continues in the background
+- progress is saved to XML
+- progress is also published to Service Bus
+- browser attempts SignalR connection and group join
+
+### SignalR Disabled
+
+When `SignalR:Enabled=false`:
+
+- API keeps the request open and runs the calculation synchronously
+- realtime publish path is skipped
+- browser does not attempt realtime tracking
+
+### Polling Fallback
+
+If the browser cannot connect to SignalR, it falls back to polling the `Details` endpoint every two seconds.
+
+UI meaning:
+
+- `Connected` = realtime connection is active
+- `Polling` = realtime failed and the page is using snapshot polling
+- `Disabled` = realtime is intentionally off by configuration
+
+`Polling` is a valid fallback, but it is not the preferred healthy state.
+
+## Navigation Restore
+
+The browser stores only a resume pointer, not the full calculation state.
+
+Storage key:
 
 ```text
 timesoft.leaveCalculation.active
 ```
 
-The page also stores login form context as a small convenience, but that is not the main resume mechanism. The active calculation id plus the API snapshot is what restores running or completed calculation status.
+Restore behavior:
 
-## Important Files
+1. page reads the saved calculation pointer
+2. page calls the `Details` endpoint
+3. API returns the latest XML-backed snapshot and history
+4. page rebuilds the progress log
+5. if the calculation is still running, the page resumes SignalR or polling
+
+Important rule:
+
+```text
+Browser storage is not the source of truth. XML storage in the API is.
+```
+
+## Important Source Files
 
 ### Web Projects
 
-Used by:
+| File | Purpose |
+| --- | --- |
+| `Views/Home/Index.cshtml` | Main leave calculation page |
+| `Views/Home/ViewLeave.cshtml` | Navigation test page |
+| `leave-calculation-signalr-client.js` | Browser SignalR wrapper and polling fallback |
+| `Controllers/HomeController.cs` | Loads page model and config |
+| `Controllers/LeaveCalculationsController.cs` | MVC proxy to the API |
 
-- `Timesoft.Solution.Web3`
-- `Timesoft.Solution.Web4`
+### API Projects
 
 | File | Purpose |
 | --- | --- |
-| `Views/Home/Index.cshtml` | Login UI, Leave Calculation Page, Process button logic |
-| `Views/Home/ViewLeave.cshtml` | Demo navigation page used to leave and return to the calculation page |
-| `leave-calculation-signalr-client.js` | SignalR page connection, group join, update handling |
-| `Controllers/LeaveCalculationsController.cs` | MVC proxy that calls the matching Api project server-side |
-| `Controllers/HomeController.cs` | Loads demo page data |
-| `Web.config` / `appsettings.json` | Api URL, hub URL, SignalR enabled setting, restore storage mode |
+| `Controllers/LeaveCalculationsController.cs` | Start and details endpoints |
+| `Services/LeaveCalculationService.cs` | Main start flow |
+| `Services/LeaveCalculationRunner.cs` | Background or synchronous execution |
+| `Services/LeaveCalculationStore.cs` | XML persistence and history |
+| `Services/NotificationPublisher.cs` | Service Bus publish path |
+| `Services/HubTokenService.cs` | Hub token creation |
 
-Main Web functions:
-
-- Build request payload.
-- Call Web3 controller.
-- Connect to SignalR hub.
-- Join calculation group.
-- Save the active calculation pointer for navigation restore.
-- Read the latest calculation snapshot when the page loads again.
-- Show current status.
-- Append progress log.
-- Stop button spinner when completed or failed.
-
-### Api Projects
-
-Used by:
-
-- `Timesoft.Solution.Api.Web3`
-- `Timesoft.Solution.Api.Web4`
+### RealtimeHub
 
 | File | Purpose |
 | --- | --- |
-| `Controllers/LeaveCalculationsController.cs` | Api start and status endpoints |
-| `Vendors/LeaveCalculationsVendor.cs` | Main start-process flow |
-| `Services/BackgroundLeaveCalculationRunner.cs` | Runs calculation in background or synchronous mode |
-| `Services/RealtimeNotifier.cs` | Publishes queue messages to Azure Service Bus |
-| `Services/XmlLeaveCalculationStore.cs` | Saves calculation state and history in XML |
-| `Services/HubTokenService.cs` | Creates page token for hub connection |
+| `Program.cs` | Startup, CORS, provider selection, hub route |
+| `Configuration/SignalRProvider.cs` | Reads SignalR enabled/provider settings |
+| `Extensions/ServiceCollectionExtensions.cs` | SignalR and Service Bus registration |
+| `Hubs/NotificationHub.cs` | Browser group join endpoint |
+| `Services/NotificationConsumer.cs` | Service Bus queue consumer |
+| `Services/NotificationPublisher.cs` | Group-targeted SignalR delivery |
+| `Services/HubTokenService.cs` | Hub token validation |
 
-Main Api functions:
+## Troubleshooting
 
-- Create calculation id.
-- Save initial state.
-- Return fast when SignalR is enabled.
-- Run background calculation.
-- Save each progress update.
-- Publish each progress update to the Service Bus queue.
+### Web4 shows `Polling` instead of `Connected`
 
-### RealtimeHub Project
+Most common cause: `RealtimeHub` CORS does not include the exact Web4 origin.
 
-Used by:
+Example mismatch:
 
-- `Timesoft.Solution.RealtimeHub`
+- Web4 runs on `https://localhost:5101`
+- `RealtimeHub` allows `https://localhost:5001`
 
-| File | Purpose |
-| --- | --- |
-| `Hubs/NotificationHub.cs` | Leave Calculation Page connects and joins the SignalR group |
-| `Services/HubTokenService.cs` | Validates page hub token |
-| `Models/LeaveCalculationStatusNotification.cs` | Realtime status message payload |
-| `Services/NotificationConsumer.cs` | Reads queue messages and forwards them to SignalR |
-| `Program.cs` | Configures SignalR hub route, Azure SignalR, and queue consumer |
+Result:
 
-Main hub functions:
+- SignalR connect fails
+- browser falls back to polling
 
-- Validate page token.
-- Add Leave Calculation Page to correct group.
-- Receive queued notification.
-- Push `LeaveCalculationStatusUpdated` to matching group only.
+### Service Bus receive/send connection resets
 
-## SignalR Enabled vs Disabled
-
-| Mode | Behavior |
-| --- | --- |
-| SignalR enabled | Api returns fast, process runs in background, Leave Calculation Page receives realtime updates and can restore a running process after navigation |
-| SignalR disabled | Api runs process inside the HTTP request, Leave Calculation Page waits for the final response |
-
-This makes the timeout problem easy to demonstrate.
-
-When SignalR is enabled but the browser cannot connect to RealtimeHub, the page uses snapshot polling against the calculation `Details` endpoint. Polling is a fallback for display only; the calculation still runs in Api.
-
-## Current Working Ports
-
-The demo is currently wired to these local ports:
-
-| Project | URL |
-| --- | --- |
-| `Timesoft.Solution.Web3` | `http://localhost:57635` |
-| `Timesoft.Solution.Api.Web3` | `http://localhost:57636` |
-| `Timesoft.Solution.RealtimeHub` | `https://localhost:5003` |
-| `Timesoft.Solution.Web4` | `https://localhost:5101` |
-| `Timesoft.Solution.Api.Web4` | `https://localhost:5102` |
-
-Web3 and Web4 both use the same RealtimeHub route:
+Local networks or VPNs may block AMQP TCP. Use:
 
 ```text
-/hubs/jobstatus
+AmqpWebSockets
 ```
 
-Web3 and Web3.Api are configured for Azure SignalR testing, while Web4 remains the newer .NET 8 path that also uses the same hub.
+for Service Bus transport settings.
 
-## Azure SignalR Service
+### Web3 API fails to load Azure Service Bus dependencies
 
-The realtime hub can run with Azure SignalR Service by configuration.
+`Api.Web3` is a .NET Framework app and needs binding redirects in `Web.config` for transitive Azure dependencies such as:
 
-Required settings:
+- `System.Diagnostics.DiagnosticSource`
+- `Microsoft.Bcl.AsyncInterfaces`
+- `System.Memory`
+- `System.Buffers`
+- `System.Runtime.CompilerServices.Unsafe`
+- `System.Threading.Tasks.Extensions`
 
-| Setting | Purpose |
-| --- | --- |
-| `SignalR:Provider` | Selects `Local` or `Azure` provider mode |
-| `Azure:SignalR:ConnectionString` | Azure SignalR access string used by `Timesoft.Solution.RealtimeHub` |
+If these redirects are missing, the app may fail only when the user clicks `Process`.
 
-Behavior:
+### Hub token mismatch
 
-- Keep the hub route unchanged: `/hubs/jobstatus`
-- Keep the calculation group rule unchanged
-- Use Azure SignalR only for the realtime transport and scale-out layer
-- Keep local SignalR available for development or rollback
+If the API and `RealtimeHub` use different secrets:
 
-This lets the same Leave Calculation Page and API flow work without changing the business process.
+- API still starts the calculation
+- browser receives a hub token
+- RealtimeHub rejects group join
+- browser falls back to polling
 
-## Final Working Setup
+### Local config appears in the project but does not affect runtime
 
-The repo currently runs with these local endpoints:
+Current runtime filenames are:
 
-| Project | URL |
-| --- | --- |
-| `Timesoft.Solution.Web3` | `http://localhost:57635` |
-| `Timesoft.Solution.Api.Web3` | `http://localhost:57636` |
-| `Timesoft.Solution.RealtimeHub` | `https://localhost:5003` |
-| `Timesoft.Solution.Web4` | `https://localhost:5101` |
-| `Timesoft.Solution.Api.Web4` | `https://localhost:5102` |
+- `appsettings.local.json` for .NET 8 apps
+- `Web.local.config` for .NET Framework apps
 
-Final configuration for Azure SignalR testing:
+Make sure the actual runtime loader and file name match exactly.
 
-| Project | Key settings |
-| --- | --- |
-| `Timesoft.Solution.Web3` | `LeaveCalculationApiBaseUrl=http://localhost:57636`, `RealtimeHubUrl=https://localhost:5003/hubs/jobstatus`, `SignalREnabled=true`, `SignalRProvider=Azure` |
-| `Timesoft.Solution.Web4` | `ApiBaseUrl=https://localhost:5102`, `HubUrl=https://localhost:5003/hubs/jobstatus`, `SignalREnabled=true`, `SignalRProvider=Azure` |
-| `Timesoft.Solution.RealtimeHub` | `SignalR:Provider=Azure`, `Azure:SignalR:ConnectionString=<Azure connection string>` |
+## Current Constraints
 
-RealtimeHub CORS must include the browser origins used by the demo, especially:
+- XML storage is demo-only
+- background work is in-process, not durable across API restarts
+- Web3 requires extra .NET Framework compatibility care
+- no production authentication or authorization
+- one shared queue and one shared hub keep the demo simple but not production-grade
 
-- `http://localhost:57635`
-- `https://localhost:57635`
-- `http://localhost:57636`
-- `https://localhost:57636`
+## Future Improvements
 
-The hub route remains unchanged:
-
-```text
-/hubs/jobstatus
-```
-
-## Pros
-
-- Leave Calculation Page does not wait for the full calculation.
-- Api response is fast when SignalR is enabled.
-- Progress is visible in realtime.
-- User can navigate away and return to the current running or completed calculation status.
-- One standalone hub can support Web3 and Web4.
-- Group rule protects updates from going to the wrong Leave Calculation Page.
-- SignalR can be turned on or off for demo comparison.
-- XML storage makes progress history easy to inspect.
-
-## Cons / Limitations
-
-- XML storage is for demo only.
-- Background task is in-process, so it is not durable if Web3.Api restarts.
-- No production authentication yet.
-- No SignalR scale-out/backplane.
-- No retry queue if Api-to-hub notification fails.
-- Browser storage stores only the last active calculation pointer for that browser/session.
-- SignalR disabled mode can still hit normal HTTP timeout risk.
-
-## Production Improvement Ideas
-
-- Replace XML with database.
-- Move background work to queue or worker service.
-- Add real authentication and authorization.
-- Add SignalR scale-out or Azure SignalR.
-- Add retry policy for hub notification.
-- Add monitoring, audit log, and health checks.
+- replace XML storage with a database
+- move background work into a durable worker or queue-driven processor
+- add production authentication and authorization
+- add richer monitoring and health checks
+- unify more of the Web3 and Web4 behavior behind shared abstractions
+- reduce legacy .NET Framework-specific maintenance overhead over time

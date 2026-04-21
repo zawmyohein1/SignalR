@@ -8,4 +8,11 @@
     <RootNamespace>Timesoft.Solution.Web4</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Update="appsettings.local.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

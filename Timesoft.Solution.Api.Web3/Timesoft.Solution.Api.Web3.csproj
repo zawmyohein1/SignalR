@@ -65,9 +65,12 @@
     <Compile Include="Models\LeaveCalculationResponse.cs" />
     <Compile Include="Models\LeaveCalculationResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\DisabledRealtimeNotificationPublisher.cs" />
+    <Compile Include="Services\IRealtimeNotificationPublisher.cs" />
     <Compile Include="Services\LeaveCalculationRunner.cs" />
     <Compile Include="Services\HubTokenService.cs" />
     <Compile Include="Services\NotificationPublisher.cs" />
+    <Compile Include="Services\ServiceBusTransport.cs" />
     <Compile Include="Services\LeaveCalculationStore.cs" />
     <Compile Include="Services\LeaveCalculationService.cs" />
   </ItemGroup>

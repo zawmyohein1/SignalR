@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Web.Mvc;
 using Timesoft.Solution.Web3.Models;
+using Timesoft.Solution.Web3.Services;
 
 namespace Timesoft.Solution.Web3.Controllers
 {
@@ -11,7 +11,7 @@ namespace Timesoft.Solution.Web3.Controllers
         public ActionResult Index()
         {
             string configuredApiBaseUrl = ReadAppSetting("LeaveCalculation-ApiBaseUrl");
-            string signalRProvider = ConfigurationManager.AppSettings["SignalRProvider"] ?? "Local";
+            string signalRProvider = ReadAppSetting("SignalR:Provider") ?? "Local";
             string apiBaseUrl = string.IsNullOrWhiteSpace(configuredApiBaseUrl)
                 || string.Equals(configuredApiBaseUrl, "auto", StringComparison.OrdinalIgnoreCase)
                 ? "https://localhost:5002"
@@ -21,12 +21,7 @@ namespace Timesoft.Solution.Web3.Controllers
             {
                 ApiBaseUrl = apiBaseUrl,
                 HubUrl = ReadAppSetting("LeaveCalculation-HubUrl") ?? "https://localhost:5003/hubs/jobstatus",
-                SignalREnabled =
-                    !string.Equals(
-                        ReadAppSetting("LeaveCalculation-SignalREnabled"),
-                        "false",
-                        StringComparison.OrdinalIgnoreCase)
-                    && !string.Equals(signalRProvider, "Disabled", StringComparison.OrdinalIgnoreCase),
+                SignalREnabled = ReadBoolean("SignalR:Enabled", true),
                 RestoreStorageMode = NormalizeRestoreStorageMode(ReadAppSetting("LeaveCalculation-RestoreStorage")),
                 SignalRProvider = signalRProvider,
                 CurrentYear = DateTime.Now.Year,
@@ -109,7 +104,16 @@ namespace Timesoft.Solution.Web3.Controllers
 
         private static string ReadAppSetting(string key)
         {
-            return ConfigurationManager.AppSettings[key];
+            return AppSettings.Read(key);
+        }
+
+        private static bool ReadBoolean(string key, bool defaultValue)
+        {
+            bool value;
+
+            return bool.TryParse(ReadAppSetting(key), out value)
+                ? value
+                : defaultValue;
         }
     }
 }

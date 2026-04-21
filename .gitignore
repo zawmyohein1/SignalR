@@ -30,8 +30,10 @@ Timesoft.Solution.Api.Web4/App_Data/LeaveCalculationJobs.xml
 
 # Local-only configuration overlays
 Timesoft.Solution.Api.Web3/Web.local.config
-Timesoft.Solution.Api.Web4/appsettings.Local.json
-Timesoft.Solution.RealtimeHub/appsettings.Local.json
+Timesoft.Solution.Api.Web4/appsettings.local.json
+Timesoft.Solution.RealtimeHub/appsettings.local.json
+Timesoft.Solution.Web3/Web.local.config
+Timesoft.Solution.Web4/appsettings.local.json
 
 # OS files
 .DS_Store

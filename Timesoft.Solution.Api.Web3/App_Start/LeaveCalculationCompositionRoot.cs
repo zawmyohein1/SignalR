@@ -8,8 +8,8 @@ namespace Timesoft.Solution.Api.Web3
         private static readonly Lazy<LeaveCalculationStore> Store =
             new Lazy<LeaveCalculationStore>(() => new LeaveCalculationStore());
 
-        private static readonly Lazy<NotificationPublisher> Publisher =
-            new Lazy<NotificationPublisher>(() => new NotificationPublisher());
+        private static readonly Lazy<IRealtimeNotificationPublisher> Publisher =
+            new Lazy<IRealtimeNotificationPublisher>(CreatePublisher);
 
         private static readonly Lazy<HubTokenService> TokenService =
             new Lazy<HubTokenService>(() => new HubTokenService());
@@ -26,5 +26,19 @@ namespace Timesoft.Solution.Api.Web3
                     BackgroundRunner.Value));
 
         public static LeaveCalculationService Service => ServiceInstance.Value;
+
+        private static IRealtimeNotificationPublisher CreatePublisher()
+        {
+            bool signalREnabled;
+
+            if (!bool.TryParse(AppSettings.Read("SignalR:Enabled"), out signalREnabled))
+            {
+                signalREnabled = true;
+            }
+
+            return signalREnabled
+                ? (IRealtimeNotificationPublisher)new NotificationPublisher()
+                : new DisabledRealtimeNotificationPublisher();
+        }
     }
 }
