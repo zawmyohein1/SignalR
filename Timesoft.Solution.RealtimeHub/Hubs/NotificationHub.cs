@@ -10,15 +10,38 @@ public sealed class NotificationHub(HubTokenService tokenService) : Hub
 
     public Task JoinCalculationGroup(string companyCode, string loginUserId, string calculationId, string hubAccessToken)
     {
+        var normalized = NormalizeCalculationContext(companyCode, loginUserId, calculationId);
         // Browser must prove it owns this calculation before joining.
-        ValidateCalculationAccess(companyCode, loginUserId, calculationId, hubAccessToken);
+        ValidateCalculationAccess(normalized, hubAccessToken);
 
         return Groups.AddToGroupAsync(
             Context.ConnectionId,
-            GroupName(companyCode.Trim(), loginUserId.Trim(), calculationId.Trim()));
+            GroupName(normalized.CompanyCode, normalized.LoginUserId, normalized.CalculationId));
     }
 
-    private void ValidateCalculationAccess(string companyCode, string loginUserId, string calculationId, string? hubAccessToken)
+    private void ValidateCalculationAccess(
+        CalculationContext calculationContext,
+        string? hubAccessToken)
+    {
+        var token = string.IsNullOrWhiteSpace(hubAccessToken)
+            ? GetAccessToken()
+            : hubAccessToken.Trim();
+
+        if (!tokenService.TryValidate(
+                token,
+                calculationContext.CompanyCode,
+                calculationContext.LoginUserId,
+                calculationContext.CalculationId,
+                out _))
+        {
+            throw new HubException("The hub access token is missing or invalid for this calculation.");
+        }
+    }
+
+    private static CalculationContext NormalizeCalculationContext(
+        string companyCode,
+        string loginUserId,
+        string calculationId)
     {
         if (string.IsNullOrWhiteSpace(companyCode))
         {
@@ -35,14 +58,7 @@ public sealed class NotificationHub(HubTokenService tokenService) : Hub
             throw new HubException("A calculationId is required.");
         }
 
-        var token = string.IsNullOrWhiteSpace(hubAccessToken)
-            ? GetAccessToken()
-            : hubAccessToken.Trim();
-
-        if (!tokenService.TryValidate(token, companyCode.Trim(), loginUserId.Trim(), calculationId.Trim(), out _))
-        {
-            throw new HubException("The hub access token is missing or invalid for this calculation.");
-        }
+        return new CalculationContext(companyCode.Trim(), loginUserId.Trim(), calculationId.Trim());
     }
 
     private string? GetAccessToken()
@@ -66,4 +82,6 @@ public sealed class NotificationHub(HubTokenService tokenService) : Hub
             ? authorization["Bearer ".Length..]
             : null;
     }
+
+    private sealed record CalculationContext(string CompanyCode, string LoginUserId, string CalculationId);
 }

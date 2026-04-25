@@ -10,10 +10,12 @@ public sealed class NotificationPublisher(
 {
     public async Task PublishAsync(LeaveCalculationStatusNotification notification)
     {
+        ArgumentNullException.ThrowIfNull(notification);
+
         var groupName = NotificationHub.GroupName(
-            notification.CompanyCode.Trim(),
-            notification.LoginUserId.Trim(),
-            notification.CalculationId.Trim());
+            Required(notification.CompanyCode, nameof(notification.CompanyCode)),
+            Required(notification.LoginUserId, nameof(notification.LoginUserId)),
+            Required(notification.CalculationId, nameof(notification.CalculationId)));
 
         // Push only to browsers that joined this exact calculation group.
         await hubContext.Clients
@@ -25,5 +27,15 @@ public sealed class NotificationPublisher(
             notification.Status,
             notification.CalculationId,
             groupName);
+    }
+
+    private static string Required(string? value, string propertyName)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            throw new ArgumentException($"Notification {propertyName} is required.", propertyName);
+        }
+
+        return value.Trim();
     }
 }
