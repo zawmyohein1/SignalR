@@ -12,9 +12,16 @@ public sealed class NotificationConsumer(
     NotificationPublisher notificationPublisher,
     ILogger<NotificationConsumer> logger) : BackgroundService
 {
+    private static readonly JsonSerializerOptions JsonOptions = new()
+    {
+        PropertyNameCaseInsensitive = true
+    };
+
+    private readonly string _queueName = RequireQueueName(options.Value.QueueName);
+
     // One processor listens to the configured queue and feeds updates into SignalR.
     private readonly ServiceBusProcessor _processor = serviceBusClient.CreateProcessor(
-        options.Value.QueueName,
+        RequireQueueName(options.Value.QueueName),
         new ServiceBusProcessorOptions
         {
             AutoCompleteMessages = false,
@@ -28,6 +35,7 @@ public sealed class NotificationConsumer(
         _processor.ProcessMessageAsync += HandleMessageAsync;
         _processor.ProcessErrorAsync += HandleErrorAsync;
 
+        logger.LogInformation("Starting notification consumer for queue {QueueName}.", _queueName);
         await _processor.StartProcessingAsync(stoppingToken);
 
         // Keep the hosted service alive until shutdown is requested.
@@ -55,10 +63,7 @@ public sealed class NotificationConsumer(
             // Service Bus payload is the same notification model used by the API.
             var notification = JsonSerializer.Deserialize<LeaveCalculationStatusNotification>(
                 args.Message.Body.ToString(),
-                new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                });
+                JsonOptions);
 
             if (notification is null)
             {
@@ -89,5 +94,15 @@ public sealed class NotificationConsumer(
             args.ErrorSource);
 
         return Task.CompletedTask;
+    }
+
+    private static string RequireQueueName(string? queueName)
+    {
+        if (string.IsNullOrWhiteSpace(queueName))
+        {
+            throw new InvalidOperationException("ServiceBus:QueueName is missing.");
+        }
+
+        return queueName;
     }
 }
