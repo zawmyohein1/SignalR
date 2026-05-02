@@ -38,7 +38,7 @@ export default defineConfig({
       name: 'web3-chromium',
       use: {
         ...devices['Desktop Chrome'],
-        baseURL: 'http://localhost:56540',
+        baseURL: 'http://localhost:57635',
       },
     },
 
@@ -46,7 +46,7 @@ export default defineConfig({
       name: 'web4-chromium',
       use: {
         ...devices['Desktop Chrome'],
-        baseURL: 'http://localhost:5101',
+        baseURL: 'https://localhost:5101',
       },
     },
   ],

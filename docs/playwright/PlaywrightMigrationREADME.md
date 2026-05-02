@@ -9,8 +9,8 @@ The goal is to make sure Web4 behaves the same as Web3 for the main UI flows.
 
 ## Local App URLs
 
-- Web3: `http://localhost:56540/`
-- Web4: `http://localhost:5101/`
+- Web3: `http://localhost:57635/`
+- Web4: `https://localhost:5101/`
 
 ## What Was Set Up
 
@@ -91,6 +91,11 @@ Two intentional failure demos were used to prove the tests are real.
 - `file:///D:/Lab/SignalR/playwright-report/index.html` can show an older static report
 - `http://localhost:9323/` shows the live report for the latest test run
 
+## Related Notes
+
+- [PlaywrightLessons.md](D:\Lab\SignalR\docs\playwright\PlaywrightLessons.md) for short migration-testing rules
+- [PlaywrightVsHumanQA.md](D:\Lab\SignalR\docs\playwright\PlaywrightVsHumanQA.md) for the automation vs manual-testing tradeoff
+
 ## Final State
 
 - Web4 was restored after each proof case
@@ -105,4 +110,3 @@ Add a new spec when you want to test another page or feature:
 - reuse shared helpers when possible
 - keep selectors stable
 - run `npm test` to verify both Web3 and Web4
-

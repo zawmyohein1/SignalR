@@ -115,8 +115,8 @@ If both pass, that behavior is consistent.
 
 ## Current Known Information
 
-- Web4 is already available at `http://localhost:5101/`
-- Web3 URL still needs to be confirmed
+- Web3 is available at `http://localhost:57635/`
+- Web4 is available at `https://localhost:5101/`
 - Playwright is already installed in the repository
 - A starter Playwright config already exists at the repo root
 
